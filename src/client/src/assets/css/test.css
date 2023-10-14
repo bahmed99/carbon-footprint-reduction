@@ -1,0 +1,5 @@
+@import "root.css";
+
+.TestClass{
+    color: var(--blue-ciel);
+}
