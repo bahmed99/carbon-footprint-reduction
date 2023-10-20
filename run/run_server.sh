@@ -1,6 +1,4 @@
 #!/bin/bash
 
-cd ./src/server && npm install
-
-npm start
+cd ./src/server && mvn clean install && mvn spring-boot:run
 
