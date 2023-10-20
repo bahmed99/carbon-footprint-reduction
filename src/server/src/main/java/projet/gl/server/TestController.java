@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 public class TestController {
 
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/test")
     public String test() {
         return "{\"message\":\"it works\"}";
