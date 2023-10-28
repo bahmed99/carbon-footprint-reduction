@@ -1,5 +1,5 @@
 package projet.gl.server.configuration;
 
-public class OptionRepository {
+public class ConfigurationService {
     
 }
