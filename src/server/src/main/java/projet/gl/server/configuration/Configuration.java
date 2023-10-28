@@ -1,21 +1,29 @@
-package projet.gl.server.color;
+package projet.gl.server.configuration;
+
+import projet.gl.server.vehicle.Vehicle;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Set;
+import jakarta.persistence.ManyToMany;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "color")
-public class Color {
+@Table(name = "configuration")
+public class Configuration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    public Color() {
+    @ManyToMany(mappedBy = "configurations")
+    private Set<Vehicle> vehicles = new HashSet<>();
+
+    public Configuration() {
     }
 
     public Long getId() {
@@ -32,5 +40,13 @@ public class Color {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 }

@@ -1,11 +1,11 @@
-package projet.gl.server.marque;
+package projet.gl.server.brand;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import projet.gl.server.modele.Modele;
+import projet.gl.server.model.Model;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 
@@ -13,14 +13,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "marque")
-public class Marque {
+@Table(name = "brand")
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nom")
-    private String nom;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "created_at")
     private LocalDate createdAt;
@@ -28,14 +28,14 @@ public class Marque {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @OneToMany(mappedBy = "marque")
-    private List<Modele> modeles;
+    @OneToMany(mappedBy = "brand")
+    private List<Model> models;
 
-    public Marque() {
+    public Brand() {
     }
 
-    public Marque(String nom) {
-        this.nom = nom;
+    public Brand(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -46,12 +46,12 @@ public class Marque {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDate getCreatedAt() {
