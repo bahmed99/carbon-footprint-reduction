@@ -4,21 +4,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import projet.gl.server.modele.Modele;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
+@Table(name = "marque")
 public class Marque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nom")
     private String nom;
 
-    public Marque() {
-    }
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
-    public Marque(Long id, String nom) {
-        this.id = id;
-        this.nom = nom;
+    @Column(name = "updated_at")
+    private LocalDate updatedAt;
+
+    @OneToMany(mappedBy = "marque")
+    private List<Modele> modeles;
+
+    public Marque() {
     }
 
     public Marque(String nom) {
@@ -26,23 +39,34 @@ public class Marque {
     }
 
     public Long getId() {
-        return this.id;
-    }
-
-    public String getNom() {
-        return this.nom;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", nom='" + getNom() + "'" + "}";
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
