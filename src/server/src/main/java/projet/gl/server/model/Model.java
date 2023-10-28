@@ -1,26 +1,27 @@
-package projet.gl.server.modele;
+package projet.gl.server.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import projet.gl.server.marque.Marque;
+import projet.gl.server.brand.Brand;
+
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
-import java.time.LocalDate;
-
 @Entity
-@Table(name = "modele")
-public class Modele {
+@Table(name = "model")
+public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nom")
-    private String nom;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "created_at")
     private LocalDate createdAt;
@@ -29,14 +30,14 @@ public class Modele {
     private LocalDate updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "id_marque")
-    private Marque marque;
+    @JoinColumn(name = "id_brand")
+    private Brand brand;
 
-    public Modele() {
+    public Model() {
     }
 
-    public Modele(String nom) {
-        this.nom = nom;
+    public Model(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -47,12 +48,12 @@ public class Modele {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDate getCreatedAt() {
@@ -71,11 +72,11 @@ public class Modele {
         this.updatedAt = updatedAt;
     }
 
-    public Marque getMarque() {
-        return marque;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setMarque(Marque marque) {
-        this.marque = marque;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

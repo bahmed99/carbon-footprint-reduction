@@ -1,4 +1,4 @@
-package projet.gl.server.option;
+package projet.gl.server.configuration;
 
 public class OptionRepository {
     

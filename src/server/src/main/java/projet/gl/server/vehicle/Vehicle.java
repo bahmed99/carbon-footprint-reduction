@@ -1,11 +1,10 @@
-package projet.gl.server.vehicule;
+package projet.gl.server.vehicle;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import projet.gl.server.modele.Modele;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
@@ -16,21 +15,22 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import projet.gl.server.option.Option;
 import projet.gl.server.color.Color;
+import projet.gl.server.configuration.Configuration;
+import projet.gl.server.model.Model;
 
 @Entity
-@Table(name = "vehicule")
-public class Vehicule {
+@Table(name = "vehicle")
+public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idVehicule;
+    private Long id;
 
     @Column(name = "year_of_creation")
     private int yearOfCreation;
 
-    @Column(name = "price_hors_option")
-    private double priceHorsOption;
+    @Column(name = "price_without_configuration")
+    private double priceWithoutConfiguration;
 
     @Column(name = "created_at")
     private LocalDate createdAt;
@@ -39,26 +39,26 @@ public class Vehicule {
     private LocalDate updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "id_modele")
-    private Modele modele;
+    @JoinColumn(name = "id_model")
+    private Model model;
 
     @ManyToOne
     @JoinColumn(name = "id_color")
     private Color color;
 
     @ManyToMany
-    @JoinTable(name = "vehicule_option", joinColumns = @JoinColumn(name = "id_vehicule"), inverseJoinColumns = @JoinColumn(name = "id_option"))
-    private Set<Option> options = new HashSet<>();
+    @JoinTable(name = "vehicle_configuration", joinColumns = @JoinColumn(name = "id_vehicle"), inverseJoinColumns = @JoinColumn(name = "id_configuration"))
+    private Set<Configuration> configurations = new HashSet<>();
 
-    public Vehicule() {
+    public Vehicle() {
     }
 
-    public Long getIdVehicule() {
-        return idVehicule;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdVehicule(Long idVehicule) {
-        this.idVehicule = idVehicule;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getYearOfCreation() {
@@ -69,12 +69,12 @@ public class Vehicule {
         this.yearOfCreation = yearOfCreation;
     }
 
-    public double getPriceHorsOption() {
-        return priceHorsOption;
+    public double getPriceWithoutConfiguration() {
+        return priceWithoutConfiguration;
     }
 
-    public void setPriceHorsOption(double priceHorsOption) {
-        this.priceHorsOption = priceHorsOption;
+    public void setPriceWithoutConfiguration(double priceWithoutConfiguration) {
+        this.priceWithoutConfiguration = priceWithoutConfiguration;
     }
 
     public LocalDate getCreatedAt() {
@@ -93,12 +93,12 @@ public class Vehicule {
         this.updatedAt = updatedAt;
     }
 
-    public Modele getModele() {
-        return modele;
+    public Model getModel() {
+        return model;
     }
 
-    public void setModele(Modele modele) {
-        this.modele = modele;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     public Color getColor() {
@@ -109,11 +109,11 @@ public class Vehicule {
         this.color = color;
     }
 
-    public Set<Option> getOptions() {
-        return options;
+    public Set<Configuration> getConfigurations() {
+        return configurations;
     }
 
-    public void setOptions(Set<Option> options) {
-        this.options = options;
+    public void setConfigurations(Set<Configuration> configurations) {
+        this.configurations = configurations;
     }
 }
