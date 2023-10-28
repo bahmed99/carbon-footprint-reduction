@@ -36,6 +36,8 @@ public class Brand {
 
     public Brand(String name) {
         this.name = name;
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
     }
 
     public Long getId() {

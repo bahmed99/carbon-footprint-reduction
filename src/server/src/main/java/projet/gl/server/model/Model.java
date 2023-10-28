@@ -38,6 +38,8 @@ public class Model {
 
     public Model(String name) {
         this.name = name;
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
     }
 
     public Long getId() {
