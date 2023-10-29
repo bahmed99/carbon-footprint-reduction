@@ -31,11 +31,9 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Brand> createBrand(@RequestParam("brandId") Long brandId) {
-        Brand brand = new Brand();
-        brand.setId(brandId);
-        Brand createdBrand = brandService.createBrand(brand);
-        return new ResponseEntity<>(createdBrand, HttpStatus.CREATED);
+    public ResponseEntity<Brand> createBrand(@RequestBody Brand brand) {
+        Brand newBrand = brandService.createBrand(brand);
+        return new ResponseEntity<>(newBrand, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

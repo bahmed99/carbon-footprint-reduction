@@ -6,6 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 import java.time.LocalDate;
 
@@ -20,9 +24,11 @@ public class Brand {
     private String name;
 
     @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate createdAt;
 
     @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate updatedAt;
 
     public Brand() {
@@ -30,8 +36,6 @@ public class Brand {
 
     public Brand(String name) {
         this.name = name;
-        createdAt = LocalDate.now();
-        updatedAt = LocalDate.now();
     }
 
     public Long getId() {
@@ -64,5 +68,16 @@ public class Brand {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDate.now();
     }
 }
