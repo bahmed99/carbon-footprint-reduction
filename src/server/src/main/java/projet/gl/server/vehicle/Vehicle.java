@@ -32,10 +32,10 @@ public class Vehicle {
     @Column(name = "price_without_configuration")
     private double priceWithoutConfiguration;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
     @ManyToOne

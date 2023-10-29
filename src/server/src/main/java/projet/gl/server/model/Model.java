@@ -1,6 +1,7 @@
 package projet.gl.server.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,14 +24,14 @@ public class Model {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     public Model() {
