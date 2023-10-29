@@ -1,7 +1,7 @@
 package projet.gl.server.configuration;
 
 import projet.gl.server.vehicle.Vehicle;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +18,7 @@ public class Configuration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique=true)
     private String name;
 
     @ManyToMany(mappedBy = "configurations")

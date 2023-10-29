@@ -32,22 +32,22 @@ public class Vehicle {
     @Column(name = "price_without_configuration")
     private double priceWithoutConfiguration;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDate createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDate updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "id_model")
+    @JoinColumn(name = "model_id", nullable = false)
     private Model model;
 
     @ManyToOne
-    @JoinColumn(name = "id_color")
+    @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
     @ManyToMany
-    @JoinTable(name = "vehicle_configuration", joinColumns = @JoinColumn(name = "id_vehicle"), inverseJoinColumns = @JoinColumn(name = "id_configuration"))
+    @JoinTable(name = "vehicle_configuration", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "configuration_id"))
     private Set<Configuration> configurations = new HashSet<>();
 
     public Vehicle() {

@@ -20,17 +20,17 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDate createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDate updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "id_brand")
+    @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     public Model() {
