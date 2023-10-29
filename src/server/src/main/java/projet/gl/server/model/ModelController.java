@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import projet.gl.server.brand.Brand;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/models")
@@ -18,22 +21,25 @@ public class ModelController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Model>> getAllModels() {
-        List<Model> models = modelService.getAllModels();
-        return new ResponseEntity<>(models, HttpStatus.OK);
+    public ResponseEntity<List<ModelDTO>> getAllModels() {
+        List<ModelDTO> modelDTOs = modelService.getAllModels().stream()
+                .map(this::convertToModelDTO)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(modelDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Model> getModelById(@PathVariable Long id) {
+    public ResponseEntity<ModelDTO> getModelById(@PathVariable Long id) {
         return modelService.getModelById(id)
-                .map(model -> new ResponseEntity<>(model, HttpStatus.OK))
+                .map(model -> new ResponseEntity<>(convertToModelDTO(model), HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public ResponseEntity<Model> createModel(@RequestBody Model model) {
+    public ResponseEntity<ModelDTO> createModel(@RequestBody ModelDTO modelDTO) {
+        Model model = convertToModel(modelDTO);
         Model createdModel = modelService.createModel(model);
-        return new ResponseEntity<>(createdModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToModelDTO(createdModel), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -50,5 +56,23 @@ public class ModelController {
     public ResponseEntity<Void> deleteModel(@PathVariable Long id) {
         modelService.deleteModel(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private ModelDTO convertToModelDTO(Model model) {
+        ModelDTO modelDTO = new ModelDTO();
+        modelDTO.setId(model.getId());
+        modelDTO.setName(model.getName());
+        modelDTO.setCreatedAt(model.getCreatedAt());
+        modelDTO.setUpdatedAt(model.getUpdatedAt());
+        modelDTO.setBrandId(model.getBrandId());
+        return modelDTO;
+    }
+
+    private Model convertToModel(ModelDTO modelDTO) {
+        Model model = new Model();
+        model.setName(modelDTO.getName());
+        model.setBrandId(modelDTO.getBrandId());
+        // Set other fields...
+        return model;
     }
 }

@@ -30,8 +30,11 @@ public class Model {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "brand_id")
+    @Column(name = "brand_id")
+    private Long brandId;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Brand brand;
 
     public Model() {
@@ -41,6 +44,14 @@ public class Model {
         this.name = name;
         createdAt = LocalDate.now();
         updatedAt = LocalDate.now();
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
     }
 
     public Long getId() {

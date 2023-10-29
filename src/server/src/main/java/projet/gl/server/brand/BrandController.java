@@ -31,7 +31,9 @@ public class BrandController {
     }
 
     @PostMapping
-    public ResponseEntity<Brand> createBrand(@RequestBody Brand brand) {
+    public ResponseEntity<Brand> createBrand(@RequestParam("brandId") Long brandId) {
+        Brand brand = new Brand();
+        brand.setId(brandId);
         Brand createdBrand = brandService.createBrand(brand);
         return new ResponseEntity<>(createdBrand, HttpStatus.CREATED);
     }

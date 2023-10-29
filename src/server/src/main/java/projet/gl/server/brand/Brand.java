@@ -5,14 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import projet.gl.server.model.Model;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "brand")
@@ -30,9 +25,6 @@ public class Brand {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Model> models = new ArrayList<Model>();
-
     public Brand() {
     }
 
@@ -40,16 +32,6 @@ public class Brand {
         this.name = name;
         createdAt = LocalDate.now();
         updatedAt = LocalDate.now();
-    }
-
-    public void addModel(Model model) {
-        models.add(model);
-        model.setBrand(this);
-    }
-
-    public void removeModel(Model model) {
-        models.remove(model);
-        model.setBrand(null);
     }
 
     public Long getId() {
