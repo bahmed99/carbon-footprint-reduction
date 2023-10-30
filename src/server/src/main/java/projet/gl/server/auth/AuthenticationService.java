@@ -28,6 +28,8 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .phone(request.getPhone())
+                .address(request.getAddress())
                 .role(Role.USER)
                 .build();
         var savedUser = repository.save(user);
