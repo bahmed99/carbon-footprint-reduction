@@ -3,8 +3,9 @@
 ## Dépendances
 
 - Linux ou MacOS
-- Node (v18.10.0)
-- NPM (v8.19.2)
+- Node (v18)
+- NPM (v8)
+- Java (v17)
 
 ## Démarrage simple de l'application
 
