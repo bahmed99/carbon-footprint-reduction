@@ -3,6 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import FiltrePage from './pages/FiltrePage';
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Page404 from "./pages/Page404";
 
 export default function MainRouter() {
   return (
