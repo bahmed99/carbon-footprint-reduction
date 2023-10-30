@@ -1,0 +1,112 @@
+.cars-form-container{
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.cars-form-error-alert{
+align-self: center;
+width: 60%;
+}
+
+.cars-form-row{
+    padding: 20px;
+    margin: 20px;
+}
+.cars-form-select{
+   font-family: var(--secondary);
+    font-size: 1.2rem !important;
+    font-weight: bolder !important;
+    background-color: #F5F5F5 !important; 
+}
+.cars-form-select option{
+    font-family: var(--secondary);
+    font-size: 1.2rem !important;
+    font-weight: bolder !important;
+}
+.cars-form-input{
+    font-family: var(--secondary);
+    font-size: 1.2rem !important;
+    font-weight: bolder !important;
+    text-align: left;
+    width: 100%;
+}
+.cars-form-input-field{
+    background-color: #F5F5F5 !important; 
+
+}
+.cars-form-col{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px ;
+}
+.cars-form-button{
+    font-family: var(--secondary) !important;
+    font-size: 1.1rem !important;
+    background-color: var(--blue-ciel) !important;
+    color: var(--blue-marine) !important;
+    padding: 10px;
+    border-radius: 15px;
+    border:none !important;
+}
+.cars-form-submit-button{
+    font-family: var(--primary) !important;
+    font-size: 1.3rem !important;
+    background-color: var(--blue-ciel) !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 15px;
+    border:none !important;
+    margin: 10px;
+    margin-bottom: 20px
+}
+.cars-form-label{
+    padding-top: 20px;
+    font-family: var(--secondary) !important;
+    font-size: 1.3rem !important;
+    font-weight: bolder !important;
+    color: var(--blue-ciel) !important;
+   
+}
+.cars-form-checkbox{
+    font-family: var(--secondary) !important;
+    font-size: 1.1rem !important;
+    font-weight: bolder !important;
+    background-color: var(--blue-ciel) !important;
+    color: white;
+    padding: 10px;
+    padding-left: 50px !important;
+    border-radius: 15px;
+    border:none !important;
+    width: 20%;
+}
+@media (max-width: 1000px) {
+    .cars-form-container{
+        width: 100%;
+        
+    }
+    .cars-form-select{
+        font-size: 1rem !important;
+    }
+    .cars-form-select option{
+        font-size: 1rem !important;
+    }
+    .cars-form-input{
+        font-size: 1rem !important;
+    }
+    .cars-form-button{
+        font-size: 0.9rem !important;
+    }
+    .cars-form-submit-button{
+        font-size: 1rem !important;
+    }   
+    .cars-form-label{
+        font-size: 1rem !important;
+    }
+    .cars-form-checkbox{
+        font-size: 0.9rem !important;
+        width: fit-content;
+    }
+}
