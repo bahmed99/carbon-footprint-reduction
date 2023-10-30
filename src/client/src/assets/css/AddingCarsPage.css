@@ -1,0 +1,34 @@
+.adding-cars-page-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+
+}
+.adding-cars-page-img{
+   margin: 10px;
+  
+}
+.adding-cars-page-title{
+    font-family: var(--primary) ;
+    font-size: 2.5rem;
+    color: var(--blue-ciel);
+    text-align: center;
+}
+.adding-cars-page-subtitle{
+    font-family: var(--secondary);
+    font-size: 1.8rem;
+    color: var(--blue-marine);
+}
+@media (max-width: 1000px) {
+    .adding-cars-page-img{
+        width: 50%;
+    }
+    .adding-cars-page-title{
+        font-size: 1.8rem;
+    }
+    .adding-cars-page-subtitle{
+        font-size: 1.3rem;
+    }
+}
