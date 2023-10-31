@@ -1,10 +1,16 @@
 package projet.gl.server.brand;
+import projet.gl.server.model;
+
+
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import projet.gl.server.model.ModelRepository;
+
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +18,12 @@ import java.util.Optional;
 public class BrandService {
     private final BrandRepository brandRepository;
 
+    private final ModelRepository modelRepository;
+
     @Autowired
-    public BrandService(BrandRepository brandRepository) {
+    public BrandService(BrandRepository brandRepository ,ModelRepository modelRepository) {
         this.brandRepository = brandRepository;
+        this.modelRepository = modelRepository;
     }
 
     public List<Brand> getAllBrands() {
@@ -50,4 +59,18 @@ public class BrandService {
     public void deleteBrand(Long id) {
         brandRepository.deleteById(id);
     }
+
+
+    public List<Model> getModelsByBrand(Long brandId) {
+        Optional<Brand> brand = brandRepository.findById(brandId);
+
+        if (brand.isPresent()) {
+            return modelRepository.findModelsByBrand(brand.get());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+
+
 }
