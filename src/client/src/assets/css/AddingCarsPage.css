@@ -13,13 +13,13 @@
 .adding-cars-page-title{
     font-family: var(--primary) ;
     font-size: 2.5rem;
-    color: var(--blue-ciel);
+    color: #db1d2b;
     text-align: center;
 }
 .adding-cars-page-subtitle{
     font-family: var(--secondary);
     font-size: 1.8rem;
-    color: var(--blue-marine);
+    color:#f47216 ;
 }
 @media (max-width: 1000px) {
     .adding-cars-page-img{
