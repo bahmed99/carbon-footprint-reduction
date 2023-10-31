@@ -45,7 +45,7 @@ width: 60%;
 .cars-form-button{
     font-family: var(--secondary) !important;
     font-size: 1.1rem !important;
-    background-color: var(--blue-ciel) !important;
+    background-color: #f47216    !important;
     color: var(--blue-marine) !important;
     padding: 10px;
     border-radius: 15px;
@@ -54,7 +54,7 @@ width: 60%;
 .cars-form-submit-button{
     font-family: var(--primary) !important;
     font-size: 1.3rem !important;
-    background-color: var(--blue-ciel) !important;
+    background-color: #db1d2b !important;
     color: white !important;
     padding: 10px;
     border-radius: 15px;
@@ -67,14 +67,14 @@ width: 60%;
     font-family: var(--secondary) !important;
     font-size: 1.3rem !important;
     font-weight: bolder !important;
-    color: var(--blue-ciel) !important;
+    color: #f47216  !important;
    
 }
 .cars-form-checkbox{
     font-family: var(--secondary) !important;
     font-size: 1.1rem !important;
     font-weight: bolder !important;
-    background-color: var(--blue-ciel) !important;
+    background-color: #f47216  !important;
     color: white;
     padding: 10px;
     padding-left: 50px !important;
