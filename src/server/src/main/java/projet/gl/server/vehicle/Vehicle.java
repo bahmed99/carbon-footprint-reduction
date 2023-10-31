@@ -5,8 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -33,21 +37,23 @@ public class Vehicle {
     private double priceWithoutConfiguration;
 
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    @Temporal(TemporalType.DATE)
+    private LocalDate createdAt;;
 
     @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "id_model")
+    @JoinColumn(name = "model_id", nullable = false)
     private Model model;
 
     @ManyToOne
-    @JoinColumn(name = "id_color")
+    @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
     @ManyToMany
-    @JoinTable(name = "vehicle_configuration", joinColumns = @JoinColumn(name = "id_vehicle"), inverseJoinColumns = @JoinColumn(name = "id_configuration"))
+    @JoinTable(name = "vehicle_configuration", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "configuration_id"))
     private Set<Configuration> configurations = new HashSet<>();
 
     public Vehicle() {
@@ -116,4 +122,16 @@ public class Vehicle {
     public void setConfigurations(Set<Configuration> configurations) {
         this.configurations = configurations;
     }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDate.now();
+    }
+
 }

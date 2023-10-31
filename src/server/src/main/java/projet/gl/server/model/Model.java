@@ -5,12 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import projet.gl.server.brand.Brand;
 
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.JoinColumn;
 
 @Entity
@@ -20,17 +24,22 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate createdAt;
 
     @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate updatedAt;
 
+    @Column(name = "brand_id")
+    private Long brandId;
+
     @ManyToOne
-    @JoinColumn(name = "id_brand")
+    @JoinColumn(name = "brand_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Brand brand;
 
     public Model() {
@@ -38,6 +47,16 @@ public class Model {
 
     public Model(String name) {
         this.name = name;
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
     }
 
     public Long getId() {
@@ -78,5 +97,16 @@ public class Model {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDate.now();
     }
 }

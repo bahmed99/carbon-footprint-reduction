@@ -5,12 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import projet.gl.server.model.Model;
 import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "brand")
@@ -19,17 +20,16 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate createdAt;
 
     @Column(name = "updated_at")
+    @Temporal(TemporalType.DATE)
     private LocalDate updatedAt;
-
-    @OneToMany(mappedBy = "brand")
-    private List<Model> models;
 
     public Brand() {
     }
@@ -68,5 +68,16 @@ public class Brand {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDate.now();
     }
 }
