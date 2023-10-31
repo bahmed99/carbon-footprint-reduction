@@ -19,7 +19,7 @@ public class BrandService {
     private final ModelRepository modelRepository;
 
     @Autowired
-    public BrandService(BrandRepository brandRepository ,ModelRepository modelRepository) {
+    public BrandService(BrandRepository brandRepository, ModelRepository modelRepository) {
         this.brandRepository = brandRepository;
         this.modelRepository = modelRepository;
     }
@@ -58,7 +58,6 @@ public class BrandService {
         brandRepository.deleteById(id);
     }
 
-
     public List<Model> getModelsByBrand(Long brandId) {
         Optional<Brand> brand = brandRepository.findById(brandId);
 
@@ -68,7 +67,5 @@ public class BrandService {
             return Collections.emptyList();
         }
     }
-
-
 
 }

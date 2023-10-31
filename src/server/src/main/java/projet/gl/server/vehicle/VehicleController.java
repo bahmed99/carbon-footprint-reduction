@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/vehicules")
 public class VehicleController {
     private final VehicleService vehicleService;
-    
+
     @Autowired
     public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
@@ -21,11 +21,11 @@ public class VehicleController {
         return ResponseEntity.ok().body(vehicleService.getAllVehicules());
     }
 
-    @GetMapping("/{id}")  
+    @GetMapping("/{id}")
     public ResponseEntity<Vehicle> getVehiculeById(@PathVariable Long id) {
         return vehicleService.getVehiculeById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -37,7 +37,6 @@ public class VehicleController {
     public ResponseEntity<Vehicle> updateVehicule(@PathVariable Long id, @RequestBody Vehicle vehicle) {
         return ResponseEntity.ok(vehicleService.updateVehicule(id, vehicle));
     }
-    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVehicule(@PathVariable Long id) {

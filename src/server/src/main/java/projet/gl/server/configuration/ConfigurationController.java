@@ -40,7 +40,8 @@ public class ConfigurationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Configuration> updateConfiguration(@PathVariable Long id, @RequestBody Configuration configuration) {
+    public ResponseEntity<Configuration> updateConfiguration(@PathVariable Long id,
+            @RequestBody Configuration configuration) {
         Configuration updatedConfiguration = configurationService.updateConfiguration(id, configuration);
         if (updatedConfiguration != null) {
             return ResponseEntity.ok(updatedConfiguration);

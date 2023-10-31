@@ -19,10 +19,10 @@ public class Configuration {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name ="name",nullable = false, unique=true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    //voir c a laisser ou pas !!!
+    // voir c a laisser ou pas !!!
     @Column(name = "vehicule_id")
     private Long vehiculeId;
 

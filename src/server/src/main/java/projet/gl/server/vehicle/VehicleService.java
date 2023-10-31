@@ -6,15 +6,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class VehicleService {
-    
+
     private final VehicleRepository vehicleRepository;
 
     @Autowired
-    public VehicleService (VehicleRepository vehicleRepository)
-    {
+    public VehicleService(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
     }
 
@@ -22,17 +20,15 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 
-    public Optional< Vehicle> getVehiculeById(Long id) {
+    public Optional<Vehicle> getVehiculeById(Long id) {
         return vehicleRepository.findById(id);
     }
 
-    public Vehicle createVehicule(Vehicle vehicle)
-    {
+    public Vehicle createVehicule(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
     }
 
-    public Vehicle updateVehicule(Long id , Vehicle vehicle)
-    {
+    public Vehicle updateVehicule(Long id, Vehicle vehicle) {
         Optional<Vehicle> vehicleData = vehicleRepository.findById(id);
 
         if (vehicleData.isPresent()) {
@@ -50,8 +46,7 @@ public class VehicleService {
         }
     }
 
-    public void deleteVehicule(Long id)
-    {
+    public void deleteVehicule(Long id) {
         vehicleRepository.deleteById(id);
     }
 
