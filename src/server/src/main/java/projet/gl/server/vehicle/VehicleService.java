@@ -16,19 +16,19 @@ public class VehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public List<Vehicle> getAllVehicules() {
+    public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
     }
 
-    public Optional<Vehicle> getVehiculeById(Long id) {
+    public Optional<Vehicle> getVehicleById(Long id) {
         return vehicleRepository.findById(id);
     }
 
-    public Vehicle createVehicule(Vehicle vehicle) {
+    public Vehicle createVehicle(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
     }
 
-    public Vehicle updateVehicule(Long id, Vehicle vehicle) {
+    public Vehicle updateVehicle(Long id, Vehicle vehicle) {
         Optional<Vehicle> vehicleData = vehicleRepository.findById(id);
 
         if (vehicleData.isPresent()) {
@@ -46,7 +46,7 @@ public class VehicleService {
         }
     }
 
-    public void deleteVehicule(Long id) {
+    public void deleteVehicle(Long id) {
         vehicleRepository.deleteById(id);
     }
 

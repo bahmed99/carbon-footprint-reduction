@@ -22,8 +22,8 @@ public class Configuration {
     private String name;
 
     // voir c a laisser ou pas !!!
-    @Column(name = "vehicule_id")
-    private Long vehiculeId;
+    @Column(name = "vehicle_id")
+    private Long vehicleId;
 
     @ManyToMany(mappedBy = "configurations")
     private Set<Vehicle> vehicles = new HashSet<>();

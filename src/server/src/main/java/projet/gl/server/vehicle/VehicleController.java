@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vehicules")
+@RequestMapping("/vehicles")
 public class VehicleController {
     private final VehicleService vehicleService;
 
@@ -17,30 +17,30 @@ public class VehicleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Vehicle>> getAllVehicules() {
-        return ResponseEntity.ok().body(vehicleService.getAllVehicules());
+    public ResponseEntity<List<Vehicle>> getAllVehicles() {
+        return ResponseEntity.ok().body(vehicleService.getAllVehicles());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Vehicle> getVehiculeById(@PathVariable Long id) {
-        return vehicleService.getVehiculeById(id)
+    public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id) {
+        return vehicleService.getVehicleById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Vehicle> createVehicule(@RequestBody Vehicle vehicle) {
-        return ResponseEntity.ok().body(vehicleService.createVehicule(vehicle));
+    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
+        return ResponseEntity.ok().body(vehicleService.createVehicle(vehicle));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Vehicle> updateVehicule(@PathVariable Long id, @RequestBody Vehicle vehicle) {
-        return ResponseEntity.ok(vehicleService.updateVehicule(id, vehicle));
+    public ResponseEntity<Vehicle> updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+        return ResponseEntity.ok(vehicleService.updateVehicle(id, vehicle));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteVehicule(@PathVariable Long id) {
-        vehicleService.deleteVehicule(id);
+    public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
+        vehicleService.deleteVehicle(id);
         return ResponseEntity.ok().build();
     }
 }
