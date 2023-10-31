@@ -1,12 +1,10 @@
 package projet.gl.server.brand;
-import projet.gl.server.model;
-
-
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import projet.gl.server.model.Model;
 import projet.gl.server.model.ModelRepository;
 
 import java.time.LocalDate;
@@ -65,7 +63,7 @@ public class BrandService {
         Optional<Brand> brand = brandRepository.findById(brandId);
 
         if (brand.isPresent()) {
-            return modelRepository.findModelsByBrand(brand.get());
+            return modelRepository.findModelsByBrand(brand.get().getId());
         } else {
             return Collections.emptyList();
         }

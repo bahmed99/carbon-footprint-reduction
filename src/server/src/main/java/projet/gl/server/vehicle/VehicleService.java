@@ -3,7 +3,6 @@ package projet.gl.server.vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.color.ColorRepository;
 import java.util.List;
 import java.util.Optional;
 
