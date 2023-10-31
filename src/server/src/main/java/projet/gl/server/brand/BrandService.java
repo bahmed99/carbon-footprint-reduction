@@ -4,7 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.model.Model;
+import projet.gl.server.model.ModelDTO;
 import projet.gl.server.model.ModelRepository;
 
 import java.time.LocalDate;
@@ -58,11 +58,11 @@ public class BrandService {
         brandRepository.deleteById(id);
     }
 
-    public List<Model> getModelsByBrand(Long brandId) {
+    public List<ModelDTO> getModelsByBrand(Long brandId) {
         Optional<Brand> brand = brandRepository.findById(brandId);
 
         if (brand.isPresent()) {
-            return modelRepository.findModelsByBrand(brand.get().getId());
+            return modelRepository.findModelsByBrand(brandId);
         } else {
             return Collections.emptyList();
         }

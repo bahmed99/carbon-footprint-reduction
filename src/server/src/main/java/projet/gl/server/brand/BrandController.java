@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import projet.gl.server.model.Model;
+import projet.gl.server.model.ModelDTO;
 
 import java.util.List;
 
@@ -33,8 +33,8 @@ public class BrandController {
     }
 
     @GetMapping("/{brandId}/models")
-    public ResponseEntity<List<Model>> getModelsByBrand(@PathVariable Long brandId) {
-        List<Model> models = brandService.getModelsByBrand(brandId);
+    public ResponseEntity<List<ModelDTO>> getModelsByBrand(@PathVariable Long brandId) {
+        List<ModelDTO> models = brandService.getModelsByBrand(brandId);
         if (models.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

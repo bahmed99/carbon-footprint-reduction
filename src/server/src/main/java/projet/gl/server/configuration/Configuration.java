@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import java.util.Set;
 import jakarta.persistence.ManyToMany;
@@ -26,8 +25,7 @@ public class Configuration {
     @Column(name = "vehicule_id")
     private Long vehiculeId;
 
-    @ManyToMany
-    @JoinColumn(name = "vehicule_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToMany(mappedBy = "configurations")
     private Set<Vehicle> vehicles = new HashSet<>();
 
     public Configuration() {

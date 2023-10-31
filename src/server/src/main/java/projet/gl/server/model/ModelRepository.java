@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ModelRepository extends JpaRepository<Model, Long> {
 
     @Query("SELECT m FROM Model m JOIN m.brand b WHERE b.id = :brandId")
-    List<Model> findModelsByBrand(Long brandId);
+    List<ModelDTO> findModelsByBrand(Long brandId);
 
 }

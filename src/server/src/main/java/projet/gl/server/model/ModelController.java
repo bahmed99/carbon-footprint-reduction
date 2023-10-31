@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/models")
@@ -19,17 +18,15 @@ public class ModelController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ModelDTO>> getAllModels() {
-        List<ModelDTO> modelDTOs = modelService.getAllModels().stream()
-                .map(this::convertToModelDTO)
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(modelDTOs, HttpStatus.OK);
+    public ResponseEntity<List<Model>> getAllModels() {
+        List<Model> models = modelService.getAllModels();
+        return new ResponseEntity<>(models, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ModelDTO> getModelById(@PathVariable Long id) {
+    public ResponseEntity<Model> getModelById(@PathVariable Long id) {
         return modelService.getModelById(id)
-                .map(model -> new ResponseEntity<>(convertToModelDTO(model), HttpStatus.OK))
+                .map(model -> new ResponseEntity<>(model, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -70,7 +67,6 @@ public class ModelController {
         Model model = new Model();
         model.setName(modelDTO.getName());
         model.setBrandId(modelDTO.getBrandId());
-        // Set other fields...
         return model;
     }
 }
