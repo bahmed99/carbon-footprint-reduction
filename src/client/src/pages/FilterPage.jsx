@@ -12,10 +12,10 @@ export default function FilterPage() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [filters, setFilters] = useState({
-    Brands: [],
-    Models: [],
-    Configurations: [],
-    Colors: []
+    brandIds: [],
+    modelIds: [],
+    configurationIds: [],
+    colorIds: []
   })
 
 

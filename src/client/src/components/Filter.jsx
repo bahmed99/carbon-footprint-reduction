@@ -28,7 +28,7 @@ export default function Filter(props) {
     }
 
     let x = props.filters
-    x[props.name] = filters
+    x[props.name+"Ids"] = filters
 
     props.setFilters(x)
 

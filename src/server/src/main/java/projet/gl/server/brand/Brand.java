@@ -31,6 +31,8 @@ public class Brand {
     @Temporal(TemporalType.DATE)
     private LocalDate updatedAt;
 
+    
+
     public Brand() {
     }
 
