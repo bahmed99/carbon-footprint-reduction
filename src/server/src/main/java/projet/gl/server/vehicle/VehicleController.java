@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import projet.gl.server.filters.Filters;
+
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/vehicles")
 public class VehicleController {
@@ -31,6 +34,11 @@ public class VehicleController {
     @PostMapping
     public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
         return ResponseEntity.ok().body(vehicleService.createVehicle(vehicle));
+    }
+
+    @GetMapping("/Filters")
+    public ResponseEntity<List<Vehicle>> getVehiculeByFilters(@RequestBody Filters filters){
+        return ResponseEntity.ok().body(vehicleService.getVehiculeByFilters(filters));
     }
 
     @PutMapping("/{id}")

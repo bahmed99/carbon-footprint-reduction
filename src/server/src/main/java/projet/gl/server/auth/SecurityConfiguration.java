@@ -26,8 +26,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                // Authorize all requests
-                .authorizeHttpRequests(req -> req.requestMatchers("/**")
+                .authorizeHttpRequests(req -> req.requestMatchers("/**" )
                 // Authorize only /auth/** and documentation
                 // .authorizeHttpRequests(req -> req.requestMatchers("/auth/**",
                 //         "/v2/api-docs",

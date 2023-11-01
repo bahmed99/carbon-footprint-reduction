@@ -1,11 +1,10 @@
 import React,{useState} from 'react'
 import { Table } from 'antd';
 
-export default function Tableau(props) {
+export default function TableFilter(props) {
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(props.loading)
     
-
     const tableProps = {
         loading,
       };

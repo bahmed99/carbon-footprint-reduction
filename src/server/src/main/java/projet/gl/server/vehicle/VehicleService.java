@@ -3,8 +3,12 @@ package projet.gl.server.vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import projet.gl.server.filters.Filters;
 
 @Service
 public class VehicleService {
@@ -22,6 +26,11 @@ public class VehicleService {
 
     public Optional<Vehicle> getVehicleById(Long id) {
         return vehicleRepository.findById(id);
+    }
+
+    public List<Vehicle> getVehiculeByFilters(Filters filters) {
+
+        return vehicleRepository.findAllByFilters(filters.getBrands(), filters.getModels(), filters.getColors(), filters.getConfigurations()); 
     }
 
     public Vehicle createVehicle(Vehicle vehicle) {
