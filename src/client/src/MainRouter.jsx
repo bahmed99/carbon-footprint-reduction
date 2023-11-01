@@ -11,6 +11,7 @@ export default function MainRouter() {
   return (
     <div>
       <Routes>
+
         <Route path={"/vehicles"} element={<FilterPage />} />
         <Route path={"/addCars"} element={<AddingCarsPage/>} />
         <Route path={"/"} element={<Home />} />
