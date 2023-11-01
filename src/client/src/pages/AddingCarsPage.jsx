@@ -5,8 +5,9 @@ const AddingCarsPage = () => {
     return (
         <div className='adding-cars-page-container'>
             <img className='adding-cars-page-img' src={Carpage} alt='carpage' />
-            <h1 className='adding-cars-page-title'>Bienvenue sur notre formulaire d'enregistrement des véhicules.  </h1> 
-            <h3 className='adding-cars-page-subtitle'> Merci de remplir les champs ci-dessous pour enregistrer votre voiture. </h3>
+            <h1 className='adding-cars-page-title'>Welcome to our vehicle registration form.</h1>
+<h3 className='adding-cars-page-subtitle'>Please fill out the fields below to register your car.</h3>
+
             <AddingCarsForm />
         </div>
     );
