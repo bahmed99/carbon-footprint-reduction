@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Checkbox } from 'antd';
 import axios from 'axios';
+import { getCars } from '../pages/FilterPage';
+
 
 export default function Filter(props) {
 
@@ -19,37 +21,55 @@ export default function Filter(props) {
 
   const HandleChange = (e) => {
 
-    if(e.target.checked){
-      setFilters([...filters,e.target.value])
-    }
-    else
-    {
-      setFilters(filters.filter((item)=> item !== e.target.value))
-    }
-
-    let x = props.filters
-    x[props.name+"Ids"] = filters
-
-    props.setFilters(x)
-
-    axios.get(process.env.REACT_APP_API_URL + 'vehicles/filters', {
-      "headers": {
-        "Authorization": 'Bearer ' + localStorage.getItem('accessToken'),
+    props.setLoading(true)
+    const updatedFilters = [...filters];
+    if (e.target.checked) {
+      updatedFilters.push(e.target.value);
+    } else {
+      const index = updatedFilters.indexOf(e.target.value);
+      if (index !== -1) {
+        updatedFilters.splice(index, 1);
       }
-    }).then((res) => {
-      console.log("test=  ",res.data)
     }
-    ).catch((err) => {
-      console.log(err)
-    })
-  }
+  
+    setFilters(updatedFilters);
+  
+    let x = props.filters;
+    x[props.filtre] = updatedFilters;
+  
+    Object.keys(x).forEach((key) => {
+      if (x[key].length === 0) {
+        delete x[key];
+      }
+    });
+  
+    props.setFilters(x);
+  
+  
+    axios
+      .post(process.env.REACT_APP_API_URL + 'vehicles/filters', x, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+        },
+      })
+      .then((res) => {
+        props.setLoading(false)
+        props.setData(getCars(res));
+      })
+      .catch((err) => {
+        props.setLoading(false)
+        console.log(err);
+      });
+  };
+  
 
   return (
     <div className='ContainerFiltre'>
       {props.name}
       <br />
-      <Checkbox.Group style={{ width: '100%' }} onChange={(e) => console.log(e)}>
-        {data.map((item) => <Checkbox onChange={(e)=>HandleChange(e)} key={item.id} value={item.id}>{item.name}</Checkbox>)}
+      <Checkbox.Group style={{ width: '100%' }} >
+        {data.map((item) => <Checkbox onChange={HandleChange} key={item.id} value={item.id}>{item.name}</Checkbox>)}
       </Checkbox.Group>
     </div>
   )

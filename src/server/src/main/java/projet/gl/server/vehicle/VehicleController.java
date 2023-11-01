@@ -45,7 +45,7 @@ public class VehicleController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/filters")
+    @PostMapping("/filters")
     public ResponseEntity<List<Vehicle>> findByFilters(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.findByFilters(vehiculeFilterDTO));
     }

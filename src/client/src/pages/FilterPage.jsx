@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Filtres from '../components/Filters'
+import Filters from '../components/Filters'
 import TableFilter from '../components/TableFilter'
-import { Space, Tag } from 'antd';
+import { Tag } from 'antd';
 import axios from 'axios'
 import Navbar from '../components/Navbar';
 
@@ -49,23 +49,22 @@ export default function FilterPage() {
     },
     {
       title: 'Configurations',
-      key: 'configurations',
       dataIndex: 'configurations',
-      // render: (_, { tags }) => (
-      //   <>
-      //     {tags.map((tag) => {
-      //       let color = tag.length > 5 ? 'geekblue' : 'green';
-      //       if (tag === 'loser') {
-      //         color = 'volcano';
-      //       }
-      //       return (
-      //         <Tag color={color} key={tag}>
-      //           {tag.toUpperCase()}
-      //         </Tag>
-      //       );
-      //     })}
-      //   </>
-      // ),
+      key: 'configurations',
+      render: (configurations) => (
+        <span>
+          {configurations[0].map((conf) => {
+            let color = conf.length > 25 ? 'geekblue' : 'green';
+            color= conf.length > 30 ? 'volcano' : color;
+            color= conf.length > 75 ? 'red' : color;
+            return (
+              <Tag color={color} key={conf}>
+                {conf}
+              </Tag>
+            );
+          })}
+        </span>
+      ),
     },
     {
       title: 'Price',
@@ -99,14 +98,13 @@ export default function FilterPage() {
       console.log(err)
     })
 
-  }
-    , [])
+  }, [filters])
 
   return (
     <div>
       <Navbar />
       <div className='ContainerFiltrePage'>
-        <Filtres filters={filters} setFilters={setFilters} />
+        <Filters filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
         <TableFilter data={data} columns={columns} loading={loading} />
       </div>
     </div>
@@ -143,6 +141,5 @@ export function getCars(response) {
       price: ''
     }
   })
-
   return cars
 }

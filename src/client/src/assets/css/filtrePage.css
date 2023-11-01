@@ -1,7 +1,7 @@
 .ContainerFiltrePage{
     display: flex;
     justify-content: space-between;
-    padding-top:8%;
+    padding-top:10%;
     background-color: #f3faf7;
     background-size: cover;
     height: 100vh;

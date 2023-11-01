@@ -12,7 +12,7 @@ export default function TableFilter(props) {
 
   return (
     <div className='ContainerTable'>
-        <Table columns={props.columns} dataSource={props.data} {...tableProps} size='small' bordered/>
+        <Table  columns={props.columns} dataSource={props.data} {...tableProps} size='small' bordered/>
     </div>
   )
 }
