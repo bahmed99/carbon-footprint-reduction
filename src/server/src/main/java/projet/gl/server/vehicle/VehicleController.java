@@ -44,4 +44,9 @@ public class VehicleController {
         vehicleService.deleteVehicle(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/filters")
+    public ResponseEntity<List<Vehicle>> findByFilters(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
+        return ResponseEntity.ok().body(vehicleService.findByFilters(vehiculeFilterDTO));
+    }
 }

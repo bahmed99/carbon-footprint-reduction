@@ -50,4 +50,7 @@ public class VehicleService {
         vehicleRepository.deleteById(id);
     }
 
+    public List<Vehicle> findByFilters(VehiculeFilterDTO vehiculeFilterDTO) {
+        return vehicleRepository.findByFilters(vehiculeFilterDTO);
+    }
 }
