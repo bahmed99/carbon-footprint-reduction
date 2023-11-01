@@ -3,7 +3,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 80px;
+    background-color: #f3faf7;
+    background-size: cover;
+    height: 100%;
 
 }
 .adding-cars-page-img{
