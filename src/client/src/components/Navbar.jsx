@@ -32,10 +32,10 @@ function Navbar() {
             </a>
             {authState.connected ? (
               <>
-                <a className="nav-link" href="/filtre">
-                  Dashboard
+                <a className="nav-link" href="/vehicles">
+                  Vehicles
                 </a>
-                <a className="nav-link" href="/insertion">
+                <a className="nav-link" href="/addCars">
                   Add vehicle
                 </a>
                 <div className="nav-sign-container">

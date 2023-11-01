@@ -32,7 +32,7 @@ export default function Filter(props) {
 
     props.setFilters(x)
 
-    axios.get(process.env.REACT_APP_API_URL + 'vehicles/Filters', {
+    axios.get(process.env.REACT_APP_API_URL + 'vehicles/filters', {
       "headers": {
         "Authorization": 'Bearer ' + localStorage.getItem('accessToken'),
       }

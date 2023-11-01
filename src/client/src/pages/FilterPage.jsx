@@ -3,6 +3,7 @@ import Filtres from '../components/Filters'
 import TableFilter from '../components/TableFilter'
 import { Space, Tag } from 'antd';
 import axios from 'axios'
+import Navbar from '../components/Navbar';
 
 
 export default function FilterPage() {
@@ -102,10 +103,14 @@ export default function FilterPage() {
     , [])
 
   return (
-    <div className='ContainerFiltrePage'>
-      <Filtres filters={filters} setFilters={setFilters} />
-      <TableFilter data={data} columns={columns} loading={loading} />
+    <div>
+      <Navbar />
+      <div className='ContainerFiltrePage'>
+        <Filtres filters={filters} setFilters={setFilters} />
+        <TableFilter data={data} columns={columns} loading={loading} />
+      </div>
     </div>
+
   )
 }
 
