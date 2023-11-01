@@ -242,7 +242,15 @@ const AddingCarsForm = () => {
                 icon: 'success',
                 confirmButtonText: 'Cool'
             })
-        });
+        }).catch((error) => {
+            console.log(error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Your car has not been added to the database.',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
+        })
     };
 
   
