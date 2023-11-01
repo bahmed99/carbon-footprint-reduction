@@ -103,39 +103,39 @@ const AddingCarsForm = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [error, setError] = useState('');
     const errorRef = useRef(null);
-
+    const Authorization = 'Bearer' + localStorage.getItem('accessToken');
       useEffect(() => {
         //get brands
-        Axios.get('http://localhost:8080/brands', {
+        Axios.get(process.env.REACT_APP_API_URL + 'brands', {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJpYXQiOjE2OTg4MzkxNTksImV4cCI6MTY5ODg4MjM1OX0.yOhZ6Vf6F0HG6IkFkcbxD1KvVJyOkXkUgm7516a6WCw`
+                Authorization: Authorization
             }
         }).then((response) => {
             console.log(response);
             setBrands(response.data);
         });
         //gets all models
-        Axios.get('http://localhost:8080/models', {
+        Axios.get(process.env.REACT_APP_API_URL + 'models', {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJpYXQiOjE2OTg4MzkxNTksImV4cCI6MTY5ODg4MjM1OX0.yOhZ6Vf6F0HG6IkFkcbxD1KvVJyOkXkUgm7516a6WCw`
+                Authorization: Authorization
             }
         }).then((response) => {
             console.log("models",response);
             setAllModels(response.data);
         });
         //get colors
-        Axios.get('http://localhost:8080/colors', {
+        Axios.get(process.env.REACT_APP_API_URL + 'colors', {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJpYXQiOjE2OTg4MzkxNTksImV4cCI6MTY5ODg4MjM1OX0.yOhZ6Vf6F0HG6IkFkcbxD1KvVJyOkXkUgm7516a6WCw`
+                Authorization: Authorization
             }
         }).then((response) => {
             console.log("colors",response);
             setColors(response.data);
         });
         //get options
-        Axios.get('http://localhost:8080/configurations', {
+        Axios.get(process.env.REACT_APP_API_URL + 'configurations', {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJpYXQiOjE2OTg4MzkxNTksImV4cCI6MTY5ODg4MjM1OX0.yOhZ6Vf6F0HG6IkFkcbxD1KvVJyOkXkUgm7516a6WCw`
+                Authorization: Authorization
             }
         }).then((response) => {
             console.log("configurations",response);
@@ -220,7 +220,7 @@ const AddingCarsForm = () => {
         console.log("json",json)        
         //post request to backend 
         //axios with headers bearer token
-        Axios.post('http://localhost:8080/vehicules', {
+        Axios.post(process.env.REACT_APP_API_URL + 'vehicules'  , {
             "yearOfCreation": year,
             "priceWithoutConfiguration": price,
             "model": {
@@ -232,7 +232,7 @@ const AddingCarsForm = () => {
             "configurations": configurations
         }, {
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkBnbWFpbC5jb20iLCJpYXQiOjE2OTg4MzkxNTksImV4cCI6MTY5ODg4MjM1OX0.yOhZ6Vf6F0HG6IkFkcbxD1KvVJyOkXkUgm7516a6WCw`
+                Authorization: Authorization
             }
         }).then((response) => {
             console.log(response);

@@ -12,7 +12,7 @@ export default function MainRouter() {
     <div>
       <Routes>
         <Route path={"/filtre"} element={<FiltrePage />} />
-        <Route path={"/addCars"} element={<AddingCarsPage/>} />
+        <Route path={"/insertion"} element={<AddingCarsPage/>} />
         <Route path={"/"} element={<Home />} />
         <Route path={"/register"} element={<RegisterPage />} />
         <Route path={"/login"} element={<LoginPage />} />
