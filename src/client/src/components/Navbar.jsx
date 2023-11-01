@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 
 import LogoImg from "../assets/images/logo2.png";
 import UserImage from "../assets/images/User_icon.png";
+import { AuthContext } from "../helpers/AuthContext";
+
 
 function Navbar() {
-  const [isConnected, setIsConnected] = useState(false);
+  const { authState,setAuthState } = useContext(AuthContext);
+
+  const logout = () => {
+
+    setAuthState({
+      connected: false,
+    });
+    localStorage.removeItem("accessToken");
+    window.location = "/";
+  }
 
   return (
     <div className="nav">
@@ -19,7 +30,7 @@ function Navbar() {
             <a className="nav-link" href="/">
                 Home
             </a>
-            {isConnected ? (
+            {authState.connected ? (
               <>
                 <a className="nav-link" href="/filtre">
                   Dashboard
@@ -35,9 +46,9 @@ function Navbar() {
                       <a className="nav-link" href="/profile">
                         Username
                       </a>
-                      <a className="nav-link" href="/logout">
+                      <button className="logout-button" onClick={logout}>
                         Logout
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -47,7 +58,7 @@ function Navbar() {
                 <a className="nav-link-login" href="/login">
                   Login
                 </a>
-                <a className="nav-link-login" href="/login">
+                <a className="nav-link-login" href="/register">
                   Register
                 </a>
               </div>

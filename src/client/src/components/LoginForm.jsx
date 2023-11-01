@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+import axios from 'axios';
+import { AuthContext } from '../helpers/AuthContext';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { setAuthState } = useContext(AuthContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,6 +24,28 @@ const LoginForm = () => {
         setError('');
         console.log("Email : ", email);
         console.log("Mot de passe : ", password);
+
+        // Envoi des données au serveur
+        const data = {
+            email: email,
+            password: password
+        };
+        axios.post('http://localhost:8080/auth/login', data)
+            .then((response) => {
+                if (response.data.error) {
+                    setError(response.data.error);
+                    alert(response.data.error);
+                } else {
+                    setAuthState({
+                        connected: true
+                    });
+                    localStorage.setItem('accessToken', response.data);
+                    window.location = '/';
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
