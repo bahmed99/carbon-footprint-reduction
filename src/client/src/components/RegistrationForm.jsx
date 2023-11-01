@@ -6,6 +6,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from "react-bootstrap/Alert";
+import { useContext } from "react";
+import { AuthContext } from "../helpers/AuthContext";
+import axios from 'axios';
 
 const RegistrationForm = () => {
     const [firstname, setFirstname] = useState('');
@@ -16,6 +19,7 @@ const RegistrationForm = () => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
+    const { setAuthState } = useContext(AuthContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,6 +47,33 @@ const RegistrationForm = () => {
         console.log("Mot de passe : ", password);
         console.log("Adresse : ", address);
         console.log("Téléphone : ", phone);
+
+        // Envoi des données au serveur
+        const data = {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            password: password,
+            address: address,
+            phone: phone
+        };
+
+        
+        axios.post('http://localhost:8080/auth/register', data).then((response) => {
+
+            if(response.data.error) {
+                setError(response.data.error);
+                alert(response.data.error);
+            } else {
+                localStorage.setItem("accessToken", response.data.token);
+                setAuthState({
+                    connected: true,
+                });
+                window.location = '/';
+            }
+
+        }
+        );
     };
 
     return (
