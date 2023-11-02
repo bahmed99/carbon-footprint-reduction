@@ -2,7 +2,10 @@
 
 docker compose up  &
 
+
 sleep 5
+
+./run/insert.sh &
 
 ./run/run_server.sh &
 ./run/run_client.sh &
