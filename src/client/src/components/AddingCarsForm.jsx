@@ -9,7 +9,7 @@ import Collapse from 'react-bootstrap/Collapse';
 import Alert from 'react-bootstrap/Alert';
 import Axios from 'axios';
 import Swal from 'sweetalert2'
-
+import ReactLoading from "react-loading";
 
 
 
@@ -98,6 +98,7 @@ const AddingCarsForm = () => {
     const [filteredModels, setFilteredModels] = useState([]);
     const [year, setYear] = useState('');
     const [color, setColor] = useState('');
+    const [loading, setLoading] = useState(false);
     const [showBrandInput, setShowBrandInput] = useState(false);
     const [showModelInput, setShowModelInput] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -190,6 +191,7 @@ const AddingCarsForm = () => {
     };
 
     const handleSubmit = (e) => {
+        setLoading(true);
         e.preventDefault();
         // Field validation
         if (!brand || !model || !year || !color || !price) {
@@ -236,6 +238,7 @@ const AddingCarsForm = () => {
             }
         }).then((response) => {
             console.log(response);
+            setLoading(false);
             Swal.fire({
                 title: 'Success!',
                 text: 'Your car has been added to the database.',
@@ -243,6 +246,8 @@ const AddingCarsForm = () => {
                 confirmButtonText: 'Cool'
             })
         }).catch((error) => {
+            setLoading(false);
+
             console.log(error);
             Swal.fire({
                 title: 'Error!',
@@ -422,8 +427,17 @@ const AddingCarsForm = () => {
                     </Col>
                 </Row>
             </Container>
-            <Button variant='primary' type='submit' className='cars-form-submit-button'>
-                Save
+            <Button variant='primary' type='submit' className='cars-form-submit-button' disabled={loading}>
+            {loading ? (
+                <ReactLoading
+                  height={"20px"}
+                  width={"24px"}
+                  className="loading1"
+                  type="spin"
+                />
+              ) : (
+                "Save"
+              )}
             </Button>
         </Form>
     );
