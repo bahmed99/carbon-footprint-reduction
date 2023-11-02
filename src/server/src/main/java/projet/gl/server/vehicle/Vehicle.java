@@ -123,6 +123,14 @@ public class Vehicle {
         this.configurations = configurations;
     }
 
+    public void Copy(Vehicle v){
+        this.yearOfCreation = v.getYearOfCreation();
+        this.priceWithoutConfiguration = v.getPriceWithoutConfiguration();
+        this.model = v.getModel();
+        this.color = v.getColor();
+        this.configurations = v.getConfigurations();
+    }
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDate.now();

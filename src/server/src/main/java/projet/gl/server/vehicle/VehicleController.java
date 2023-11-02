@@ -30,8 +30,15 @@ public class VehicleController {
     }
 
     @PostMapping
-    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
-        return ResponseEntity.ok().body(vehicleService.createVehicle(vehicle));
+    public ResponseEntity<Void> createVehicle(@RequestBody Vehicle vehicle) {
+
+        for(int i=0;i < 100;i++){
+            Vehicle newVehicle = new Vehicle();
+            newVehicle.Copy(vehicle);
+            vehicleService.createVehicle(newVehicle);
+
+        }
+        return ResponseEntity.ok().build();       
     }
 
     @PutMapping("/{id}")

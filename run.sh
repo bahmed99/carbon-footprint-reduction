@@ -1,5 +1,9 @@
 #!/bin/bash
 
+docker compose up  &
+
+sleep 5
+
 ./run/run_server.sh &
 ./run/run_client.sh &
 

@@ -7,7 +7,7 @@ import { getCars } from '../pages/FilterPage';
 export default function Filter(props) {
 
   const [data, setData] = useState([])
-  const [filters,setFilters] = useState([])
+  const [filters, setFilters] = useState([])
 
   useEffect(() => {
     axios.get(process.env.REACT_APP_API_URL + props.url, {
@@ -31,21 +31,21 @@ export default function Filter(props) {
         updatedFilters.splice(index, 1);
       }
     }
-  
+
     setFilters(updatedFilters);
-  
+
     let x = props.filters;
     x[props.filtre] = updatedFilters;
-  
+
     Object.keys(x).forEach((key) => {
       if (x[key].length === 0) {
         delete x[key];
       }
     });
-  
+
     props.setFilters(x);
-  
-  
+
+
     axios
       .post(process.env.REACT_APP_API_URL + 'vehicles/filters', x, {
         headers: {
@@ -62,15 +62,42 @@ export default function Filter(props) {
         console.log(err);
       });
   };
-  
+
+  console.log(props.data)
+
 
   return (
     <div className='ContainerFiltre'>
       {props.name}
       <br />
       <Checkbox.Group style={{ width: '100%' }} >
-        {data.map((item) => <Checkbox onChange={HandleChange} key={item.id} value={item.id}>{item.name}</Checkbox>)}
+        {data.map((item) => <Checkbox onChange={HandleChange} key={item.id} value={item.id}>{item.name} ({NumberOfCarsByFiltre(props.url.slice(0, -1), item, props.data)})</Checkbox>)}
       </Checkbox.Group>
     </div>
   )
+}
+
+function NumberOfCarsByFiltre(filtre, item, cars) {
+  let count = 0;
+
+  if (filtre === 'configuration') {
+    cars.map((car) => {
+      car[`${filtre}s`].map((configuration) => {
+        if (configuration.includes(item.name)) {
+          count++;
+        }
+      }
+      )
+    });
+
+    return count;
+  }
+
+  cars.map((car) => {
+    if (car[`${filtre}`].includes(item.name)) {
+      count++;
+    }
+  });
+  return count;
+
 }
