@@ -29,16 +29,21 @@ public class VehicleController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createVehicle(@RequestBody Vehicle vehicle) {
+    @PostMapping("/{count}")
+    public ResponseEntity<Void> createVehicle(@PathVariable int count, @RequestBody Vehicle vehicle) {
         Vehicle newVehicle;
 
-        for(int i=0;i < 100;i++){
+        if (count == 0) {
             newVehicle = new Vehicle();
             newVehicle.Copy(vehicle);
-            vehicleService.createVehicle(newVehicle);
+        } else {
+            for(int i=0;i < count;i++){
+                newVehicle = new Vehicle();
+                newVehicle.Copy(vehicle);
+                vehicleService.createVehicle(newVehicle);
+            }
         }
-        
+
         return ResponseEntity.ok().build();       
     }
 
