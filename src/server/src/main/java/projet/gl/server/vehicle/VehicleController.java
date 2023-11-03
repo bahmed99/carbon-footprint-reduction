@@ -31,13 +31,14 @@ public class VehicleController {
 
     @PostMapping
     public ResponseEntity<Void> createVehicle(@RequestBody Vehicle vehicle) {
+        Vehicle newVehicle;
 
         for(int i=0;i < 100;i++){
-            Vehicle newVehicle = new Vehicle();
+            newVehicle = new Vehicle();
             newVehicle.Copy(vehicle);
             vehicleService.createVehicle(newVehicle);
-
         }
+        
         return ResponseEntity.ok().build();       
     }
 
