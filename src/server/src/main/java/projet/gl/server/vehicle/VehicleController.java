@@ -31,12 +31,12 @@ public class VehicleController {
 
     @PostMapping("/{count}")
     public ResponseEntity<Void> createVehicle(@PathVariable int count, @RequestBody Vehicle vehicle) {
-        Vehicle newVehicle;
-
+        
         if (count == 0) {
-            newVehicle = new Vehicle();
-            newVehicle.Copy(vehicle);
+            vehicleService.createVehicle(vehicle);
         } else {
+            Vehicle newVehicle;
+            
             for(int i=0;i < count;i++){
                 newVehicle = new Vehicle();
                 newVehicle.Copy(vehicle);
