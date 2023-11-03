@@ -8,7 +8,7 @@ MYSQL_ROOT_PASSWORD="root"
 
 DB_NAME="db"
 
-SQL_FILE_PATH="./data.sql"
+SQL_FILE_PATH="./run/data.sql"
 
 
 
