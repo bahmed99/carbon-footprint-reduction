@@ -13,3 +13,27 @@ services:
       - "3308:3306"
     volumes:
       - ./db:/var/lib/mysql
+
+  # server: 
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./src/server
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./src/server:/app
+  #   depends_on:
+  #     - db
+
+  # client:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./src/client
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./src/client:/app
+  #   depends_on:
+  #     - server
+  #     - db
