@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Filters from '../components/Filters'
 import TableFilter from '../components/TableFilter'
 import { Tag } from 'antd';
-import axios from 'axios'
+import Axios from 'axios'
 import Navbar from '../components/Navbar';
 
 
 export default function FilterPage() {
 
-
+  const Authorization = 'Bearer' + localStorage.getItem('accessToken');
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [filters, setFilters] = useState({
@@ -86,19 +86,16 @@ export default function FilterPage() {
   useEffect(() => {
     setLoading(true)
 
-    axios.get(process.env.REACT_APP_API_URL + 'vehicles', {
-      "headers": {
-        "Authorization": 'Bearer ' + localStorage.getItem('accessToken'),
+    Axios.get(process.env.REACT_APP_API_URL + 'vehicles', {
+      headers: {
+        Authorization: Authorization,
       }
     }).then((res) => {
 
       setData(getCars(res))
-    }
-    ).catch((err) => {
-      console.log(err)
     })
-
-  }, [filters])
+      .catch((err) => console.log(err))
+  }, [])
 
   return (
     <div>
