@@ -64,8 +64,6 @@ export default function Filter(props) {
       });
   };
 
-  console.log(props.data)
-
 
   return (
     <div className='ContainerFiltre'>
@@ -78,7 +76,7 @@ export default function Filter(props) {
   )
 }
 
-function NumberOfCarsByFiltre(filtre, item, cars) {
+export function NumberOfCarsByFiltre(filtre, item, cars) {
   let count = 0;
 
   if (filtre === 'configuration') {

@@ -102,7 +102,7 @@ export default function FilterPage() {
       <Navbar />
       <div className='ContainerFiltrePage'>
         <Filters data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
-        <TableFilter data={data} columns={columns} loading={loading} />
+        <TableFilter filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
       </div>
     </div>
 
