@@ -3,3 +3,5 @@ src/server/node_modules
 .vscode
 db
 
+test.jsx
+test2.jsx

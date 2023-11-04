@@ -222,7 +222,7 @@ const AddingCarsForm = () => {
         console.log("json",json)        
         //post request to backend 
         //axios with headers bearer token
-        Axios.post(process.env.REACT_APP_API_URL + 'vehicles'  , {
+        Axios.post(process.env.REACT_APP_API_URL + 'vehicles/'+10  , {
             "yearOfCreation": year,
             "priceWithoutConfiguration": price,
             "model": {

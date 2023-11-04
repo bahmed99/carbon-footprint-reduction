@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filters from '../components/Filters'
 import TableFilter from '../components/TableFilter'
 import { Tag } from 'antd';
-import Axios from 'axios'
+import axios from 'axios'
 import Navbar from '../components/Navbar';
 
 
@@ -10,7 +10,10 @@ export default function FilterPage() {
 
   const Authorization = 'Bearer' + localStorage.getItem('accessToken');
   const [data, setData] = useState([])
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const [loading, setLoading] = useState(false)
+  const [countData, setCountData] = useState(0)
   const [filters, setFilters] = useState({
     brandIds: [],
     modelIds: [],
@@ -55,8 +58,8 @@ export default function FilterPage() {
         <span>
           {configurations[0].map((conf) => {
             let color = conf.length > 25 ? 'geekblue' : 'green';
-            color= conf.length > 30 ? 'volcano' : color;
-            color= conf.length > 75 ? 'red' : color;
+            color = conf.length > 30 ? 'volcano' : color;
+            color = conf.length > 75 ? 'red' : color;
             return (
               <Tag color={color} key={conf}>
                 {conf}
@@ -86,7 +89,16 @@ export default function FilterPage() {
   const fetchData = () => {
     setLoading(true);
 
-    Axios.get(process.env.REACT_APP_API_URL + 'vehicles', {
+    let x = filters;
+
+    Object.keys(x).forEach((key) => {
+      if (x[key].length === 0) {
+        delete x[key];
+      }
+    }
+    );  
+
+    axios.post(process.env.REACT_APP_API_URL + `vehicles/filters/page/${pageNumber -1}/${pageSize}`, x,{
       headers: {
         Authorization: Authorization,
       }
@@ -94,35 +106,44 @@ export default function FilterPage() {
       .then((res) => {
         setData(getCars(res));
         setLoading(false);
-      })
+              })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
+
+      console.log(x)
+      axios.post(process.env.REACT_APP_API_URL + `vehicles/countByFilter`, x,{
+        headers: {
+          Authorization: Authorization,
+
+        }
+      })
+        .then((res) => {
+          setCountData(res.data)
+        })
+        .catch((err) => console.log(err))
   };
 
   useEffect(() => {
-    fetchData(); // Exécutez la fonction fetchData une fois au montage du composant
-
+    fetchData();
     const intervalId = setInterval(() => {
-      fetchData(); // Exécutez la fonction fetchData toutes les 5 secondes
-    }, 60000);
+      fetchData();
+    }, 600000);
 
-    // Retournez une fonction de nettoyage pour effacer l'intervalle lors du démontage du composant
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [pageNumber, pageSize]);
 
   return (
     <div>
       <Navbar />
       <div className='ContainerFiltrePage'>
-        <Filters data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
-        <TableFilter filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
+        <Filters countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
+        <TableFilter countData={countData} pageNumber={pageNumber} pageSize={pageSize} setPageNumber={setPageNumber} setPageSize={setPageSize} filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
       </div>
     </div>
-
   )
 }
 

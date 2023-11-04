@@ -10,15 +10,50 @@ export default function Filter(props) {
   const [data, setData] = useState([])
   const [filters, setFilters] = useState([])
 
+
   useEffect(() => {
     axios.get(process.env.REACT_APP_API_URL + props.url, {
       headers: {
         Authorization: Authorization,
       }
     })
-      .then((res) => setData(res.data))
+      .then((res) => {
+
+
+        let x = props.filters;
+
+        Object.keys(x).forEach((key) => {
+          if (x[key].length === 0) {
+            delete x[key];
+          }
+        }
+        );
+
+        axios.post(process.env.REACT_APP_API_URL + `vehicles/filters/${props.url.slice(0, -1)}`, x, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: Authorization,
+          },
+        }).then((resp) => {
+
+          let y = res.data
+          //add count to y 
+          y.forEach((item, index) => {
+            const carCount = resp.data.find((element) => element[0] === item.id);
+            y[index].count = carCount ? carCount[1] : 0
+          })
+
+          setData(y)
+    
+
+
+        }).catch((err) => console.log(err))
+
+
+
+      })
       .catch((err) => console.log(err))
-  }, [])
+  }, [props.data, props.filters])
 
   const HandleChange = (e) => {
 
@@ -36,6 +71,7 @@ export default function Filter(props) {
     setFilters(updatedFilters);
 
     let x = props.filters;
+    console.log(x)
     x[props.filtre] = updatedFilters;
 
     Object.keys(x).forEach((key) => {
@@ -48,7 +84,7 @@ export default function Filter(props) {
 
 
     axios
-      .post(process.env.REACT_APP_API_URL + 'vehicles/filters', x, {
+      .post(process.env.REACT_APP_API_URL + `vehicles/filters/page/${props.pageNumber - 1}/${props.pageSize}`, x, {
         headers: {
           "Content-Type": "application/json",
           Authorization: Authorization,
@@ -65,38 +101,16 @@ export default function Filter(props) {
   };
 
 
+
   return (
     <div className='ContainerFiltre'>
       {props.name}
       <br />
       <Checkbox.Group style={{ width: '100%' }} >
-        {data.map((item) => <Checkbox onChange={HandleChange} key={item.id} value={item.id}>{item.name} ({NumberOfCarsByFiltre(props.url.slice(0, -1), item, props.data)})</Checkbox>)}
+        {data.map((item, index) => <Checkbox onChange={HandleChange} key={item.id} value={item.id}>{item.name} ({item.count})
+        </Checkbox>)}
       </Checkbox.Group>
     </div>
   )
 }
 
-export function NumberOfCarsByFiltre(filtre, item, cars) {
-  let count = 0;
-
-  if (filtre === 'configuration') {
-    cars.map((car) => {
-      car[`${filtre}s`].map((configuration) => {
-        if (configuration.includes(item.name)) {
-          count++;
-        }
-      }
-      )
-    });
-
-    return count;
-  }
-
-  cars.map((car) => {
-    if (car[`${filtre}`].includes(item.name)) {
-      count++;
-    }
-  });
-  return count;
-
-}
