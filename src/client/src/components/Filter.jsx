@@ -5,14 +5,15 @@ import { getCars } from '../pages/FilterPage';
 
 
 export default function Filter(props) {
+  const Authorization = 'Bearer' + localStorage.getItem('accessToken');
 
   const [data, setData] = useState([])
   const [filters, setFilters] = useState([])
 
   useEffect(() => {
     axios.get(process.env.REACT_APP_API_URL + props.url, {
-      "headers": {
-        "Authorization": 'Bearer ' + localStorage.getItem('accessToken'),
+      headers: {
+        Authorization: Authorization,
       }
     })
       .then((res) => setData(res.data))
@@ -50,7 +51,7 @@ export default function Filter(props) {
       .post(process.env.REACT_APP_API_URL + 'vehicles/filters', x, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          Authorization: Authorization,
         },
       })
       .then((res) => {
