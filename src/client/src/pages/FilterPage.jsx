@@ -83,19 +83,36 @@ export default function FilterPage() {
     // },
   ])
 
-  useEffect(() => {
-    setLoading(true)
+  const fetchData = () => {
+    setLoading(true);
 
     Axios.get(process.env.REACT_APP_API_URL + 'vehicles', {
       headers: {
         Authorization: Authorization,
       }
-    }).then((res) => {
-
-      setData(getCars(res))
     })
-      .catch((err) => console.log(err))
-  }, [])
+      .then((res) => {
+        setData(getCars(res));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchData(); // Exécutez la fonction fetchData une fois au montage du composant
+
+    const intervalId = setInterval(() => {
+      fetchData(); // Exécutez la fonction fetchData toutes les 5 secondes
+    }, 60000);
+
+    // Retournez une fonction de nettoyage pour effacer l'intervalle lors du démontage du composant
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <div>
