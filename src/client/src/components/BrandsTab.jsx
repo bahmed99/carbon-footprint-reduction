@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import { getCars } from '../pages/FilterPage';
 import axios from "axios";
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
-const Tab = styled.button`
-  font-size: 20px;
-  padding: 10px 60px;
-  cursor: pointer;
-  opacity: 0.6;
-  background: white;
-  border: 0;
-  outline: 0;
-  ${({ active }) =>
-    active==="true" &&
-    `
-    border-bottom: 2px solid black;
-    opacity: 1;
-  `}
-`;
-const ButtonGroup = styled.div`
-  display: flex;
-`;
+// const Tab = styled.button`
+//   font-size: 20px;
+//   padding: 10px 60px;
+//   cursor: pointer;
+//   opacity: 0.6;
+//   background: white;
+//   border: 0;
+//   outline: 0;
+//   ${({ active }) =>
+//     active==="true" &&
+//     `
+//     border-bottom: 2px solid black;
+//     opacity: 1;
+//   `}
+// `;
+// const ButtonGroup = styled.div`
+//   display: flex;
+// `;
 
 
 export default function BrandsTab(props) {
@@ -127,13 +127,13 @@ export default function BrandsTab(props) {
 
     return (
         <div className='ContainerBrandsTab'>
-            {/* <Tabs
+            <Tabs
                 defaultActiveKey="-1"
                 items={data}
                 onChange={HandleChange}
                 indicatorSize={(origin) => origin - 16}
-                        /> */}
-            <ButtonGroup>
+                        />
+            {/* <ButtonGroup>
             {
                 data.map((item, index) => (
                     <Tab
@@ -149,7 +149,7 @@ export default function BrandsTab(props) {
                 ))
                         }
 
-            </ButtonGroup>
+            </ButtonGroup> */}
 
             
 

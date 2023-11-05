@@ -53,7 +53,7 @@ export default function Filter(props) {
 
       })
       .catch((err) => console.log(err))
-  }, [props.data, props.filters])
+  }, [props.filters])
 
   const HandleChange = (e) => {
 

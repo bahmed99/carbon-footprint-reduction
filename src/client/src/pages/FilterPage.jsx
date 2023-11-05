@@ -134,7 +134,7 @@ export default function FilterPage() {
     return () => {
       clearInterval(intervalId);
     };
-  }, [pageNumber, pageSize]);
+  }, [pageNumber, pageSize,filters]);
 
   return (
     <div>
