@@ -72,17 +72,15 @@ public class VehicleService {
     public List<Object[]> findByFiltersByModel(VehiculeFilterDTO vehiculeFilterDTO) {
         return vehicleRepository.findByFiltersByModel(vehiculeFilterDTO);
     }
-    
 
     public Page<Vehicle> findByFiltersAndPageSize(VehiculeFilterDTO vehiculeFilterDTO, int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return vehicleRepository.findByFiltersAndPageSize(vehiculeFilterDTO, pageable);
     }
 
-
     public Page<Vehicle> getPaginatedData(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        
+
         return vehicleRepository.findAll(pageable);
     }
 
@@ -93,7 +91,7 @@ public class VehicleService {
     public long countByFilter(VehiculeFilterDTO vehiculeFilterDTO) {
         return vehicleRepository.countByFilter(vehiculeFilterDTO);
     }
-   
+
     public List<Object[]> countByModel() {
         return vehicleRepository.countVehiclesByModel();
     }
@@ -101,6 +99,5 @@ public class VehicleService {
     public List<Object[]> countByBrand() {
         return vehicleRepository.countVehiclesByBrand();
     }
-
 
 }

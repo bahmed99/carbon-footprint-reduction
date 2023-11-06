@@ -123,7 +123,7 @@ public class Vehicle {
         this.configurations = configurations;
     }
 
-    public void Copy(Vehicle v){
+    public void Copy(Vehicle v) {
         this.yearOfCreation = v.getYearOfCreation();
         this.priceWithoutConfiguration = v.getPriceWithoutConfiguration();
         this.model = v.getModel();
