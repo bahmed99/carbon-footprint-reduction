@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Checkbox } from 'antd';
 import axios from 'axios';
 import { getCars } from '../pages/FilterPage';
+import 'font-awesome/css/font-awesome.min.css';
 
 
 export default function Filter(props) {
@@ -9,6 +10,10 @@ export default function Filter(props) {
 
   const [data, setData] = useState([])
   const [filters, setFilters] = useState([])
+
+  /* ajouter le collaps pour les filtres */
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [arrowDirection, setArrowDirection] = useState("down");
 
 
   useEffect(() => {
@@ -104,13 +109,28 @@ export default function Filter(props) {
 
   return (
     <div className='ContainerFiltre'>
-      {props.name}
-      <br />
-      <Checkbox.Group style={{ width: '100%' }} >
-        {data.map((item, index) => <Checkbox onChange={HandleChange} key={item.id} value={item.id}>{item.name} ({item.count})
-        </Checkbox>)}
-      </Checkbox.Group>
+      <div
+        style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+        onClick={() => {
+          setIsFilterOpen(!isFilterOpen);
+          setArrowDirection(isFilterOpen ? 'down' : 'up');
+        }}
+      >
+        {props.name}
+        <div style={{ marginLeft: 'auto' }}>
+          <i className={`fa fa-chevron-${arrowDirection}`} />
+        </div>
+      </div>
+      {isFilterOpen && (
+        <Checkbox.Group style={{ width: '100%' }}>
+          {data.map((item, index) => (
+            <Checkbox onChange={HandleChange} key={item.id} value={item.id}>
+              {item.name} ({item.count})
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      )}
     </div>
-  )
+  );
 }
 

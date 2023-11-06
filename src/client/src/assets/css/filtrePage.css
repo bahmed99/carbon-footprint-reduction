@@ -4,5 +4,6 @@
     padding-top:10%;
     background-color: #f3faf7;
     background-size: cover;
-    height: max-content;
+    min-height: 100vh;
+    height: 100%;
 }
