@@ -95,6 +95,7 @@ const AddingCarsForm = () => {
     const [model, setModel] = useState('');
     const [newModelName, setNewModelName] = useState('');
     const [price , setPrice] = useState('')
+    const [nbCars , setNbCars] = useState('')
     const [filteredModels, setFilteredModels] = useState([]);
     const [year, setYear] = useState('');
     const [color, setColor] = useState('');
@@ -180,6 +181,9 @@ const AddingCarsForm = () => {
     const handlePriceChange = (e) => {
         setPrice(parseFloat(e.target.value));
     };
+    const handleNbCarsChange = (e) => {
+        setNbCars(parseInt(e.target.value));
+    };
     const handleCheckboxChange = (optionId) => {
         if (selectedOptions.includes(optionId)) {
             setSelectedOptions((prevOptions) =>
@@ -222,7 +226,7 @@ const AddingCarsForm = () => {
         console.log("json",json)        
         //post request to backend 
         //axios with headers bearer token
-        Axios.post(process.env.REACT_APP_API_URL + 'vehicles/'+10  , {
+        Axios.post(process.env.REACT_APP_API_URL + 'vehicles/'+nbCars  , {
             "yearOfCreation": year,
             "priceWithoutConfiguration": price,
             "model": {
@@ -403,6 +407,20 @@ const AddingCarsForm = () => {
                                 type='number'
                                 placeholder='Example: 150 000'
                                 onChange={handlePriceChange}
+                                className='cars-form-input-field'
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col className='cars-form-col'>
+                        <Form.Group
+                            className='mb-3 cars-form-input'
+                            controlId='nbCarsInput'
+                        >
+                            <Form.Label>Please enter the number of cars you want to insert:</Form.Label>
+                            <Form.Control
+                                type='number'
+                                placeholder='Example: 100'
+                                onChange={handleNbCarsChange}
                                 className='cars-form-input-field'
                             />
                         </Form.Group>
