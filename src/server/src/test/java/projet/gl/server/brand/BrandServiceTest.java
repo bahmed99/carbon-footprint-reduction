@@ -84,21 +84,21 @@ class BrandServiceTest {
         when(brandData.get()).thenReturn(brand);
         when(brandRepository.save(brand)).thenReturn(brand);
         // Act
-        brandService.createBrand(brand);
+        Brand testBrand =  brandService.createBrand(brand);
         brand.setName("audi");
-        Brand updatedBrand = brandService.updateBrand(id, brand);
+        testBrand = brandService.updateBrand(id, brand);
         // Assert
         verify(brandData).isPresent();
 
-        assertEquals(id, updatedBrand.getId());
-        assertEquals("audi", updatedBrand.getName());
+        assertEquals(id, testBrand.getId());
+        assertEquals("audi", testBrand.getName());
     }
 
     @Test
     void canNotUpdateBrand() {
         // Arrange
         Long id = 1L;
-        Brand brand = Brand.builder().id(id).name("red").build();
+        Brand brand = Brand.builder().id(id).name("toyota").build();
         // Act
         brand = brandService.updateBrand(id, brand);
         // Assert
