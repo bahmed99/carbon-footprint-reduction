@@ -69,13 +69,13 @@ class ColorServiceTest {
         when(colorRepository.save(color)).thenReturn(color);
         // Act
         Color testColor =  colorService.createColor(color);
-        color.setName("audi");
+        color.setName("blue");
         testColor = colorService.updateColor(id, color);
         // Assert
         verify(colorRepository).existsById(id);
 
         assertEquals(id, testColor.getId());
-        assertEquals("audi", testColor.getName());
+        assertEquals("blue", testColor.getName());
     }
 
     @Test
