@@ -1,5 +1,7 @@
 package projet.gl.server.token;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,25 +22,25 @@ import projet.gl.server.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Token {
+public class Token implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
-    @Column(unique = true)
-    public String token;
+    @Column(unique = true, name = "token")
+    private String tokenData;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    public TokenType tokenType = TokenType.BEARER;
+    private TokenType tokenType = TokenType.BEARER;
 
-    public boolean revoked;
+    private boolean revoked;
 
-    public boolean expired;
+    private boolean expired;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public User user;
+    private User user;
 
 }

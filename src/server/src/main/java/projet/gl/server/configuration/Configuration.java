@@ -18,6 +18,7 @@ public class Configuration {
     private String name;
 
     public Configuration() {
+        // This is a default constructor that is required by JPA
     }
 
     public Long getId() {

@@ -35,15 +35,15 @@ public class VehicleService {
         Optional<Vehicle> vehicleData = vehicleRepository.findById(id);
 
         if (vehicleData.isPresent()) {
-            Vehicle _vehicle = vehicleData.get();
-            _vehicle.setYearOfCreation(vehicle.getYearOfCreation());
-            _vehicle.setPriceWithoutConfiguration(vehicle.getPriceWithoutConfiguration());
-            _vehicle.setCreatedAt(vehicle.getCreatedAt());
-            _vehicle.setUpdatedAt(vehicle.getUpdatedAt());
-            _vehicle.setModel(vehicle.getModel());
-            _vehicle.setColor(vehicle.getColor());
-            _vehicle.setConfigurations(vehicle.getConfigurations());
-            return vehicleRepository.save(_vehicle);
+            Vehicle updatedVehicle = vehicleData.get();
+            updatedVehicle.setYearOfCreation(vehicle.getYearOfCreation());
+            updatedVehicle.setPriceWithoutConfiguration(vehicle.getPriceWithoutConfiguration());
+            updatedVehicle.setCreatedAt(vehicle.getCreatedAt());
+            updatedVehicle.setUpdatedAt(vehicle.getUpdatedAt());
+            updatedVehicle.setModel(vehicle.getModel());
+            updatedVehicle.setColor(vehicle.getColor());
+            updatedVehicle.setConfigurations(vehicle.getConfigurations());
+            return vehicleRepository.save(updatedVehicle);
         } else {
             return null;
         }

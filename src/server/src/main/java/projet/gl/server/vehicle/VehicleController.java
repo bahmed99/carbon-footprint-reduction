@@ -43,7 +43,7 @@ public class VehicleController {
 
             for (int i = 0; i < count; i++) {
                 newVehicle = new Vehicle();
-                newVehicle.Copy(vehicle);
+                newVehicle.copy(vehicle);
                 vehicleService.createVehicle(newVehicle);
             }
         }
