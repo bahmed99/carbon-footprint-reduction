@@ -13,11 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import projet.gl.server.user.User;
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,5 +40,53 @@ public class Token implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getTokenData() {
+        return tokenData;
+    }
+
+    public TokenType getTokenType() {
+        return tokenType;
+    }
+
+    public boolean isRevoked() {
+        return revoked;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTokenData(String tokenData) {
+        this.tokenData = tokenData;
+    }
+
+    public void setTokenType(TokenType tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public void setRevoked(boolean revoked) {
+        this.revoked = revoked;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }
