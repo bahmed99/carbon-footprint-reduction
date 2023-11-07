@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import { getCars } from '../pages/FilterPage';
 import axios from "axios";
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
-// const Tab = styled.button`
-//   font-size: 20px;
-//   padding: 10px 60px;
-//   cursor: pointer;
-//   opacity: 0.6;
-//   background: white;
-//   border: 0;
-//   outline: 0;
-//   ${({ active }) =>
-//     active==="true" &&
-//     `
-//     border-bottom: 2px solid black;
-//     opacity: 1;
-//   `}
-// `;
-// const ButtonGroup = styled.div`
-//   display: flex;
-// `;
+const Tab = styled.button`
+  font-size: 20px;
+  padding: 10px 60px;
+  cursor: pointer;
+  opacity: 0.6;
+  background: white;
+  border: 0;
+  outline: 0;
+  ${({ active }) =>
+        active === "true" &&
+        `
+    border-bottom: 2px solid black;
+    opacity: 1;
+  `}
+`;
+const ButtonGroup = styled.div`
+  display: flex;
+`;
 
 
 export default function BrandsTab(props) {
@@ -36,7 +36,9 @@ export default function BrandsTab(props) {
                 Authorization: Authorization,
             }
         }).then((res) => {
-            let x = props.filters;
+            let x = {...props.filters};
+
+            console.log(res.data)
 
             Object.keys(x).forEach((key) => {
                 if (x[key].length === 0) {
@@ -74,17 +76,22 @@ export default function BrandsTab(props) {
 
         }).catch((err) => console.log(err));
 
-        
-    }, [props.data, props.filters]);
+
+    }, [props.filters,props.data]);
 
     const HandleChange = (e) => {
+        props.setPageNumber(1)
+        props.setPageSize(10)
+
+      
         props.setLoading(true);
-        const x = { ...props.filters }; // Cloner l'objet filters pour éviter les modifications directes
+
+        const updatedBrands = [...brands];
+
+        updatedBrands.splice(0, updatedBrands.length);
+        let x = {...props.filters};
 
         if (e === -1) {
-            const updatedBrands = [];
-            setBrands(updatedBrands); // Mettre à jour l'état local
-
             if (Object.values(x).every(liste => liste.length === 0)) {
                 axios.get(process.env.REACT_APP_API_URL + `vehicles/page/${props.pageNumber - 1}/${props.pageSize}`, {
                     headers: {
@@ -96,22 +103,33 @@ export default function BrandsTab(props) {
                     console.log(err);
                 });
             }
-        } else {
-            const updatedBrands = [e];
-            setBrands(updatedBrands); // Mettre à jour l'état local
-            x[props.filtre] = updatedBrands;
         }
 
-        // Supprimer les clés du filtre si les listes sont vides
+        else {
+            updatedBrands.push(e);
+        }
+
+        setBrands(updatedBrands);
+
+       
+        x[props.filtre] = updatedBrands;
+
+
+        //Supprimer les clés du filtre si les listes sont vides
         Object.keys(x).forEach((key) => {
             if (x[key].length === 0) {
                 delete x[key];
             }
         });
 
+
         props.setFilters(x);
 
-        axios.post(process.env.REACT_APP_API_URL + `vehicles/filters/page/${props.pageNumber - 1}/${props.pageSize}`, x, {
+        console.log(props.filters)
+
+
+
+        axios.post(process.env.REACT_APP_API_URL + `vehicles/filters/page/${props.pageNumber - 1}/${props.pageSize}`, props.filters, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: Authorization,
@@ -119,11 +137,15 @@ export default function BrandsTab(props) {
         }).then((res) => {
             props.setLoading(false);
             props.setData(getCars(res));
+
         }).catch((err) => {
             props.setLoading(false);
             console.log(err);
         });
+
     };
+
+
 
     return (
         <div className='ContainerBrandsTab'>
@@ -132,28 +154,28 @@ export default function BrandsTab(props) {
                 items={data}
                 onChange={HandleChange}
                 indicatorSize={(origin) => origin - 16}
-                        />
+            />
             {/* <ButtonGroup>
-            {
-                data.map((item, index) => (
-                    <Tab
-                        key={index}
-                        active={item.key === active ? 'true' : 'false'}
-                        onClick={() => {
-                            setActive(item.key);
-                            HandleChange(item.key);
-                        }}
-                    >
-                        {item.label}
-                    </Tab>
-                ))
-                        }
+                {
+                    data.map((item, index) => (
+                        <Tab
+                            key={index}
+                            active={item.key === active ? 'true' : 'false'}
+                            onClick={() => {
+                                setActive(item.key);
+                                HandleChange(item.key);
+                            }}
+                        >
+                            {item.label}
+                        </Tab>
+                    ))
+                }
 
             </ButtonGroup> */}
 
-            
 
 
-         </div>
+
+        </div>
     )
 }

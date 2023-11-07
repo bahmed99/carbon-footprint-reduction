@@ -53,9 +53,12 @@ export default function Filter(props) {
 
       })
       .catch((err) => console.log(err))
-  }, [props.filters])
+  }, [props.filters,props.data])
 
   const HandleChange = (e) => {
+
+    props.setPageNumber(1)
+    props.setPageSize(10)
 
     props.setLoading(true)
     const updatedFilters = [...filters];
@@ -71,7 +74,6 @@ export default function Filter(props) {
     setFilters(updatedFilters);
 
     let x = props.filters;
-    console.log(x)
     x[props.filtre] = updatedFilters;
 
     Object.keys(x).forEach((key) => {

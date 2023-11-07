@@ -14,12 +14,7 @@ export default function FilterPage() {
   const [pageSize, setPageSize] = useState(10)
   const [loading, setLoading] = useState(false)
   const [countData, setCountData] = useState(0)
-  const [filters, setFilters] = useState({
-    brandIds: [],
-    modelIds: [],
-    configurationIds: [],
-    colorIds: []
-  })
+  const [filters, setFilters] = useState({})
 
 
   const [columns, setColumns] = useState([
@@ -140,7 +135,7 @@ export default function FilterPage() {
     <div>
       <Navbar />
       <div className='ContainerFiltrePage'>
-        <Filters countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
+        <Filters  setPageNumber={setPageNumber} setPageSize={setPageSize} countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
         <TableFilter countData={countData} pageNumber={pageNumber} pageSize={pageSize} setPageNumber={setPageNumber} setPageSize={setPageSize} filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
       </div>
     </div>
