@@ -8,13 +8,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 
 import java.time.LocalDate;
 
-@Data
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "brand")
 public class Brand {
@@ -37,8 +39,36 @@ public class Brand {
         // This is a default constructor that is required by JPA
     }
 
-    public Brand(String name) {
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDate getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDate updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @PrePersist
