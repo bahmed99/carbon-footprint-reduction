@@ -2,6 +2,7 @@ package projet.gl.server.vehicle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Sort;
 import java.util.List;
@@ -11,6 +12,10 @@ import java.util.List;
 @RequestMapping("/vehicles")
 public class VehicleController {
     private final VehicleService vehicleService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
 
     @Autowired
     public VehicleController(VehicleService vehicleService) {
@@ -49,6 +54,11 @@ public class VehicleController {
                 vehicleService.createVehicle(newVehicle);
             }
         }
+
+        List <Vehicle> vehicles = vehicleService.getAllVehicles();
+
+        messagingTemplate.convertAndSend("/topic/vehicles", "hello");
+
 
         return ResponseEntity.ok().build();
     }

@@ -11,47 +11,75 @@ services:
       MYSQL_PASSWORD: user
     ports:
       - "3308:3306"
+    networks:
+      - mynet
     volumes:
       - ./db:/var/lib/mysql
-    # healthcheck:
-    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p root"]
-    #   interval: 5s
-    #   retries: 3
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  # server: 
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./src/server
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/db
+  #     - SPRING_DATASOURCE_USERNAME=root
+  #     - SPRING_DATASOURCE_PASSWORD=root
+  #     - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
+  #     - SPRING_JPA_HIBERNATE_DDL-AUTO=update
+  #   volumes:
+  #     - ./src/server:/app
+  #   networks:
+  #     - mynet
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
 
-#   server: 
-#     build:
-#       dockerfile: Dockerfile
-#       context: ./src/server
-#     ports:
-#       - "8080:8080"
-#     environment:
-#       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3308/db
-#       - SPRING_DATASOURCE_USERNAME=root
-#       - SPRING_DATASOURCE_PASSWORD=root
-#       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
-#       - SPRING_JPA_HIBERNATE_DDL-AUTO=update
-#     volumes:
-#       - ./src/server:/app
-#     networks:
-#       - mynet
-#     depends_on:
-#       db:
-#         condition: service_healthy
+  # client:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./src/client
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./src/client:/app
+  #   networks:
+  #     - mynet
+  #   depends_on:
+  #     - server
 
-#   client:
-#     build:
-#       dockerfile: Dockerfile
-#       context: ./src/client
-#     ports:
-#       - "3000:3000"
-#     volumes:
-#       - /app/node_modules
-#       - ./src/client:/app
-#     networks:
-#       - mynet
-#     depends_on:
-#       - server
+  # db_sonar:
+  #   image: postgres:latest
+  #   environment:
+  #     - POSTGRES_USER=sonar
+  #     - POSTGRES_PASSWORD=sonar
+  #     - POSTGRES_DB=sonar
+  #   networks:
+  #     - mynet
+  #   depends_on:
+  #     - client
+  
+  # sonarqube:
+  #   image: sonarqube:latest
+  #   ports:
+  #     - "9000:9000"
+  #     - "9092:9092" 
+  #   environment:
+  #     - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+  #     - SONARQUBE_JDBC_USERNAME=sonar
+  #     - SONARQUBE_JDBC_PASSWORD=sonar
+  #     - SONARQUBE_WEB_LOGIN=root    
+  #     - SONARQUBE_WEB_PASSWORD=root 
+  #   networks:
+  #     - mynet
+  #   depends_on:
+  #     - db_sonar
 
-# networks:
-#   mynet:
-#     driver: bridge
+networks:
+  mynet:
+    driver: bridge  
