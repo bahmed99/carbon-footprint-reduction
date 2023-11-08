@@ -39,7 +39,7 @@ const LoginForm = () => {
                     setAuthState({
                         connected: true
                     });
-                    localStorage.setItem('accessToken', response.data);
+                    localStorage.setItem('accessToken', response.data.token);
                     window.location = '/';
                 }
             })
