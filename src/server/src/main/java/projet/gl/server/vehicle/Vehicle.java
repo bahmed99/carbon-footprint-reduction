@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
@@ -23,6 +25,8 @@ import projet.gl.server.color.Color;
 import projet.gl.server.configuration.Configuration;
 import projet.gl.server.model.Model;
 
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "vehicle")
 public class Vehicle {
@@ -52,6 +56,7 @@ public class Vehicle {
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
+    @Builder.Default
     @ManyToMany
     @JoinTable(name = "vehicle_configuration", joinColumns = @JoinColumn(name = "vehicle_id"), inverseJoinColumns = @JoinColumn(name = "configuration_id"))
     private Set<Configuration> configurations = new HashSet<>();
