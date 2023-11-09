@@ -26,8 +26,8 @@ public class Token implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, name = "token")
-    private String tokenData;
+    @Column(unique = true)
+    private String token;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -46,7 +46,7 @@ public class Token implements Serializable {
     }
 
     public String getTokenData() {
-        return tokenData;
+        return this.token;
     }
 
     public TokenType getTokenType() {
@@ -69,8 +69,8 @@ public class Token implements Serializable {
         this.id = id;
     }
 
-    public void setTokenData(String tokenData) {
-        this.tokenData = tokenData;
+    public void setTokenData(String token) {
+        this.token = token;
     }
 
     public void setTokenType(TokenType tokenType) {

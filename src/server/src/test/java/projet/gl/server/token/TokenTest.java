@@ -43,8 +43,8 @@ class TokenTest {
     @Test
     void canGetTokenData() {
         // Arrange
-        String tokenData = "tokenData";
-        token = Token.builder().tokenData(tokenData).build();
+        String tokenData = "token";
+        token = Token.builder().token(tokenData).build();
         // Act
         String result = token.getTokenData();
         // Assert
@@ -54,7 +54,7 @@ class TokenTest {
     @Test
     void canSetTokenData() {
         // Arrange
-        String tokenData = "tokenData";
+        String tokenData = "token";
         token = Token.builder().build();
         // Act
         token.setTokenData(tokenData);
