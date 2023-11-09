@@ -43,6 +43,18 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "GROUP BY m.brand.id")
         List<Object[]> countVehiclesByBrand();
 
+
+        @Query("SELECT n.brand.name AS brandName, COUNT(DISTINCT v.id) AS vehicleCount FROM Vehicle v " +
+                        "LEFT JOIN v.model n " +
+                        "GROUP BY n.brand.name")
+        List<Object[]> countVehiclesByBrandName();
+
+
+        @Query("SELECT c.name AS colorName, COUNT(v.id) AS vehicleCount FROM Vehicle v " +
+        "JOIN v.color c " +
+        "GROUP BY c.id")
+        List<Object[]> countVehiclesByColor();
+ 
         // findByFiltersByBrand
 
         @Query("SELECT m.brand.id AS brandId, COUNT(DISTINCT v.id) AS vehicleCount FROM Vehicle v " +

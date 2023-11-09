@@ -102,5 +102,15 @@ public class VehicleService {
         return vehicleRepository.countVehiclesByBrand();
     }
 
+    public List<Object[]> countByBrandName() {
+        return vehicleRepository.countVehiclesByBrandName();
+    }
+
+    public List<Object[]> countByColor() {
+        return vehicleRepository.countVehiclesByColor();
+    }
+        
+
+
 
 }

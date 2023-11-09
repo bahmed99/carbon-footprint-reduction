@@ -114,11 +114,19 @@ public class VehicleController {
         return ResponseEntity.ok().body(vehicleService.countByBrand());
     }
 
+    @GetMapping("/countByBrandName")
+    public ResponseEntity<List<Object[]>> countByBrandName() {
+        return ResponseEntity.ok().body(vehicleService.countByBrandName());
+    }
+
+    @GetMapping("/countByColor")
+    public ResponseEntity<List<Object[]>> countByColor() {
+        return ResponseEntity.ok().body(vehicleService.countByColor());
+    }
+    
     @PostMapping("/countByFilter")
     public ResponseEntity<Long> countByFilter(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.countByFilter(vehiculeFilterDTO));
     }
-
-
 
 }
