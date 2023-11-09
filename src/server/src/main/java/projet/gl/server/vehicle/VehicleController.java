@@ -83,7 +83,7 @@ public class VehicleController {
     }
 
     @PostMapping("/filters/color")
-    public ResponseEntity<List<Object[]>> findByFiltersByFiltre(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
+    public ResponseEntity<List<Object[]>> findByFiltersByColor(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.findByFiltersByColor(vehiculeFilterDTO));
     }
 
