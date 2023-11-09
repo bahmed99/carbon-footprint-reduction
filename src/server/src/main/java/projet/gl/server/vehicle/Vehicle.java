@@ -38,7 +38,7 @@ public class Vehicle {
 
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
-    private LocalDate createdAt;;
+    private LocalDate createdAt;
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.DATE)
@@ -57,6 +57,7 @@ public class Vehicle {
     private Set<Configuration> configurations = new HashSet<>();
 
     public Vehicle() {
+        // This is a default constructor that is required by JPA
     }
 
     public Long getId() {
@@ -123,7 +124,7 @@ public class Vehicle {
         this.configurations = configurations;
     }
 
-    public void Copy(Vehicle v){
+    public void copy(Vehicle v) {
         this.yearOfCreation = v.getYearOfCreation();
         this.priceWithoutConfiguration = v.getPriceWithoutConfiguration();
         this.model = v.getModel();

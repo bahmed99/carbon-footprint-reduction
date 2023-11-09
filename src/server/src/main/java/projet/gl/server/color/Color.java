@@ -6,7 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "color")
 public class Color {
@@ -18,6 +22,7 @@ public class Color {
     private String name;
 
     public Color() {
+        // This is a default constructor that is required by JPA
     }
 
     public Long getId() {
