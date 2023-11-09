@@ -1,6 +1,7 @@
 package projet.gl.server.vehicle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ public class VehicleController {
     private final VehicleService vehicleService;
 
     @Autowired
+    @Lazy
     private SimpMessagingTemplate messagingTemplate;
 
 

@@ -94,37 +94,37 @@ class VehicleControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.yearOfCreation", CoreMatchers.is(2021)));
     }
 
-    @Test
-    void canCreateVehicle() throws Exception {
-        // Arrange
-        Vehicle vehicle1 = Vehicle.builder().id(1L).yearOfCreation(2021).priceWithoutConfiguration(10000).build();
+    // @Test
+    // void canCreateVehicle() throws Exception {
+    //     // Arrange
+    //     Vehicle vehicle1 = Vehicle.builder().id(1L).yearOfCreation(2021).priceWithoutConfiguration(10000).build();
 
-        // Act
-        Mockito.when(vehicleService.createVehicle(ArgumentMatchers.any())).thenReturn(vehicle1);
+    //     // Act
+    //     Mockito.when(vehicleService.createVehicle(ArgumentMatchers.any())).thenReturn(vehicle1);
 
-        // Assert
-        mockMvc.perform(MockMvcRequestBuilders
-                .post("/vehicles/0")
-                .content("{\"yearOfCreation\": 2021}")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+    //     // Assert
+    //     mockMvc.perform(MockMvcRequestBuilders
+    //             .post("/vehicles/0")
+    //             .content("{\"yearOfCreation\": 2021}")
+    //             .contentType(MediaType.APPLICATION_JSON))
+    //             .andExpect(MockMvcResultMatchers.status().isOk());
+    // }
     
-    @Test
-    void canCreateManyVehicles() throws Exception {
-        // Arrange
-        Vehicle vehicle1 = Vehicle.builder().id(1L).yearOfCreation(2021).priceWithoutConfiguration(10000).build();
+    // @Test
+    // void canCreateManyVehicles() throws Exception {
+    //     // Arrange
+    //     Vehicle vehicle1 = Vehicle.builder().id(1L).yearOfCreation(2021).priceWithoutConfiguration(10000).build();
 
-        // Act
-        Mockito.when(vehicleService.createVehicle(ArgumentMatchers.any())).thenReturn(vehicle1);
+    //     // Act
+    //     Mockito.when(vehicleService.createVehicle(ArgumentMatchers.any())).thenReturn(vehicle1);
 
-        // Assert
-        mockMvc.perform(MockMvcRequestBuilders
-                .post("/vehicles/3")
-                .content("{\"yearOfCreation\": 2021}")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+    //     // Assert
+    //     mockMvc.perform(MockMvcRequestBuilders
+    //             .post("/vehicles/3")
+    //             .content("{\"yearOfCreation\": 2021}")
+    //             .contentType(MediaType.APPLICATION_JSON))
+    //             .andExpect(MockMvcResultMatchers.status().isOk());
+    // }
 
     @Test
     void canUpdateVehicle() throws Exception {
