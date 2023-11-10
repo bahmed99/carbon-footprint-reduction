@@ -43,6 +43,18 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "GROUP BY m.brand.id")
         List<Object[]> countVehiclesByBrand();
 
+
+        @Query("SELECT n.brand.name AS brandName, COUNT(DISTINCT v.id) AS vehicleCount FROM Vehicle v " +
+                        "LEFT JOIN v.model n " +
+                        "GROUP BY n.brand.name")
+        List<Object[]> countVehiclesByBrandName();
+
+
+        @Query("SELECT c.name AS colorName, COUNT(v.id) AS vehicleCount FROM Vehicle v " +
+        "JOIN v.color c " +
+        "GROUP BY c.id")
+        List<Object[]> countVehiclesByColor();
+ 
         // findByFiltersByBrand
 
         @Query("SELECT m.brand.id AS brandId, COUNT(DISTINCT v.id) AS vehicleCount FROM Vehicle v " +
@@ -51,7 +63,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "LEFT JOIN v.configurations conf " +
                         "WHERE (:#{#vehicleFilterDTO.colorIds} IS NULL OR c.id IN (:#{#vehicleFilterDTO.colorIds})) " +
                         "AND (:#{#vehicleFilterDTO.modelIds} IS NULL OR m.id IN (:#{#vehicleFilterDTO.modelIds})) " +
-                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) "+
+                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) "
+                        +
                         "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))"
                         +
                         "GROUP BY m.brand.id")
@@ -63,7 +76,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "LEFT JOIN v.configurations conf " +
                         "WHERE (:#{#vehicleFilterDTO.colorIds} IS NULL OR c.id IN (:#{#vehicleFilterDTO.colorIds})) " +
                         "AND (:#{#vehicleFilterDTO.modelIds} IS NULL OR m.id IN (:#{#vehicleFilterDTO.modelIds})) " +
-                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) " +
+                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) "
+                        +
                         "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))"
                         +
                         "GROUP BY c.id")
@@ -75,9 +89,11 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "LEFT JOIN v.configurations conf " +
                         "WHERE (:#{#vehicleFilterDTO.colorIds} IS NULL OR c.id IN (:#{#vehicleFilterDTO.colorIds})) " +
                         "AND (:#{#vehicleFilterDTO.modelIds} IS NULL OR m.id IN (:#{#vehicleFilterDTO.modelIds})) " +
-                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) " +
-                        "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))"+
-                        
+                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) "
+                        +
+                        "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))"
+                        +
+
                         "GROUP BY conf.id")
         List<Object[]> findByFiltersByConfigurations(VehiculeFilterDTO vehicleFilterDTO);
 
@@ -87,8 +103,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "LEFT JOIN v.configurations conf " +
                         "WHERE (:#{#vehicleFilterDTO.colorIds} IS NULL OR c.id IN (:#{#vehicleFilterDTO.colorIds})) " +
                         "AND (:#{#vehicleFilterDTO.modelIds} IS NULL OR m.id IN (:#{#vehicleFilterDTO.modelIds})) " +
-                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) " +
-                        "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))" 
+                        "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) "
+                        +
+                        "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))"
                         +
                         "GROUP BY m.id")
         List<Object[]> findByFiltersByModel(VehiculeFilterDTO vehicleFilterDTO);
@@ -101,7 +118,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                         "AND (:#{#vehicleFilterDTO.modelIds} IS NULL OR m.id IN (:#{#vehicleFilterDTO.modelIds})) " +
                         "AND (:#{#vehicleFilterDTO.configurationIds} IS NULL OR conf.id IN (:#{#vehicleFilterDTO.configurationIds})) "
                         +
-                        "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))")        
-                        long countByFilter(VehiculeFilterDTO vehicleFilterDTO);
+                        "AND (:#{#vehicleFilterDTO.brandIds} IS NULL OR m.brand.id IN (:#{#vehicleFilterDTO.brandIds}))")
+        long countByFilter(VehiculeFilterDTO vehicleFilterDTO);
 
 }

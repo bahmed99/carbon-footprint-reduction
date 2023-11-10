@@ -1,9 +1,10 @@
 package projet.gl.server.vehicle;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Sort;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -11,6 +12,11 @@ import java.util.List;
 @RequestMapping("/vehicles")
 public class VehicleController {
     private final VehicleService vehicleService;
+
+    @Autowired
+    @Lazy
+    private SimpMessagingTemplate messagingTemplate;
+
 
     @Autowired
     public VehicleController(VehicleService vehicleService) {
@@ -22,13 +28,12 @@ public class VehicleController {
         return ResponseEntity.ok().body(vehicleService.getAllVehicles());
     }
 
-
     @GetMapping("/page/{pageNumber}/{pageSize}")
-    public ResponseEntity<List<Vehicle>> getAllVehiclesByPageSize(@PathVariable int pageNumber, @PathVariable int pageSize) {
+    public ResponseEntity<List<Vehicle>> getAllVehiclesByPageSize(@PathVariable int pageNumber,
+            @PathVariable int pageSize) {
         return ResponseEntity.ok().body(vehicleService.getPaginatedData(pageNumber, pageSize).getContent());
     }
-    
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id) {
         return vehicleService.getVehicleById(id)
@@ -45,10 +50,15 @@ public class VehicleController {
 
             for (int i = 0; i < count; i++) {
                 newVehicle = new Vehicle();
-                newVehicle.Copy(vehicle);
+                newVehicle.copy(vehicle);
                 vehicleService.createVehicle(newVehicle);
             }
         }
+
+        List <Vehicle> vehicles = vehicleService.getAllVehicles();
+
+        messagingTemplate.convertAndSend("/topic/vehicles", "hello");
+
 
         return ResponseEntity.ok().build();
     }
@@ -70,39 +80,37 @@ public class VehicleController {
     }
 
     @PostMapping("/filters/CountBrand")
-    public ResponseEntity<List<Object[]>>findByFiltersByBrand(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
+    public ResponseEntity<List<Object[]>> findByFiltersByBrand(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.findByFiltersByBrand(vehiculeFilterDTO));
     }
 
     @PostMapping("/filters/color")
-    public ResponseEntity<List<Object[]>>findByFiltersByFiltre(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
+    public ResponseEntity<List<Object[]>> findByFiltersByColor(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.findByFiltersByColor(vehiculeFilterDTO));
     }
 
     @PostMapping("/filters/configuration")
-    public ResponseEntity<List<Object[]>>findByFiltersByConfigurations(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
+    public ResponseEntity<List<Object[]>> findByFiltersByConfigurations(
+            @RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.findByFiltersByConfigurations(vehiculeFilterDTO));
     }
 
     @PostMapping("/filters/model")
-    public ResponseEntity<List<Object[]>>findByFiltersByModel(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
+    public ResponseEntity<List<Object[]>> findByFiltersByModel(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.findByFiltersByModel(vehiculeFilterDTO));
     }
 
-
-
-
-
     @PostMapping("/filters/page/{pageNumber}/{pageSize}")
-    public ResponseEntity<List<Vehicle>> findByFiltersAndPageSize(@RequestBody VehiculeFilterDTO vehiculeFilterDTO, @PathVariable int pageNumber, @PathVariable int pageSize) {
-        return ResponseEntity.ok().body(vehicleService.findByFiltersAndPageSize(vehiculeFilterDTO, pageNumber, pageSize).getContent());
+    public ResponseEntity<List<Vehicle>> findByFiltersAndPageSize(@RequestBody VehiculeFilterDTO vehiculeFilterDTO,
+            @PathVariable int pageNumber, @PathVariable int pageSize) {
+        return ResponseEntity.ok()
+                .body(vehicleService.findByFiltersAndPageSize(vehiculeFilterDTO, pageNumber, pageSize).getContent());
     }
 
     @GetMapping("/count")
     public ResponseEntity<Long> count() {
         return ResponseEntity.ok().body(vehicleService.countVehicles());
     }
-
 
     @GetMapping("/countByModel")
     public ResponseEntity<List<Object[]>> countByModel() {
@@ -114,11 +122,19 @@ public class VehicleController {
         return ResponseEntity.ok().body(vehicleService.countByBrand());
     }
 
+    @GetMapping("/countByBrandName")
+    public ResponseEntity<List<Object[]>> countByBrandName() {
+        return ResponseEntity.ok().body(vehicleService.countByBrandName());
+    }
+
+    @GetMapping("/countByColor")
+    public ResponseEntity<List<Object[]>> countByColor() {
+        return ResponseEntity.ok().body(vehicleService.countByColor());
+    }
+    
     @PostMapping("/countByFilter")
     public ResponseEntity<Long> countByFilter(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.countByFilter(vehiculeFilterDTO));
     }
-
-
 
 }

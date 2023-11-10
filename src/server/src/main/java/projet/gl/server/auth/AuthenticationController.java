@@ -1,14 +1,23 @@
 package projet.gl.server.auth;
 
 import lombok.RequiredArgsConstructor;
+import projet.gl.server.user.User;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.security.Principal;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -18,6 +27,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class AuthenticationController {
 
     private final AuthenticationService service;
+    private final LogoutService logoutService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -31,4 +41,35 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.login(request));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        logoutService.logout(request, null, null);
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
+
+    @GetMapping("/getUsername")
+    public String getUsernameFromToken(@RequestParam("token") String token) {
+        String username = service.getUsernameFromToken(token);
+        if (username != null) {
+            return "Username: " + username;
+        } else {
+            return "Invalid token or expired token";
+        }
+    }
+
+    @GetMapping("/checkToken")
+    public ResponseEntity<String> checkTokenValidity(@RequestParam("token") String token, Principal principal) {
+        if (principal != null) {
+            User user = (User) principal;
+    
+
+            if (service.isTokenValidForUser(token, user)) {
+                return ResponseEntity.ok("OK");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+    }
+
 }
+

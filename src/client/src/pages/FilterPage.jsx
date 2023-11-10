@@ -4,7 +4,7 @@ import TableFilter from '../components/TableFilter'
 import { Tag } from 'antd';
 import axios from 'axios'
 import Navbar from '../components/Navbar';
-
+import Stomp from 'stompjs';
 
 export default function FilterPage() {
 
@@ -14,13 +14,21 @@ export default function FilterPage() {
   const [pageSize, setPageSize] = useState(10)
   const [loading, setLoading] = useState(false)
   const [countData, setCountData] = useState(0)
-  const [filters, setFilters] = useState({
-    brandIds: [],
-    modelIds: [],
-    configurationIds: [],
-    colorIds: []
-  })
+  const [filters, setFilters] = useState({})
 
+  const socket = new WebSocket('ws://localhost:8080/chat', "v10.stomp");
+
+  useEffect(() => {
+    const stompClient = Stomp.over(socket);
+    const onConnect = (frame) => {
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/topic/vehicles', function (message) {
+        fetchData();
+      });
+    };
+
+    stompClient.connect({}, onConnect);
+  },[socket])
 
   const [columns, setColumns] = useState([
     {
@@ -127,20 +135,14 @@ export default function FilterPage() {
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 600000);
 
-    return () => {
-      clearInterval(intervalId);
-    };
   }, [pageNumber, pageSize,filters]);
 
   return (
     <div>
       <Navbar />
       <div className='ContainerFiltrePage'>
-        <Filters countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
+        <Filters  setPageNumber={setPageNumber} setPageSize={setPageSize} countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
         <TableFilter countData={countData} pageNumber={pageNumber} pageSize={pageSize} setPageNumber={setPageNumber} setPageSize={setPageSize} filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
       </div>
     </div>
