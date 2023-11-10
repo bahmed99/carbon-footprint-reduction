@@ -93,7 +93,7 @@ public class AuthenticationService {
     public boolean isTokenValidForUser(String token, User user) {
         List<Token> userTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         Token userToken = userTokens.stream()
-                .filter(t -> t.getToken().equals(token))
+                .filter(t -> t.getTokenData().equals(token))
                 .findFirst()
                 .orElse(null);
     
