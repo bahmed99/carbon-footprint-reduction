@@ -49,17 +49,19 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/checkToken")
+/*     @GetMapping("/checkToken")
     public ResponseEntity<String> checkTokenValidity(@RequestParam("token") String token, Principal principal) {
         if (principal != null) {
             User user = (User) principal;
     
 
-            if (service.isTokenValidForUser(token, user)) {
+            if (service.isTokenValidForUser(token, user)) {    ////// faire verification ici meme user ou pas ???
+                //autre group by brand et model
+                
                 return ResponseEntity.ok("OK");
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
-    }
+    } */
 
 }

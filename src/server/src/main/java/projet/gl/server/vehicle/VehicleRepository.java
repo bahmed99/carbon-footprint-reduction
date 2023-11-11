@@ -1,13 +1,13 @@
 package projet.gl.server.vehicle;
 
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
@@ -38,6 +38,14 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
         @Query("SELECT v.model.id AS modelId, COUNT(DISTINCT v.id) AS vehicleCount FROM Vehicle v GROUP BY v.model.id")
         List<Object[]> countVehiclesByModel();
 
+
+
+        @Query("SELECT m.name AS modelName, COUNT(DISTINCT v.id) FROM Vehicle v " +
+        "JOIN v.model m " +
+        "WHERE m.brand.id = :brandId GROUP BY m.name")
+        List<Object[]> countVehiclesByModelName(@Param("brandId") int brandId);
+
+            
         @Query("SELECT m.brand.id AS brandId, COUNT(DISTINCT v.id) AS vehicleCount FROM Vehicle v " +
                         "LEFT JOIN v.model m " +
                         "GROUP BY m.brand.id")

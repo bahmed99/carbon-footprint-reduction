@@ -5,6 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+
+import projet.gl.server.brand.Brand;
+import projet.gl.server.brand.BrandRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +16,11 @@ import java.util.Optional;
 @Service
 public class VehicleService {
 
-    private final VehicleRepository vehicleRepository;
+    private VehicleRepository vehicleRepository;
+
+
+    @Autowired
+    private BrandRepository brandRepository;
 
     @Autowired
     public VehicleService(VehicleRepository vehicleRepository) {
@@ -97,6 +105,45 @@ public class VehicleService {
     public List<Object[]> countByModel() {
         return vehicleRepository.countVehiclesByModel();
     }
+
+       
+    public List<Object[]> countByModelName(int brandId) {
+        return vehicleRepository.countVehiclesByModelName(brandId);
+    }
+    
+
+    
+    public List<BrandModelCountDTO> countVehiclesByModelNameForAllBrands() {
+        List<BrandModelCountDTO> result = new ArrayList<>();
+    
+        List<Brand> brands = brandRepository.findAll();
+    
+        for (Brand brand : brands) {
+            List<Object[]> countResult = vehicleRepository.countVehiclesByModelName(brand.getId().intValue());
+    
+            BrandModelCountDTO brandModelCountDTO = new BrandModelCountDTO();
+            brandModelCountDTO.setBrandName(brand.getName());
+    
+            List<ModelCountDTO> modelCounts = new ArrayList<>();
+    
+            for (Object[] row : countResult) {
+                ModelCountDTO modelCountDTO = new ModelCountDTO();
+                modelCountDTO.setModelName((String) row[0]);
+                modelCountDTO.setVehicleCount((Long) row[1]);
+    
+                modelCounts.add(modelCountDTO);
+            }
+    
+            brandModelCountDTO.setModels(modelCounts);
+            result.add(brandModelCountDTO);
+        }
+    
+        return result;
+    }
+    
+    
+    
+    
 
     public List<Object[]> countByBrand() {
         return vehicleRepository.countVehiclesByBrand();

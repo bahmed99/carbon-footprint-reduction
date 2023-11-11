@@ -88,20 +88,9 @@ public class AuthenticationService {
         return userFullName;
     }
 
-
-
     public boolean isTokenValidForUser(String token, User user) {
-        List<Token> userTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        Token userToken = userTokens.stream()
-                .filter(t -> t.getToken().equals(token))
-                .findFirst()
-                .orElse(null);
-    
-        if (userToken == null || userToken.isExpired()) {
-            throw new RuntimeException("Token is invalid or expired");
-        }
-    
-        return true;
+        return jwtService.isTokenValid(token, user);
     }
+    
 
 }
