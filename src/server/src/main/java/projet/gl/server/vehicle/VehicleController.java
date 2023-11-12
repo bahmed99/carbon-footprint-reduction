@@ -1,11 +1,13 @@
 package projet.gl.server.vehicle;
 
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -116,6 +118,20 @@ public class VehicleController {
     public ResponseEntity<List<Object[]>> countByModel() {
         return ResponseEntity.ok().body(vehicleService.countByModel());
     }
+
+    @GetMapping("/countByModelName/{brandId}")
+    public ResponseEntity<List<Object[]>> countByModelName(@PathVariable int brandId) {
+        return ResponseEntity.ok().body(vehicleService.countByModelName(brandId));
+    }
+    
+
+
+    @GetMapping("/countByModelName")
+    public ResponseEntity<List<BrandModelCountDTO>> countByModelNameForAllBrands() {
+        List<BrandModelCountDTO> result = vehicleService.countVehiclesByModelNameForAllBrands();
+        return ResponseEntity.ok().body(result);
+    }
+    
 
     @GetMapping("/countByBrand")
     public ResponseEntity<List<Object[]>> countByBrand() {
