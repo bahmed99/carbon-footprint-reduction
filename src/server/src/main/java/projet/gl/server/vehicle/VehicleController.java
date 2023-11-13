@@ -1,13 +1,11 @@
 package projet.gl.server.vehicle;
 
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -57,10 +55,9 @@ public class VehicleController {
             }
         }
 
-        List <Vehicle> vehicles = vehicleService.getAllVehicles();
+        // List <Vehicle> vehicles = vehicleService.getAllVehicles();
 
         messagingTemplate.convertAndSend("/topic/vehicles", "hello");
-
 
         return ResponseEntity.ok().build();
     }

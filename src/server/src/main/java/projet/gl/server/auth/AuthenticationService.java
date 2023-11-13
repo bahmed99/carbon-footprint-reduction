@@ -7,7 +7,8 @@ import projet.gl.server.token.TokenType;
 import projet.gl.server.user.Role;
 import projet.gl.server.user.User;
 import projet.gl.server.user.UserRepository;
-import java.util.List;
+import java.util.Optional;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -87,20 +88,10 @@ public class AuthenticationService {
         return userFullName;
     }
 
-    public boolean isTokenValidForUser(String token, User user) {
-        List<Token> userTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        Token userToken = userTokens.stream()
-                .filter(t -> t.getTokenData().equals(token))
-                .findFirst()
-                .orElse(null);
+    public boolean isTokenValidForUser(String token) {
+        String userEmail = jwtService.extractUsername(token);
+        Optional<User> userToken = repository.findByEmail(userEmail);
     
-        if (userToken == null || userToken.isExpired()) {
-            throw new RuntimeException("Token is invalid or expired");
-        }
-    
-        return jwtService.isTokenValid(token, user);
-
+        return jwtService.isTokenValid(token, userToken.get());
     }
-    
-
 }

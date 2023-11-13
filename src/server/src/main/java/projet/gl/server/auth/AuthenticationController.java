@@ -1,7 +1,6 @@
 package projet.gl.server.auth;
 
 import lombok.RequiredArgsConstructor;
-import projet.gl.server.user.User;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.security.Principal;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -47,7 +44,6 @@ public class AuthenticationController {
         return ResponseEntity.ok("Logged out successfully");
     }
 
-
     @GetMapping("/getUsername")
     public String getUsernameFromToken(@RequestParam("token") String token) {
         String username = service.getUsernameFromToken(token);
@@ -58,20 +54,16 @@ public class AuthenticationController {
         }
     }
 
-/*     @GetMapping("/checkToken")
-    public ResponseEntity<String> checkTokenValidity(@RequestParam("token") String token, Principal principal) {
-        if (principal != null) {
-            User user = (User) principal;
-    
-
-            if (service.isTokenValidForUser(token, user)) {    ////// faire verification ici meme user ou pas ???
-                //autre group by brand et model
-                
+    @GetMapping("/checkToken")
+    public ResponseEntity<String> checkTokenValidity(@RequestParam("token") String token) {
+        try {
+            if (service.isTokenValidForUser(token)) {
                 return ResponseEntity.ok("OK");
             }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
-    } */
+    }
 
 }
-

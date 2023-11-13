@@ -21,7 +21,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import projet.gl.server.brand.Brand;
 import projet.gl.server.color.Color;
 import projet.gl.server.configuration.Configuration;
 import projet.gl.server.model.Model;
