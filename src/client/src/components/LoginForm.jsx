@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import { AuthContext } from '../helpers/AuthContext';
+import Swal from 'sweetalert2';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -22,8 +23,6 @@ const LoginForm = () => {
         }
         // Logique de connexion ici
         setError('');
-        console.log("Email : ", email);
-        console.log("Mot de passe : ", password);
 
         // Envoi des données au serveur
         const data = {
@@ -34,7 +33,12 @@ const LoginForm = () => {
             .then((response) => {
                 if (response.data.error) {
                     setError(response.data.error);
-                    alert(response.data.error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Incorrect email or password combination.',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 } else {
                     setAuthState({
                         connected: true
@@ -44,7 +48,14 @@ const LoginForm = () => {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                if(error.response.status === 403) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Incorrect email and password combination.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            }
             });
     };
 
