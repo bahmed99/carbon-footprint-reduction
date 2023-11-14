@@ -48,7 +48,7 @@ public class AuthenticationController {
     public String getUsernameFromToken(@RequestParam("token") String token) {
         String username = service.getUsernameFromToken(token);
         if (username != null) {
-            return "Username: " + username;
+            return username;
         } else {
             return "Invalid token or expired token";
         }

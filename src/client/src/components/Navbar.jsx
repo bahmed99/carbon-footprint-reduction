@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 
 import LogoImg from "../assets/images/logo2.png";
 import UserImage from "../assets/images/User_icon.png";
@@ -10,6 +10,30 @@ function Navbar() {
   const { authState,setAuthState } = useContext(AuthContext);
   const Authorization = 'Bearer' + localStorage.getItem('accessToken');
   const token = localStorage.getItem("accessToken");
+  const [username, setUsername] = useState("Profile");
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(process.env.REACT_APP_API_URL + "auth/getUsername?token="+token, {
+          headers: {
+            Authorization: Authorization,
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            // TODO gérer les erreurs de déconnexion ici
+          } else {
+            setUsername(response.data);
+          }
+        })
+        .catch((error) => {
+          // TODO Gérer les erreurs de déconnexion ici
+        });
+    }
+  }
+  , [token]);
+
 
 
 
@@ -74,7 +98,7 @@ function Navbar() {
                     <span className="down-arrow">&#8964;</span>
                     <div className="dropdown-content-profile">
                       <a className="nav-link" href="/profile">
-                        Username
+                        {username}
                       </a>
                       <button className="logout-button" onClick={logout}>
                         Logout
