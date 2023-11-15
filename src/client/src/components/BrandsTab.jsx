@@ -149,13 +149,13 @@ export default function BrandsTab(props) {
 
     return (
         <div className='ContainerBrandsTab'>
-            <Tabs
+            {/* <Tabs
                 defaultActiveKey="-1"
                 items={data}
                 onChange={HandleChange}
                 indicatorSize={(origin) => origin - 16}
-            />
-            {/* <ButtonGroup>
+            /> */}
+            <ButtonGroup>
                 {
                     data.map((item, index) => (
                         <Tab
@@ -171,7 +171,7 @@ export default function BrandsTab(props) {
                     ))
                 }
 
-            </ButtonGroup> */}
+            </ButtonGroup>
 
 
 
