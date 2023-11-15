@@ -8,6 +8,7 @@ import AddingCarsPage from "./pages/AddingCarsPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import BrandsPage from "./pages/BrandsPage";
+import ModelsPage from "./pages/ModelsPage";
 export default function MainRouter() {
   return (
     <div>
@@ -16,6 +17,7 @@ export default function MainRouter() {
         <Route path={"/vehicles"} element={<FilterPage />} />
         <Route path={"/addCars"} element={<AddingCarsPage/>} />
         <Route path={"/brands"} element={<BrandsPage/>} />
+        <Route path={"/models"} element={<ModelsPage/>} />
         <Route path={"/"} element={<Home />} />
         <Route path={"/register"} element={<RegisterPage />} />
         <Route path={"/login"} element={<LoginPage />} />

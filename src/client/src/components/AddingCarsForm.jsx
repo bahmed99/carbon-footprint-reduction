@@ -204,11 +204,6 @@ const AddingCarsForm = () => {
             return;
         }
         setError('');
-        console.log('Brand: ', brand);
-        console.log('Model: ', model);
-        console.log('Year: ', year);
-        console.log('Color: ', color);
-        console.log('Selected options: ', selectedOptions);
         const configurations = selectedOptions.map(id => {
             return { id };
           });
