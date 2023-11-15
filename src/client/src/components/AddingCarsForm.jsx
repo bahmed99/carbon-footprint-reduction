@@ -91,7 +91,7 @@ const AddingCarsForm = () => {
 
     //
     const [brand, setBrand] = useState('');
-    const [newBrandName, setNewBrandName] = useState('');
+    // const [newBrandName, setNewBrandName] = useState('');
     const [model, setModel] = useState('');
     const [newModelName, setNewModelName] = useState('');
     const [price , setPrice] = useState('')
@@ -100,7 +100,7 @@ const AddingCarsForm = () => {
     const [year, setYear] = useState('');
     const [color, setColor] = useState('');
     const [loading, setLoading] = useState(false);
-    const [showBrandInput, setShowBrandInput] = useState(false);
+    // const [showBrandInput, setShowBrandInput] = useState(false);
     const [showModelInput, setShowModelInput] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [error, setError] = useState('');
@@ -145,11 +145,11 @@ const AddingCarsForm = () => {
         });
     }, []);
 
-    const newBrand = () => {
-        setBrand('');
-        setShowBrandInput(!showBrandInput);
-        setShowModelInput(true);
-    };
+    // const newBrand = () => {
+    //     setBrand('');
+    //     setShowBrandInput(!showBrandInput);
+    //     setShowModelInput(true);
+    // };
 
     const newModel = () => {
         setModel('');
@@ -204,11 +204,6 @@ const AddingCarsForm = () => {
             return;
         }
         setError('');
-        console.log('Brand: ', brand);
-        console.log('Model: ', model);
-        console.log('Year: ', year);
-        console.log('Color: ', color);
-        console.log('Selected options: ', selectedOptions);
         const configurations = selectedOptions.map(id => {
             return { id };
           });
@@ -279,17 +274,14 @@ const AddingCarsForm = () => {
                             onChange={handleBrandChange}
                             value={brand}
                         >
-                            <option value=''>
-                                {showBrandInput
-                                    ? 'Please enter the new brand of the car'
-                                    : 'Please choose the brand of the car'}
+                            <option value=''>                        
+                                    Please choose the brand of the car
                             </option>
-                            {!showBrandInput &&
-                                brands.map((brand) => (
+                            {brands.map((brand) => (
                                     <option key={brand.id} value={brand.id}>
                                         {brand.name}
                                     </option>
-                                ))}
+                                ))} 
                         </Form.Select>
                     </Col>
                     {/* <Col className='cars-form-col'>
@@ -298,7 +290,7 @@ const AddingCarsForm = () => {
                         </Button>
                     </Col> */}
                 </Row>
-                <Collapse in={showBrandInput}>
+                {/* <Collapse in={showBrandInput}>
                     <Row className='cars-form-row'>
                         <Col className='cars-form-col' xs={9}>
                             <Form.Group
@@ -320,7 +312,7 @@ const AddingCarsForm = () => {
                         </Col>
                       
                     </Row>
-                </Collapse>
+                </Collapse> */}
                 <Row className='cars-form-row'>
                     <Col className='cars-form-col' xs={9}>
                         <Form.Select className='cars-form-select' onChange={handleModelChange} value={model}>
@@ -343,7 +335,7 @@ const AddingCarsForm = () => {
                         </Button>
                     </Col> */}
                 </Row>
-                <Collapse in={showModelInput}>
+                {/* <Collapse in={showModelInput}>
                     <Row className='cars-form-row'>
                         <Col className='cars-form-col' xs={9}>
                             <Form.Group
@@ -364,7 +356,7 @@ const AddingCarsForm = () => {
                             </Button>
                         </Col>
                     </Row>
-                </Collapse>
+                </Collapse> */}
                 <Row>
                     <Col className='cars-form-col'>
                         <Form.Group

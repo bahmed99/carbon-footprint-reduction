@@ -1,5 +1,5 @@
 import React, { useContext,useEffect,useState } from "react";
-
+import { Link } from "react-router-dom";
 import LogoImg from "../assets/images/logo2.png";
 import UserImage from "../assets/images/User_icon.png";
 import { AuthContext } from "../helpers/AuthContext";
@@ -92,6 +92,12 @@ function Navbar() {
                 <a className="nav-link" href="/addCars">
                   Add vehicle
                 </a>
+                <Link className="nav-link" to="/brands">  
+                        Brands
+                </Link>
+                <Link className="nav-link" to="/models">  
+                        Models
+                </Link>
                 <div className="nav-sign-container">
                   <div className="user-container">
                     <img src={UserImage} alt="User" className="user-image" />
@@ -100,6 +106,7 @@ function Navbar() {
                       <a className="nav-link" href="/profile">
                         {username}
                       </a>
+                    
                       <button className="logout-button" onClick={logout}>
                         Logout
                       </button>

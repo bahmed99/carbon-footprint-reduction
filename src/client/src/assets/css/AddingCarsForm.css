@@ -42,15 +42,6 @@ width: 60%;
     justify-content: center;
     gap: 10px ;
 }
-.cars-form-button{
-    font-family: var(--secondary) !important;
-    font-size: 1.1rem !important;
-    background-color: #f47216    !important;
-    color: var(--blue-marine) !important;
-    padding: 10px;
-    border-radius: 15px;
-    border:none !important;
-}
 .cars-form-submit-button{
     font-family: var(--primary) !important;
     font-size: 1.3rem !important;

@@ -1,0 +1,116 @@
+.brands-page-container{
+    background-color: #f3faf7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 120px;
+    gap: 20px;
+    min-height: 100vh;
+}
+
+.brands-page-title{
+    font-family: var(--primary) ;
+    font-size: 2.5rem;
+    color: #EF7C00;
+    text-align: center;
+}
+
+.brands-page-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.brands-page-item{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+   justify-content: space-between;
+   padding: 15px;
+    align-items: center;
+   width: 30%;
+   box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.5);
+}
+.brands-page-item-name{
+    font-family: var(--secondary);
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+.brands-page-item-count{
+    font-family: var(--secondary);
+    font-size: 1rem;
+    font-weight: bolder;
+    color: white;
+    background-color: #EF7C00;
+    padding: 7px;
+    border-radius: 50px;
+    min-width: 50px;
+    width: fit-content;
+    text-align: center;
+}
+.brands-page-item:hover {
+    background-color: #EF7C00;
+    color: white;
+    transform: scale(1.1);
+    transition: all 0.3s ease; 
+}
+
+.brands-page-item:hover .brands-page-item-count {
+    background-color: white; 
+    color: #EF7C00;
+}
+.brands-page-subtitle{
+    font-family: var(--secondary) ;
+    margin-top: 50px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+.adding-brand-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+.adding-brand-form{
+   width: 50%;
+   display: flex;
+   flex-direction: row ;
+   justify-content: center ;
+   align-items: start !important;
+  gap: 10px;
+}
+.adding-brand-button{
+    font-family: var(--secondary) !important;
+    font-size: 1rem !important;
+    background-color: #f47216    !important;
+    border-radius: 15px;
+    border:none !important;
+    width: 20%
+}
+.brand-form-error-alert{
+    width: 50%;
+}
+
+@media (max-width: 1000px) {
+    .adding-brand-form{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .adding-brand-button{
+        width: 100%;
+    }
+    .brands-page-item{
+        width: 80%;
+    }
+    .brands-page-list{
+        width: 100%;
+    }
+}
