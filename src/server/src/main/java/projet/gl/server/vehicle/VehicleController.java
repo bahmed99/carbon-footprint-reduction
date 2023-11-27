@@ -17,7 +17,6 @@ public class VehicleController {
     @Lazy
     private SimpMessagingTemplate messagingTemplate;
 
-
     @Autowired
     public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
@@ -41,17 +40,23 @@ public class VehicleController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/{count}")
-    public ResponseEntity<Void> createVehicle(@PathVariable int count, @RequestBody Vehicle vehicle) {
+    @PostMapping("/{count}/{type}")
+    public ResponseEntity<Void> createVehicle(@PathVariable int count, @PathVariable InsertionType type,
+            @RequestBody Vehicle vehicle) {
         if (count == 0) {
-            vehicleService.createVehicle(vehicle);
+            if (type == InsertionType.SALE) {
+                vehicleService.createVehicleWithSale(vehicle);
+            }
         } else {
             Vehicle newVehicle;
 
             for (int i = 0; i < count; i++) {
                 newVehicle = new Vehicle();
                 newVehicle.copy(vehicle);
-                vehicleService.createVehicle(newVehicle);
+                if (type == InsertionType.SALE) {
+                    vehicleService.createVehicleWithSale(newVehicle);
+                }
+
             }
         }
 
@@ -120,15 +125,12 @@ public class VehicleController {
     public ResponseEntity<List<Object[]>> countByModelName(@PathVariable int brandId) {
         return ResponseEntity.ok().body(vehicleService.countByModelName(brandId));
     }
-    
-
 
     @GetMapping("/countByModelName")
     public ResponseEntity<List<BrandModelCountDTO>> countByModelNameForAllBrands() {
         List<BrandModelCountDTO> result = vehicleService.countVehiclesByModelNameForAllBrands();
         return ResponseEntity.ok().body(result);
     }
-    
 
     @GetMapping("/countByBrand")
     public ResponseEntity<List<Object[]>> countByBrand() {
@@ -144,7 +146,7 @@ public class VehicleController {
     public ResponseEntity<List<Object[]>> countByColor() {
         return ResponseEntity.ok().body(vehicleService.countByColor());
     }
-    
+
     @PostMapping("/countByFilter")
     public ResponseEntity<Long> countByFilter(@RequestBody VehiculeFilterDTO vehiculeFilterDTO) {
         return ResponseEntity.ok().body(vehicleService.countByFilter(vehiculeFilterDTO));

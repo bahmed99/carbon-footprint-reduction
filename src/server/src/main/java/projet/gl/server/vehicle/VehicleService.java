@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import projet.gl.server.brand.Brand;
 import projet.gl.server.brand.BrandRepository;
+import projet.gl.server.sale.SaleService;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ public class VehicleService {
 
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private SaleService saleService;
 
     @Autowired
     private BrandRepository brandRepository;
@@ -37,6 +40,12 @@ public class VehicleService {
 
     public Vehicle createVehicle(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
+    }
+
+    public Vehicle createVehicleWithSale(Vehicle vehicle) {
+        Vehicle newVehicle = vehicleRepository.save(vehicle);
+        saleService.createSale(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
+        return newVehicle;
     }
 
     public Vehicle updateVehicle(Long id, Vehicle vehicle) {
@@ -104,49 +113,41 @@ public class VehicleService {
         return vehicleRepository.countVehiclesByModel();
     }
 
-       
     public List<Object[]> countByModelName(int brandId) {
         return vehicleRepository.countVehiclesByModelName(brandId);
     }
-    
 
-    
     public List<BrandModelCountDTO> countVehiclesByModelNameForAllBrands() {
         List<BrandModelCountDTO> result = new ArrayList<>();
-    
+
         List<Brand> brands = brandRepository.findAll();
-    
+
         for (Brand brand : brands) {
             List<Object[]> countResult = vehicleRepository.countVehiclesByModelName(brand.getId().intValue());
-    
+
             BrandModelCountDTO brandModelCountDTO = new BrandModelCountDTO();
             brandModelCountDTO.setBrandName(brand.getName());
-    
+
             List<ModelCountDTO> modelCounts = new ArrayList<>();
-    
+
             for (Object[] row : countResult) {
                 ModelCountDTO modelCountDTO = new ModelCountDTO();
                 modelCountDTO.setModelName((String) row[0]);
                 modelCountDTO.setVehicleCount((Long) row[1]);
-    
+
                 modelCounts.add(modelCountDTO);
             }
-    
+
             brandModelCountDTO.setModels(modelCounts);
             result.add(brandModelCountDTO);
         }
-    
+
         return result;
     }
-    
-    
-    
-    
 
     public List<Object[]> countByBrand() {
         return vehicleRepository.countVehiclesByBrand();
     }
-
 
     public List<Object[]> countByBrandName() {
         return vehicleRepository.countVehiclesByBrandName();
@@ -155,5 +156,5 @@ public class VehicleService {
     public List<Object[]> countByColor() {
         return vehicleRepository.countVehiclesByColor();
     }
-        
+
 }

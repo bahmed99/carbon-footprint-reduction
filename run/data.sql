@@ -187,3 +187,20 @@ VALUES (2023, 30000.0, '2023-11-04', '2023-11-04', 4, 4);
 
 
 INSERT INTO `vehicle_configuration` (`vehicle_id`, `configuration_id`) VALUES ('1', '1'), ('1', '4'), ('2', '2'), ('2', '3'), ('3', '4'), ('3', '5'), ('4', '4'), ('4', '5'), ('1', '6'), ('2', '7');
+
+
+-- Sale 1
+INSERT INTO Sale (price, date_sale, date_delivery, date_expiration_insurance, created_at, updated_at, vehicle_id)
+VALUES (25000.0, '2023-11-01', '2023-11-01', '2023-11-30', '2023-11-01', '2023-11-01', 1);
+
+-- Sale 2
+INSERT INTO Sale (price, date_sale, date_delivery, date_expiration_insurance, created_at, updated_at, vehicle_id)
+VALUES (28000.0, '2023-11-02', '2023-11-02', '2023-12-01', '2023-11-02', '2023-11-02', 2);
+
+-- Sale 3
+INSERT INTO Sale (price, date_sale, date_delivery, date_expiration_insurance, created_at, updated_at, vehicle_id)
+VALUES (26000.0, '2023-11-03', '2023-11-03', '2023-12-02', '2023-11-03', '2023-11-03', 3);
+
+-- Sale 4
+INSERT INTO Sale (price, date_sale, date_delivery, date_expiration_insurance, created_at, updated_at, vehicle_id)
+VALUES (30000.0, '2023-11-04', '2023-11-04', '2023-12-03', '2023-11-04', '2023-11-04', 4);
