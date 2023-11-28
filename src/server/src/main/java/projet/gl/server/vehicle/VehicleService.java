@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import projet.gl.server.brand.Brand;
 import projet.gl.server.brand.BrandRepository;
 import projet.gl.server.rental.RentalService;
+import projet.gl.server.reparation.ReparationService;
 import projet.gl.server.sale.SaleService;
 
 import java.util.List;
@@ -56,9 +57,11 @@ public class VehicleService {
                 saleService.createSale(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
                 break;
             case RENTAL:
+                rentalService.createRental(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
                 break;
 
             case REPARATION:
+                reparationService.createReparation(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
                 break;
             default:
 

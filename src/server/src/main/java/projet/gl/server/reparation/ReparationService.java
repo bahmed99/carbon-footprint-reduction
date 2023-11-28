@@ -3,7 +3,11 @@ package projet.gl.server.reparation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import projet.gl.server.sale.Sale;
+
 import java.util.List;
+import java.util.Random;
+import java.time.LocalDate;
 
 @Service
 public class ReparationService {
@@ -25,6 +29,19 @@ public class ReparationService {
 
     public Reparation createReparation(Reparation reparation) {
         return reparationRepository.save(reparation);
+    }
+
+    public Reparation createReparation(long idVehicle, double price) {
+        Random random = new Random();
+        Reparation reparation = new Reparation();
+        reparation.setVehicleId(idVehicle);
+        reparation.setRepairCost(price * 0.2);
+        reparation.setRepairStartDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
+        reparation.setRepairEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
+        reparation.setRepairCreatedAt(LocalDate.now());
+        reparation.setRepairUpdatedAt(LocalDate.now());
+        return reparationRepository.save(reparation);
+
     }
 
     public Reparation updateReparation(Long id, Reparation reparation) {

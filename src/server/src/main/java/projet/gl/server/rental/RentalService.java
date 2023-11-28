@@ -33,7 +33,7 @@ public class RentalService {
         Random random = new Random();
         Rental rental = new Rental();
         rental.setVehicleId(idVehicle);
-        rental.setRentalFee(rentalFee * 1.2);
+        rental.setRentalFee(rentalFee * 0.4);
         rental.setRentalEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
         rental.setInsuranceExpirationDate(LocalDate.now().plusYears(random.nextInt(4) + 1));
         return rentalRepository.save(rental);
