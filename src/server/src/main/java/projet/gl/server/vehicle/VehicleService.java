@@ -42,9 +42,22 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
-    public Vehicle createVehicleWithSale(Vehicle vehicle) {
+    public Vehicle createVehicleWithType(Vehicle vehicle, InsertionType type) {
         Vehicle newVehicle = vehicleRepository.save(vehicle);
-        saleService.createSale(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
+        switch (type) {
+            case SALE:
+                saleService.createSale(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
+                break;
+            case RENTAL:
+                break;
+
+            case REPARATION:
+                break;
+            default:
+
+                break;
+        }
+
         return newVehicle;
     }
 

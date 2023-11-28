@@ -45,7 +45,7 @@ public class VehicleController {
             @RequestBody Vehicle vehicle) {
         if (count == 0) {
             if (type == InsertionType.SALE) {
-                vehicleService.createVehicleWithSale(vehicle);
+                vehicleService.createVehicleWithType(vehicle, type);
             }
         } else {
             Vehicle newVehicle;
@@ -53,9 +53,7 @@ public class VehicleController {
             for (int i = 0; i < count; i++) {
                 newVehicle = new Vehicle();
                 newVehicle.copy(vehicle);
-                if (type == InsertionType.SALE) {
-                    vehicleService.createVehicleWithSale(newVehicle);
-                }
+                vehicleService.createVehicleWithType(newVehicle, type);
 
             }
         }

@@ -1,5 +1,5 @@
 package projet.gl.server.vehicle;
 
 public enum InsertionType {
-    SALE, RENTAL, REPARATION
+    SALE, RENTAL, REPARATION, NOTHING
 }

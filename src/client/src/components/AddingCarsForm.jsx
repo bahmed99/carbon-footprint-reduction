@@ -103,6 +103,7 @@ const AddingCarsForm = () => {
     // const [showBrandInput, setShowBrandInput] = useState(false);
     const [showModelInput, setShowModelInput] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [chooseAction, setChooseAction] = useState('NOTHING');
     const [error, setError] = useState('');
     const errorRef = useRef(null);
     const Authorization = 'Bearer' + localStorage.getItem('accessToken');
@@ -194,6 +195,11 @@ const AddingCarsForm = () => {
         }
     };
 
+    const handleChooseActionChange = (e) => {
+        setChooseAction(e.target.value);
+    };
+
+
     const handleSubmit = (e) => {
         setLoading(true);
         e.preventDefault();
@@ -221,7 +227,7 @@ const AddingCarsForm = () => {
         console.log("json",json)        
         //post request to backend 
         //axios with headers bearer token
-        Axios.post(process.env.REACT_APP_API_URL + 'vehicles/'+nbCars+'/SALE'  , {
+        Axios.post(process.env.REACT_APP_API_URL + 'vehicles/'+nbCars+'/'+chooseAction  , {
             "yearOfCreation": year,
             "priceWithoutConfiguration": price,
             "model": {
@@ -314,7 +320,7 @@ const AddingCarsForm = () => {
                     </Row>
                 </Collapse> */}
                 <Row className='cars-form-row'>
-                    <Col className='cars-form-col' xs={9}>
+                    <Col className='cars-form-col' >
                         <Form.Select className='cars-form-select' onChange={handleModelChange} value={model}>
                             <option value=''>
                                 {showModelInput
@@ -329,6 +335,21 @@ const AddingCarsForm = () => {
                                 ))}
                         </Form.Select>
                     </Col>
+                    <Col className='cars-form-col'>
+                        <Form.Select className='cars-form-select' onChange={handleColorChange}>
+                            <option>Please choose the color of the car</option>
+                            {colors.map((color) => (
+                                <option
+                                    key={color.id}
+                                    value={color.id}
+                                    style={{ color: color.name }}
+                                >
+                                    {color.name}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Col>
+                    
                     {/* <Col className='cars-form-col'>
                         <Button className='cars-form-button' onClick={newModel}>
                             {showModelInput ? 'Cancel' : 'Add a model'}
@@ -372,21 +393,21 @@ const AddingCarsForm = () => {
                             />
                         </Form.Group>
                     </Col>
-                    <Col className='cars-form-col'>
-                        <Form.Select className='cars-form-select' onChange={handleColorChange}>
-                            <option>Please choose the color of the car</option>
-                            {colors.map((color) => (
-                                <option
-                                    key={color.id}
-                                    value={color.id}
-                                    style={{ color: color.name }}
-                                >
-                                    {color.name}
-                                </option>
-                            ))}
-                        </Form.Select>
-                    </Col>
                     
+                    <Col className='cars-form-col'>
+                    <Form.Group
+                            className='mb-3 cars-form-input'
+                            controlId='yearInput'
+                        >
+                        <Form.Label>Please select the action that you want to make:</Form.Label>
+                        <Form.Select className='cars-form-select' onChange={handleChooseActionChange} >
+                            <option value='NOTHING'>Nothing</option>
+                            <option value='SALE'>Sale</option>
+                            <option value='RENTAL'>Rental</option>
+                            <option value='REPARATION'>Reparation</option>
+                        </Form.Select>
+                        </Form.Group>
+                    </Col>
                 </Row>
                 <Row> 
                 <Col className='cars-form-col'>
