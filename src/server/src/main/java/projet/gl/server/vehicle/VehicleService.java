@@ -140,6 +140,7 @@ public class VehicleService {
 
             BrandModelCountDTO brandModelCountDTO = new BrandModelCountDTO();
             brandModelCountDTO.setBrandName(brand.getName());
+            brandModelCountDTO.setBrandId(brand.getId());
 
             List<ModelCountDTO> modelCounts = new ArrayList<>();
 
