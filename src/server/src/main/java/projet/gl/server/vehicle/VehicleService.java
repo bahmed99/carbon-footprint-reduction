@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import projet.gl.server.brand.Brand;
 import projet.gl.server.brand.BrandRepository;
+import projet.gl.server.rental.RentalService;
 import projet.gl.server.sale.SaleService;
 
 import java.util.List;
@@ -21,6 +22,12 @@ public class VehicleService {
 
     @Autowired
     private SaleService saleService;
+
+    @Autowired
+    private RentalService rentalService;
+
+    @Autowired
+    private ReparationService reparationService;
 
     @Autowired
     private BrandRepository brandRepository;
