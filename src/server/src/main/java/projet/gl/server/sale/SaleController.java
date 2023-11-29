@@ -1,10 +1,11 @@
 package projet.gl.server.sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -23,6 +24,29 @@ public class SaleController {
     public ResponseEntity<List<Sale>> getAllSales() {
         List<Sale> sales = saleService.getAllSales();
         return new ResponseEntity<>(sales, HttpStatus.OK);
+    }
+
+    //Méthode pour prendre en charge la pagination avec le chemin /page/size
+    @GetMapping("/page/{page}/size/{size}")
+    public ResponseEntity<List<Sale>> getSalesByPageAndSize(
+            @PathVariable int page,
+            @PathVariable int size) {
+        try {
+            Page<Sale> sales = saleService.getSalesByPageAndSize(PageRequest.of(page, size));
+            return new ResponseEntity<>(sales.getContent(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //Méthode pour obtenir la taille de la table de sales
+    @GetMapping("/size")
+    public ResponseEntity<Long> getSalesTableSize() {
+        try {
+            long tableSize = saleService.getSalesTableSize();
+            return new ResponseEntity<>(tableSize, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")

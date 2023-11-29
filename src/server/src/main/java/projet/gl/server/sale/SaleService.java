@@ -1,6 +1,8 @@
 package projet.gl.server.sale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,6 +23,11 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
+    //Méthode pour obtenir les sales par page et par taille
+    public Page<Sale> getSalesByPageAndSize(Pageable pageable) {
+        return saleRepository.findAll(pageable);
+    }
+
     public Optional<Sale> getSaleById(Long id) {
         return saleRepository.findById(id);
     }
@@ -38,4 +45,10 @@ public class SaleService {
         sale.setDateExpiratonInsurance(LocalDate.now().plusYears(random.nextInt(4) + 1));
         return saleRepository.save(sale);
     }
+
+    //Méthode pour obtenir la taille de la table de sales
+    public long getSalesTableSize() {
+        return saleRepository.count();
+    }
+
 }

@@ -1,0 +1,41 @@
+.statesPage-container{
+    padding-top: 130px;
+    margin-left: 30px;
+    margin-right: 30px;
+  
+}
+.statesPage-title{
+    font-family: var(--primary) ;
+    font-size: 2.2rem;
+    color: var(--red);
+    text-align: center;
+}
+.StatesTable-Tabs{
+    font-family: var(--primary) ;
+}
+.statetabPane{
+margin-top: 20px;
+
+}
+.statetab-title{
+    font-family: var(--secondary) ;
+    font-weight: bolder;
+    font-size: 2.3rem;
+    color: var(--yellow);
+    text-align: center;
+}
+.custom-tab-label{
+    font-family: var(--secondary) ;
+    font-weight: bolder;
+    font-size: 1rem;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--yellow);
+    text-align: center;
+
+}
+
+.ant-tabs-ink-bar  {
+    background-color: var(--yellow) !important;
+  }

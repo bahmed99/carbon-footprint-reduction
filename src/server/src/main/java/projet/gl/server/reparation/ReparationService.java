@@ -1,9 +1,10 @@
 package projet.gl.server.reparation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.sale.Sale;
 
 import java.util.List;
 import java.util.Random;
@@ -21,6 +22,11 @@ public class ReparationService {
 
     public List<Reparation> getAllReparations() {
         return reparationRepository.findAll();
+    }
+
+    //Méthode pour obtenir les reparations par page et par taille
+    public Page<Reparation> getReparationsByPageAndSize(Pageable pageable) {
+        return reparationRepository.findAll(pageable);
     }
 
     public Reparation getReparationById(Long id) {
@@ -61,5 +67,10 @@ public class ReparationService {
 
     public void deleteReparation(Long id) {
         reparationRepository.deleteById(id);
+    }
+
+     //Méthode pour obtenir la taille de la table de réparations
+     public long getReparationsTableSize() {
+        return reparationRepository.count();
     }
 }
