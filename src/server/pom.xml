@@ -109,6 +109,19 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.11</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.gatling.highcharts</groupId>
+			<artifactId>gatling-charts-highcharts</artifactId>
+			<version>3.7.2</version>
+			<scope>test</scope>
+		  </dependency>
+		<dependency>
+			<groupId>io.gatling</groupId>
+			<artifactId>gatling-maven-plugin</artifactId>
+			<version>4.6.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -138,12 +151,16 @@
                     </execution>
                 </executions>
             </plugin>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>io.gatling</groupId>
+				<artifactId>gatling-maven-plugin</artifactId>
+				<version>4.6.0</version>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
