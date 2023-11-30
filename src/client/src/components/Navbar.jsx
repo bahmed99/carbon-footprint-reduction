@@ -98,6 +98,9 @@ function Navbar() {
                 <Link className="nav-link" to="/models">  
                         Models
                 </Link>
+                <Link className="nav-link" to="/states">
+                        States
+                </Link>
                 <div className="nav-sign-container">
                   <div className="user-container">
                     <img src={UserImage} alt="User" className="user-image" />

@@ -1,10 +1,11 @@
 package projet.gl.server.rental;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -23,6 +24,29 @@ public class RentalController {
     public ResponseEntity<List<Rental>> getAllRentals() {
         List<Rental> rentals = rentalService.getAllRentals();
         return new ResponseEntity<>(rentals, HttpStatus.OK);
+    }
+    //Méthode pour prendre en charge la pagination avec le chemin /page/size
+    @GetMapping("/page/{page}/size/{size}")
+    public ResponseEntity<List<Rental>> getRentalsByPageAndSize(
+            @PathVariable int page,
+            @PathVariable int size) {
+        try {
+            Page<Rental> rentals = rentalService.getRentalsByPageAndSize(PageRequest.of(page, size));
+            return new ResponseEntity<>(rentals.getContent(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Méthode pour obtenir la taille de la table de rentals
+    @GetMapping("/size")
+    public ResponseEntity<Long> getRentalsTableSize() {
+        try {
+            long tableSize = rentalService.getRentalsTableSize();
+            return new ResponseEntity<>(tableSize, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")

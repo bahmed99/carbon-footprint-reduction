@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import BrandsPage from "./pages/BrandsPage";
 import ModelsPage from "./pages/ModelsPage";
+import StatesPage from "./pages/StatesPage";
 export default function MainRouter() {
   return (
     <div>
@@ -21,6 +22,7 @@ export default function MainRouter() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/register"} element={<RegisterPage />} />
         <Route path={"/login"} element={<LoginPage />} />
+        <Route path={"/states"} element={<StatesPage />} />
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
