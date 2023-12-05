@@ -1,6 +1,7 @@
 package projet.gl.server.auth;
 
 import lombok.RequiredArgsConstructor;
+import projet.gl.server.user.Role;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,14 +56,23 @@ public class AuthenticationController {
     }
 
     @GetMapping("/checkToken")
-    public ResponseEntity<String> checkTokenValidity(@RequestParam("token") String token) {
+    public ResponseEntity<AuthenticationResponse> checkTokenValidity(@RequestParam("token") String token) {
         try {
             if (service.isTokenValidForUser(token)) {
-                return ResponseEntity.ok("OK");
+
+                String username = service.getUsernameFromToken(token);
+                Role role = service.getRoleFromToken(token);
+                AuthenticationResponse response = AuthenticationResponse.builder()
+                        .token(token)
+                        .role(role)
+                        .username(username)
+                        .build();
+
+                return ResponseEntity.ok(response);
             }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 

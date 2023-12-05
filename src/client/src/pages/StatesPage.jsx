@@ -249,7 +249,6 @@ export default function StatesPage() {
 
     return (
         <div>
-            <Navbar />
             <div className="statesPage-container">
             <h1 className="statesPage-title">Vehicle States Overview: Explore rental, sales, and repair information for our vehicles.</h1>
             <Tabs activeKey={activeTab} onChange={handleTabChange} className="StatesTable-Tabs">

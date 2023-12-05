@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import projet.gl.server.user.Role;
 
 @Data
 @Builder
@@ -14,5 +15,7 @@ public class AuthenticationRequest {
     private String email;
 
     private String password;
+
+    private Role role;
 
 }

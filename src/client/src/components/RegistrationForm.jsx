@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Alert from "react-bootstrap/Alert";
 import { useContext } from "react";
 import { AuthContext } from "../helpers/AuthContext";
+
 import axios from 'axios';
 
 const RegistrationForm = () => {
@@ -19,7 +20,10 @@ const RegistrationForm = () => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
+    const [role, setRole] = useState('USER');
+    const [checked, setChecked] = useState(false);
     const { setAuthState } = useContext(AuthContext);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,25 +32,20 @@ const RegistrationForm = () => {
             setError('Veuillez remplir tous les champs.');
             return;
         }
-        if(password !== confirmationPassword) {
+        if (password !== confirmationPassword) {
             setError('Les mots de passe ne correspondent pas.');
             return;
         }
-        if(password.length < 6) {
+        if (password.length < 6) {
             setError('Le mot de passe doit contenir au moins 8 caractères.');
             return;
         }
-        if(!phone.match(/^0[1-9]([-. ]?[0-9]{2}){4}$/)) {
+        if (!phone.match(/^0[1-9]([-. ]?[0-9]{2}){4}$/)) {
             setError('Le numéro de téléphone n\'est pas valide.');
             return;
         }
-        setError(''); 
-        console.log("Prénom : ", firstname);
-        console.log("Nom : ", lastname);
-        console.log("Email : ", email);
-        console.log("Mot de passe : ", password);
-        console.log("Adresse : ", address);
-        console.log("Téléphone : ", phone);
+        setError('');
+
 
         // Envoi des données au serveur
         const data = {
@@ -55,20 +54,28 @@ const RegistrationForm = () => {
             email: email,
             password: password,
             address: address,
-            phone: phone
+            phone: phone,
+            role: checked ? 'ADMIN' : 'USER'
         };
 
-        
+
         axios.post('http://localhost:8080/auth/register', data).then((response) => {
 
-            if(response.data.error) {
+            if (response.data.error) {
                 setError(response.data.error);
                 alert(response.data.error);
             } else {
                 localStorage.setItem("accessToken", response.data.token);
+                localStorage.setItem('role', response.data.role);
+
                 setAuthState({
                     connected: true,
+                    username: response.data.username,
+                    role: response.data.role
                 });
+
+
+
                 window.location = '/';
             }
 
@@ -111,7 +118,7 @@ const RegistrationForm = () => {
                     </Col>
                 </Row>
                 <Row className='registration-form-row'>
-                <Col className='registration-form-col'>
+                    <Col className='registration-form-col'>
                         <Form.Group className="mb-3 registration-form-input" controlId="passwordInput">
                             <Form.Label>Confirmation du mot de passe</Form.Label>
                             <Form.Control type="password" placeholder="Confirmez votre mot de passe" value={confirmationPassword} onChange={(e) => setConfirmationPassword(e.target.value)} className='registration-form-input-field' />
@@ -119,7 +126,7 @@ const RegistrationForm = () => {
                     </Col>
                 </Row>
                 <Row className='registration-form-row'>
-                <Col className='registration-form-col'>
+                    <Col className='registration-form-col'>
                         <Form.Group className="mb-3 registration-form-input" controlId="addressInput">
                             <Form.Label>Adresse :</Form.Label>
                             <Form.Control type="text" placeholder="Saisissez votre adresse" value={address} onChange={(e) => setAddress(e.target.value)} className='registration-form-input-field' />
@@ -132,11 +139,25 @@ const RegistrationForm = () => {
                         </Form.Group>
                     </Col>
                 </Row>
-             
+
             </Container>
+            <Row className='registration-form-row'>
+                <Col className='registration-form-col'>
+                    <Form.Group className="mb-3 registration-form-input" controlId="termsCheckbox">
+                        <Form.Check
+                            type="checkbox"
+                            label="Check if you are a admin"
+                            value={checked}
+                            onChange={(e) => setChecked(e.target.checked)}
+
+                            className='registration-form-input-field'
+                        />
+                    </Form.Group>
+                </Col>
+            </Row>
             <Button type="submit" className='registration-form-submit-button'>
-                    S'inscrire
-                </Button>
+                S'inscrire
+            </Button>
         </Form>
     );
 };

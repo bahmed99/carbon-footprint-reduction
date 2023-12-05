@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import { AuthContext } from '../helpers/AuthContext';
+
 import Swal from 'sweetalert2';
 
 const LoginForm = () => {
@@ -13,6 +14,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setAuthState } = useContext(AuthContext);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -40,10 +42,19 @@ const LoginForm = () => {
                         confirmButtonText: 'Ok'
                     })
                 } else {
+
+                    console.log(response.data.role)
                     setAuthState({
-                        connected: true
+                        connected: true,
+                        username: response.data.username,
+                        role: response.data.role
+
                     });
+
                     localStorage.setItem('accessToken', response.data.token);
+                    localStorage.setItem('role', response.data.role);
+                    
+
                     window.location = '/';
                 }
             })

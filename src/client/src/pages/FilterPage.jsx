@@ -140,7 +140,6 @@ export default function FilterPage() {
 
   return (
     <div>
-      <Navbar />
       <div className='ContainerFiltrePage'>
         <Filters  setPageNumber={setPageNumber} setPageSize={setPageSize} countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
         <TableFilter countData={countData} pageNumber={pageNumber} pageSize={pageSize} setPageNumber={setPageNumber} setPageSize={setPageSize} filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />

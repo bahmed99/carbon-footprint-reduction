@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 const Home = () => {
   return (
     <div >
-      <Navbar />
       <div className="home-background-img" style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className="home-background-overlay">
           <div className="home-background-content">

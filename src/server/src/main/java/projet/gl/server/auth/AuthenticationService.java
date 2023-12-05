@@ -31,13 +31,15 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phone(request.getPhone())
                 .address(request.getAddress())
-                .role(Role.USER)
+                .role(request.getRole())
                 .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .role(savedUser.getRole())
+                .username(savedUser.getFirstname() + " " + savedUser.getLastname())
                 .build();
     }
 
@@ -53,6 +55,8 @@ public class AuthenticationService {
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .role(user.getRole())
+                .username(user.getFirstname() + " " + user.getLastname())
                 .build();
     }
 
@@ -94,4 +98,15 @@ public class AuthenticationService {
     
         return jwtService.isTokenValid(token, userToken.get());
     }
+
+    public Role getRoleFromToken(String token) {
+        String userEmail = jwtService.extractUsername(token);
+        User user = repository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found")); 
+    
+        Role userRole = user.getRole();
+        return userRole;
+    }
+
+
 }

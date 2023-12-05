@@ -86,7 +86,6 @@ export default function ModelsPage() {
     }, []);
     return (
         <>
-            <Navbar />
             <div className='models-page-container'>
                 <h2 className='models-page-title'>You can find here the various models for each brand in our database.</h2>
                 <div className='models-page-list'>

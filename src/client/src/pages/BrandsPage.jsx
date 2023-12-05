@@ -108,7 +108,6 @@ export default function BrandsPage() {
 
     return (
         <>
-            <Navbar />
 
             <div className='brands-page-container'>
                 <h2 className='brands-page-title'>You can find here all the brands we have in our database.</h2>
