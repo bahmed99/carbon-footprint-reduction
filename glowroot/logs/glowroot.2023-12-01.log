@@ -1,0 +1,8 @@
+2023-12-01 14:55:56.676 INFO  org.glowroot - Glowroot version: 0.14.0, built 2023-05-14 11:36:22 +0000
+2023-12-01 14:55:56.677 INFO  org.glowroot - Java version: 17.0.9 (Private Build / Linux)
+2023-12-01 14:55:56.678 INFO  org.glowroot - Java args: -javaagent:glowroot/glowroot.jar
+2023-12-01 14:55:58.269 INFO  org.glowroot - UI listening on 127.0.0.1:4000 (to access the UI from remote machines, change the bind address to 0.0.0.0, either in the Glowroot UI under Configuration > Web or directly in the admin.json file, and then restart JVM to take effect)
+2023-12-01 14:57:46.265 INFO  org.glowroot - Glowroot version: 0.14.0, built 2023-05-14 11:36:22 +0000
+2023-12-01 14:57:46.267 INFO  org.glowroot - Java version: 17.0.9 (Private Build / Linux)
+2023-12-01 14:57:46.267 INFO  org.glowroot - Java args: -javaagent:glowroot/glowroot.jar
+2023-12-01 14:57:47.707 INFO  org.glowroot - UI listening on 127.0.0.1:4000 (to access the UI from remote machines, change the bind address to 0.0.0.0, either in the Glowroot UI under Configuration > Web or directly in the admin.json file, and then restart JVM to take effect)
