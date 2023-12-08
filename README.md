@@ -64,3 +64,47 @@ L'application sera disponible via un navigateur sur le port 3000 : [http://local
 ```
 
 L'application sera disponible via un navigateur sur le port 3000 : [http://localhost:3000]
+
+
+## Démarrage de glowroot
+
+1. Dans un premier terminal, lancer la base de données avec la commande
+
+```bash
+docker compose up
+```
+
+2. Dans un deuxieme terminal, lancer dans le serveur "src/server" avec la commande
+
+```bash
+mvn package
+```
+
+3. Dans un troiseme terminal, lancer le serveur avec la commande:
+
+```bash
+java -javaagent:glowroot/glowroot.jar -jar ./src/server/target/server-0.0.1-SNAPSHOT.jar 
+```
+
+4. Dans un quatrieme terminal, lancer le client "src/client" avec la commande
+
+```bash
+npm install
+npm start
+```
+
+5. Aller sur [http://localhost:4000](http://localhost:4000)
+
+
+## Démarrage de gatling
+
+1. Dans un premier terminal, lancer le projet avec la commande
+
+```bash
+./run.sh
+```
+2. Dans un deuxieme terminal, lancer le serveur "src/server" avec la commande
+
+```bash
+mvn gatling:test
+```
