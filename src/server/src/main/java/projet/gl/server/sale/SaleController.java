@@ -26,7 +26,7 @@ public class SaleController {
         return new ResponseEntity<>(sales, HttpStatus.OK);
     }
 
-    //Méthode pour prendre en charge la pagination avec le chemin /page/size
+    // Méthode pour prendre en charge la pagination avec le chemin /page/size
     @GetMapping("/page/{page}/size/{size}")
     public ResponseEntity<List<Sale>> getSalesByPageAndSize(
             @PathVariable int page,
@@ -38,7 +38,8 @@ public class SaleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //Méthode pour obtenir la taille de la table de sales
+
+    // Méthode pour obtenir la taille de la table de sales
     @GetMapping("/size")
     public ResponseEntity<Long> getSalesTableSize() {
         try {
@@ -68,7 +69,7 @@ public class SaleController {
         saleDTO.setId(sale.getId());
         saleDTO.setPrice(sale.getPrice());
         saleDTO.setDateSale(sale.getDateSale());
-        saleDTO.setDateDilevery(sale.getDateDilevery());
+        saleDTO.setDateDelivery(sale.getDateDelivery());
         saleDTO.setDateExpiratonInsurance(sale.getDateExpiratonInsurance());
         saleDTO.setCreatedAt(sale.getCreatedAt());
         saleDTO.setUpdatedAt(sale.getUpdatedAt());
@@ -80,7 +81,7 @@ public class SaleController {
         Sale sale = new Sale();
         sale.setId(saleDTO.getId());
         sale.setPrice(saleDTO.getPrice());
-        sale.setDateDilevery(saleDTO.getDateDilevery());
+        sale.setDateDelivery(saleDTO.getDateDelivery());
         sale.setDateExpiratonInsurance(saleDTO.getDateExpiratonInsurance());
         sale.setVehicleId(saleDTO.getVehicleId());
         return sale;
