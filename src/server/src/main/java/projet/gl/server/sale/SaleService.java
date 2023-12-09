@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class SaleService {
@@ -19,13 +20,21 @@ public class SaleService {
         this.saleRepository = saleRepository;
     }
 
-    public List<Sale> getAllSales() {
-        return saleRepository.findAll();
+    public List<SaleDTO> getAllSalesDTO() {
+        List<Sale> sales = saleRepository.findAll();
+        return sales.stream()
+                .map(this::convertToSaleDTO)
+                .collect(Collectors.toList());
+    }
+
+    private SaleDTO convertToSaleDTO(Sale sale) {
+        return new SaleDTO(sale);
     }
 
     // Méthode pour obtenir les sales par page et par taille
-    public Page<Sale> getSalesByPageAndSize(Pageable pageable) {
-        return saleRepository.findAll(pageable);
+    public Page<SaleDTO> getSalesByPageAndSize(Pageable pageable) {
+        Page<Sale> sales = saleRepository.findAll(pageable);
+        return sales.map(this::convertToSaleDTO);
     }
 
     public Optional<Sale> getSaleById(Long id) {

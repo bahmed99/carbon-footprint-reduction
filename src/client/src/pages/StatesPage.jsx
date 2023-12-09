@@ -62,12 +62,12 @@ export default function StatesPage() {
         },
         {
             title: 'Brand Name',
-            dataIndex: ['vehicle', 'model', 'brand', 'name'],
+            dataIndex: 'brandName',
             key: 'brandName',
         },
         {
             title: 'Model Name',
-            dataIndex: ['vehicle', 'model', 'name'],
+            dataIndex: 'modelName',
             key: 'modelName',
         },
         {

@@ -18,9 +18,9 @@ public class SaleDTO {
     private LocalDate dateSale;
     private LocalDate dateDelivery;
     private LocalDate dateExpiratonInsurance;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
     private Long vehicleId;
+    private String modelName;
+    private String brandName;
 
     public SaleDTO(Sale sale) {
         this.id = sale.getId();
@@ -28,9 +28,10 @@ public class SaleDTO {
         this.dateSale = sale.getDateSale();
         this.dateDelivery = sale.getDateDelivery();
         this.dateExpiratonInsurance = sale.getDateExpiratonInsurance();
-        this.createdAt = sale.getCreatedAt();
-        this.updatedAt = sale.getUpdatedAt();
         this.vehicleId = sale.getVehicleId();
+        this.modelName = sale.getModelName();
+        this.brandName = sale.getBrandName();
+
     }
 
 }

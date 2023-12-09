@@ -21,18 +21,18 @@ public class SaleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Sale>> getAllSales() {
-        List<Sale> sales = saleService.getAllSales();
-        return new ResponseEntity<>(sales, HttpStatus.OK);
+    public ResponseEntity<List<SaleDTO>> getAllSalesDTO() {
+        List<SaleDTO> salesDTO = saleService.getAllSalesDTO();
+        return new ResponseEntity<>(salesDTO, HttpStatus.OK);
     }
 
     // Méthode pour prendre en charge la pagination avec le chemin /page/size
     @GetMapping("/page/{page}/size/{size}")
-    public ResponseEntity<List<Sale>> getSalesByPageAndSize(
+    public ResponseEntity<List<SaleDTO>> getSalesByPageAndSize(
             @PathVariable int page,
             @PathVariable int size) {
         try {
-            Page<Sale> sales = saleService.getSalesByPageAndSize(PageRequest.of(page, size));
+            Page<SaleDTO> sales = saleService.getSalesByPageAndSize(PageRequest.of(page, size));
             return new ResponseEntity<>(sales.getContent(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,8 +71,8 @@ public class SaleController {
         saleDTO.setDateSale(sale.getDateSale());
         saleDTO.setDateDelivery(sale.getDateDelivery());
         saleDTO.setDateExpiratonInsurance(sale.getDateExpiratonInsurance());
-        saleDTO.setCreatedAt(sale.getCreatedAt());
-        saleDTO.setUpdatedAt(sale.getUpdatedAt());
+        saleDTO.setModelName(sale.getModelName());
+        saleDTO.setBrandName(sale.getBrandName());
         saleDTO.setVehicleId(sale.getVehicleId());
         return saleDTO;
     }
