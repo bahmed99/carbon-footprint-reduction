@@ -173,4 +173,13 @@ public class Reparation {
         repairUpdatedAt = LocalDate.now();
         repairEndDate = LocalDate.now().plusDays(random.nextInt(30));
     }
+
+    public String getModelName() {
+        return repairedVehicle.getModel().getName();
+    }
+
+    public String getBrandName() {
+        return repairedVehicle.getModel().getBrand().getName();
+    }
+
 }

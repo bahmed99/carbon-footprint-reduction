@@ -6,11 +6,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import projet.gl.server.reparation.Reparation;
+import projet.gl.server.sale.Sale;
+import projet.gl.server.sale.SaleDTO;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class RentalService {
@@ -21,15 +24,24 @@ public class RentalService {
         this.rentalRepository = rentalRepository;
     }
 
-    public List<Rental> getAllRentals() {
-        return rentalRepository.findAll();
+    // Méthode pour obtenir tous les rentals
+    public List<RentalDTO> getAllRentalsDTO() {
+        List<Rental> rentals = rentalRepository.findAll();
+        return rentals.stream()
+                .map(this::convertToRentalDTO)
+                .collect(Collectors.toList());
     }
 
-    //Méthode pour obtenir les rentals par page et par taille
-    public Page<Rental> getRentalsByPageAndSize(Pageable pageable) {
-        return rentalRepository.findAll(pageable);
+    // convertir de Rental à RentalDTO
+    private RentalDTO convertToRentalDTO(Rental rental) {
+        return new RentalDTO(rental);
     }
 
+    // Méthode pour obtenir les rentals par page et par taille
+    public Page<RentalDTO> getRentalsByPageAndSize(Pageable pageable) {
+        Page<Rental> rentals = rentalRepository.findAll(pageable);
+        return rentals.map(this::convertToRentalDTO);
+    }
 
     public Optional<Rental> getRentalById(Long id) {
         return rentalRepository.findById(id);
@@ -49,9 +61,9 @@ public class RentalService {
         return rentalRepository.save(rental);
     }
 
-     //Méthode pour obtenir la taille de la table de rentals
-        public long getRentalsTableSize() {
-            return rentalRepository.count();
-        }
+    // Méthode pour obtenir la taille de la table de rentals
+    public long getRentalsTableSize() {
+        return rentalRepository.count();
+    }
 
 }

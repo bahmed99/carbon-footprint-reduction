@@ -26,12 +26,12 @@ export default function StatesPage() {
         },
         {
             title: 'Brand Name',
-            dataIndex: ['rentedVehicle', 'model', 'brand', 'name'],
+            dataIndex: 'brandName',
             key: 'brandName',
         },
         {
             title: 'Model Name',
-            dataIndex: ['rentedVehicle', 'model', 'name'],
+            dataIndex: 'modelName',
             key: 'modelName',
         },
         {
@@ -97,12 +97,12 @@ export default function StatesPage() {
         },
         {
             title: 'Brand Name',
-            dataIndex: ['repairedVehicle', 'model', 'brand', 'name'],
+            dataIndex: 'brandName',
             key: 'brandName',
         },
         {
             title: 'Model Name',
-            dataIndex: ['repairedVehicle', 'model', 'name'],
+            dataIndex: 'modelName',
             key: 'modelName',
         },
         {

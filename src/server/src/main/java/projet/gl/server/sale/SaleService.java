@@ -20,6 +20,7 @@ public class SaleService {
         this.saleRepository = saleRepository;
     }
 
+    // Méthode pour obtenir tous les sales
     public List<SaleDTO> getAllSalesDTO() {
         List<Sale> sales = saleRepository.findAll();
         return sales.stream()
@@ -27,6 +28,7 @@ public class SaleService {
                 .collect(Collectors.toList());
     }
 
+    // convertir de Sale à SaleDTO
     private SaleDTO convertToSaleDTO(Sale sale) {
         return new SaleDTO(sale);
     }

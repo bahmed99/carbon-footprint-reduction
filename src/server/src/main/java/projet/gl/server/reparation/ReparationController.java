@@ -21,25 +21,25 @@ public class ReparationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reparation>> getAllReparations() {
-        List<Reparation> reparations = reparationService.getAllReparations();
+    public ResponseEntity<List<ReparationDTO>> getAllReparations() {
+        List<ReparationDTO> reparations = reparationService.getAllReparationsDTO();
         return new ResponseEntity<>(reparations, HttpStatus.OK);
     }
 
-    //Méthode pour prendre en charge la pagination avec le chemin /page/size
+    // Méthode pour prendre en charge la pagination avec le chemin /page/size
     @GetMapping("/page/{page}/size/{size}")
-    public ResponseEntity<List<Reparation>> getReparationsByPageAndSize(
+    public ResponseEntity<List<ReparationDTO>> getReparationsByPageAndSize(
             @PathVariable int page,
             @PathVariable int size) {
         try {
-            Page<Reparation> reparations = reparationService.getReparationsByPageAndSize(PageRequest.of(page, size));
+            Page<ReparationDTO> reparations = reparationService.getReparationsByPageAndSize(PageRequest.of(page, size));
             return new ResponseEntity<>(reparations.getContent(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    //Méthode pour obtenir la taille de la table de réparations
+    // Méthode pour obtenir la taille de la table de réparations
     @GetMapping("/size")
     public ResponseEntity<Long> getReparationsTableSize() {
         try {

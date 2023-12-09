@@ -21,6 +21,8 @@ public class RentalDTO {
     private LocalDate rentalCreatedAt;
     private LocalDate rentalUpdatedAt;
     private Long vehicleId;
+    private String modelName;
+    private String brandName;
 
     public RentalDTO(Rental rental) {
         this.id = rental.getId();
@@ -28,9 +30,9 @@ public class RentalDTO {
         this.rentalStartDate = rental.getRentalStartDate();
         this.rentalEndDate = rental.getRentalEndDate();
         this.insuranceExpirationDate = rental.getInsuranceExpirationDate();
-        this.rentalCreatedAt = rental.getRentalCreatedAt();
-        this.rentalUpdatedAt = rental.getRentalUpdatedAt();
         this.vehicleId = rental.getVehicleId();
+        this.modelName = rental.getModelName();
+        this.brandName = rental.getBrandName();
     }
 
 }
