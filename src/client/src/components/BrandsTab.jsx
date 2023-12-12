@@ -5,8 +5,8 @@ import axios from "axios";
 import styled from 'styled-components';
 
 const Tab = styled.button`
-  font-size: 20px;
-  padding: 10px 60px;
+  font-size: 15px;
+  padding: 10px 40px;
   cursor: pointer;
   opacity: 0.6;
   background: white;

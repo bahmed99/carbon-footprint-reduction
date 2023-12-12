@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Table, Tabs } from 'antd';
-import Navbar from "../components/Navbar";
+import { Table, Tabs,Space } from 'antd';
 export default function StatesPage() {
     const { TabPane } = Tabs;
 
@@ -50,6 +49,19 @@ export default function StatesPage() {
             key: 'rentalFee',
 
         }
+        ,{
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+              <Space size="middle">
+                  <select onChange={(e)=>handleChangeState(e,record.id)}>
+                      <option value="0">Move to</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Reparations">Reparations</option>
+                  </select>
+              </Space>
+            ),
+          }
 
 
     ])
@@ -86,6 +98,19 @@ export default function StatesPage() {
             dataIndex: 'price',
             key: 'price',
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+              <Space size="middle">
+                  <select onChange={(e)=>handleChangeState(e,record.id)}>
+                      <option value="-1">Move to</option>
+                      <option value="Reparations">Reparations</option>
+                      <option value="Rentals">Rentals</option>
+                  </select>
+              </Space>
+            ),
+          }
     ];
 
     // Colonnes pour l'état de réparation
@@ -120,7 +145,22 @@ export default function StatesPage() {
             dataIndex: 'repairCost',
             key: 'repairCost',
         },
+        
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+            <select onChange={(e)=>handleChangeState(e,record.id)}>
+                <option value="0">Move to</option>
+                <option value="Sales">Sales</option>
+                <option value="Rentals">Rentals</option>
+            </select>
+        </Space>
+      ),
+    }
     ];
+
 
     useEffect(() => {
         const fetchTablesCount = async () => {
@@ -161,7 +201,10 @@ export default function StatesPage() {
 
     }, []);
 
-
+    const handleChangeState = (e,id) => {
+        console.log(`selected ${e.target.value}`);
+        console.log(id);
+    }
 
     const handleTabChange = (key) => {
         setActiveTab(key);
@@ -201,7 +244,6 @@ export default function StatesPage() {
                 }
             );
 
-            console.log("rentalsResponse", rentalsResponse);
             setRentals(rentalsResponse.data);
         } catch (error) {
             console.log(error);
@@ -219,7 +261,6 @@ export default function StatesPage() {
                 }
             );
 
-            console.log("salesResponse", salesResponse);
             setSales(salesResponse.data);
         } catch (error) {
             console.log(error);
@@ -237,7 +278,6 @@ export default function StatesPage() {
                 }
             );
 
-            console.log("reparationsResponse", reparationsResponse);
             setReparations(reparationsResponse.data);
         } catch (error) {
             console.log(error);
