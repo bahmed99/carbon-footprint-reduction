@@ -34,7 +34,7 @@ export default function ModelsPage() {
         });
       };
 
-    const submitAddBrand = (e,index) => {
+    const submitAddBrand = (e,index, brandId) => {
         e.preventDefault();
         setLoading(true);
         if (newBrandNames[index] === '') {
@@ -44,7 +44,7 @@ export default function ModelsPage() {
         setModelAddingError('');
         const json = {
             "name": newBrandNames[index],
-            "brandId" : index + 1
+            "brandId" : brandId
         };
         Axios.post(process.env.REACT_APP_API_URL + 'models', json, {
             headers: {
@@ -118,7 +118,7 @@ export default function ModelsPage() {
                                     </Alert>
                                 )}
                                 <Collapse in={showModelInputs[index]}>
-                                    <Form className='adding-model-form' onSubmit={(e) => submitAddBrand(e, index)}>
+                                    <Form className='adding-model-form' onSubmit={(e) => submitAddBrand(e, index, item.brandId)}>
                                         <Form.Group
                                             className='mb-3 cars-form-input'
                                             controlId='modelInput'
