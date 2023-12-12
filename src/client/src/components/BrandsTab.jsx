@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs } from 'antd';
 import { getCars } from '../pages/FilterPage';
 import axios from "axios";
 import styled from 'styled-components';

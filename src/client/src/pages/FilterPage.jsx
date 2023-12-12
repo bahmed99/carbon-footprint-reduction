@@ -3,7 +3,6 @@ import Filters from '../components/Filters'
 import TableFilter from '../components/TableFilter'
 import { Tag } from 'antd';
 import axios from 'axios'
-import Navbar from '../components/Navbar';
 import Stomp from 'stompjs';
 
 export default function FilterPage() {

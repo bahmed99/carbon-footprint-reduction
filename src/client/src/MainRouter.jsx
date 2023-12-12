@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import FilterPage from './pages/FilterPage';
@@ -10,7 +10,6 @@ import LoginPage from "./pages/LoginPage";
 import BrandsPage from "./pages/BrandsPage";
 import ModelsPage from "./pages/ModelsPage";
 import StatesPage from "./pages/StatesPage";
-import { AuthContext } from "./helpers/AuthContext";
 import Navbar from "./components/Navbar";
 
 export default function MainRouter() {

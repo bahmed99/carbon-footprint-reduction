@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
-import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
