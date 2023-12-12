@@ -35,9 +35,9 @@ public class Sale {
     @Temporal(TemporalType.DATE)
     private LocalDate dateSale;
 
-    @Column(name = "date_dilevery")
+    @Column(name = "date_delivery")
     @Temporal(TemporalType.DATE)
-    private LocalDate dateDilevery;
+    private LocalDate dateDelivery;
 
     @Column(name = "date_expiration_insurance")
     @Temporal(TemporalType.DATE)
@@ -102,12 +102,12 @@ public class Sale {
         this.dateSale = dateSale;
     }
 
-    public LocalDate getDateDilevery() {
-        return dateDilevery;
+    public LocalDate getDateDelivery() {
+        return dateDelivery;
     }
 
-    public void setDateDilevery(LocalDate dateDilevery) {
-        this.dateDilevery = dateDilevery;
+    public void setDateDelivery(LocalDate dateDelivery) {
+        this.dateDelivery = dateDelivery;
     }
 
     public LocalDate getDateExpiratonInsurance() {

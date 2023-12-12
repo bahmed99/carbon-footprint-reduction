@@ -16,7 +16,7 @@ public class SaleDTO {
     private Long id;
     private Double price;
     private LocalDate dateSale;
-    private LocalDate dateDilevery;
+    private LocalDate dateDelivery;
     private LocalDate dateExpiratonInsurance;
     private LocalDate createdAt;
     private LocalDate updatedAt;
@@ -26,7 +26,7 @@ public class SaleDTO {
         this.id = sale.getId();
         this.price = sale.getPrice();
         this.dateSale = sale.getDateSale();
-        this.dateDilevery = sale.getDateDilevery();
+        this.dateDelivery = sale.getDateDelivery();
         this.dateExpiratonInsurance = sale.getDateExpiratonInsurance();
         this.createdAt = sale.getCreatedAt();
         this.updatedAt = sale.getUpdatedAt();

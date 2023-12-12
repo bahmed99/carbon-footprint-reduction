@@ -89,8 +89,8 @@ export default function StatesPage() {
         },
         {
             title: 'Delivery Date',
-            dataIndex: 'dateDilevery',
-            key: 'dateDilevery',
+            dataIndex: 'dateDelivery',
+            key: 'dateDelivery',
         },
 
         {
