@@ -33,8 +33,8 @@ export default function MainRouter() {
 
 
 
-        <Route path={"/brands"} element={<PrivateRoute Component={BrandsPage} auth={role == "USER" && token!==null} />} />
-        <Route path={"/models"}  element={<PrivateRoute Component={ModelsPage} auth={role == "USER" && token!==null} />} />
+        <Route path={"/brands"} element={<PrivateRoute Component={BrandsPage} auth={role == "ADMIN" && token!==null} />} />
+        <Route path={"/models"}  element={<PrivateRoute Component={ModelsPage} auth={role == "ADMIN" && token!==null} />} />
 
         <Route path={"/"} element={<Home />} />
 
