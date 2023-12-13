@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import projet.gl.server.sale.Sale;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.time.LocalDate;
 
 @Service
@@ -20,13 +22,23 @@ public class ReparationService {
         this.reparationRepository = reparationRepository;
     }
 
-    public List<Reparation> getAllReparations() {
-        return reparationRepository.findAll();
+    // Méthode pour obtenir tous les reparations
+    public List<ReparationDTO> getAllReparationsDTO() {
+        List<Reparation> reparations = reparationRepository.findAll();
+        return reparations.stream()
+                .map(this::convertToReparationDTO)
+                .collect(Collectors.toList());
     }
 
-    //Méthode pour obtenir les reparations par page et par taille
-    public Page<Reparation> getReparationsByPageAndSize(Pageable pageable) {
-        return reparationRepository.findAll(pageable);
+    // convertir de Reparation à ReparationDTO
+    private ReparationDTO convertToReparationDTO(Reparation reparation) {
+        return new ReparationDTO(reparation);
+    }
+
+    // Méthode pour obtenir les reparations par page et par taille
+    public Page<ReparationDTO> getReparationsByPageAndSize(Pageable pageable) {
+        Page<Reparation> reparations = reparationRepository.findAll(pageable);
+        return reparations.map(this::convertToReparationDTO);
     }
 
     public Reparation getReparationById(Long id) {
@@ -69,8 +81,8 @@ public class ReparationService {
         reparationRepository.deleteById(id);
     }
 
-     //Méthode pour obtenir la taille de la table de réparations
-     public long getReparationsTableSize() {
+    // Méthode pour obtenir la taille de la table de réparations
+    public long getReparationsTableSize() {
         return reparationRepository.count();
     }
 }

@@ -1,4 +1,5 @@
 package projet.gl.server.rental;
+
 import java.util.Random;
 
 import jakarta.persistence.Entity;
@@ -197,13 +198,21 @@ public class Rental {
         rentalStartDate = LocalDate.now();
         rentalCreatedAt = LocalDate.now();
         rentalUpdatedAt = LocalDate.now();
-        rentalEndDate =  LocalDate.now().plusDays(random.nextInt(30) + 1);
+        rentalEndDate = LocalDate.now().plusDays(random.nextInt(30) + 1);
         insuranceExpirationDate = LocalDate.now().plusYears(random.nextInt(4) + 1);
     }
 
     @PreUpdate
     public void preUpdate() {
         rentalUpdatedAt = LocalDate.now();
+    }
+
+    public String getModelName() {
+        return rentedVehicle.getModel().getName();
+    }
+
+    public String getBrandName() {
+        return rentedVehicle.getModel().getBrand().getName();
     }
 
 }

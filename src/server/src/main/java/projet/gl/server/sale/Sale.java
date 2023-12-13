@@ -146,4 +146,12 @@ public class Sale {
         updatedAt = LocalDate.now();
     }
 
+    public String getModelName() {
+        return vehicle.getModel().getName();
+    }
+
+    public String getBrandName() {
+        return vehicle.getModel().getBrand().getName();
+    }
+
 }
