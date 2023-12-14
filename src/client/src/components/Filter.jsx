@@ -89,6 +89,8 @@ export default function Filter(props) {
 
     props.setFilters(x);
 
+    console.log(x)
+
 
     axios
       .post(process.env.REACT_APP_API_URL + `vehicles/filters/page/${props.pageNumber - 1}/${props.pageSize}`, x, {

@@ -49,19 +49,19 @@ export default function StatesPage() {
             key: 'rentalFee',
 
         }
-        ,{
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-              <Space size="middle">
-                  <select onChange={(e)=>handleChangeState(e,record.id)}>
-                      <option value="0">Move to</option>
-                      <option value="Sales">Sales</option>
-                      <option value="Reparations">Reparations</option>
-                  </select>
-              </Space>
-            ),
-          }
+        // ,{
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (_, record) => (
+        //       <Space size="middle">
+        //           <select onChange={(e)=>handleChangeState(e,record.id)}>
+        //               <option value="0">Move to</option>
+        //               <option value="Sales">Sales</option>
+        //               <option value="Reparations">Reparations</option>
+        //           </select>
+        //       </Space>
+        //     ),
+        //   }
 
 
     ])
@@ -98,19 +98,19 @@ export default function StatesPage() {
             dataIndex: 'price',
             key: 'price',
         },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-              <Space size="middle">
-                  <select onChange={(e)=>handleChangeState(e,record.id)}>
-                      <option value="-1">Move to</option>
-                      <option value="Reparations">Reparations</option>
-                      <option value="Rentals">Rentals</option>
-                  </select>
-              </Space>
-            ),
-          }
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (_, record) => (
+        //       <Space size="middle">
+        //           <select onChange={(e)=>handleChangeState(e,record.id)}>
+        //               <option value="-1">Move to</option>
+        //               <option value="Reparations">Reparations</option>
+        //               <option value="Rentals">Rentals</option>
+        //           </select>
+        //       </Space>
+        //     ),
+        //   }
     ];
 
     // Colonnes pour l'état de réparation
@@ -146,19 +146,19 @@ export default function StatesPage() {
             key: 'repairCost',
         },
         
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-            <select onChange={(e)=>handleChangeState(e,record.id)}>
-                <option value="0">Move to</option>
-                <option value="Sales">Sales</option>
-                <option value="Rentals">Rentals</option>
-            </select>
-        </Space>
-      ),
-    }
+    // {
+    //   title: 'Action',
+    //   key: 'action',
+    //   render: (_, record) => (
+    //     <Space size="middle">
+    //         <select onChange={(e)=>handleChangeState(e,record.id)}>
+    //             <option value="0">Move to</option>
+    //             <option value="Sales">Sales</option>
+    //             <option value="Rentals">Rentals</option>
+    //         </select>
+    //     </Space>
+    //   ),
+    // }
     ];
 
 

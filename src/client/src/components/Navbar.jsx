@@ -79,9 +79,21 @@ function Navbar() {
             {authState.connected ? (
               <>
                 {
-                  role == "ADMIN" ? <Link className="nav-link" to="/addCars">
+                  role == "ADMIN" ? 
+                  <> <Link className="nav-link" to="/addCars">
                     Add vehicle
-                  </Link> : ""
+                  </Link>
+                         <Link className="nav-link" to="/brands">
+                         Brands
+                       </Link>
+                       <Link className="nav-link" to="/models">
+                         Models
+                       </Link>
+
+                       </>
+                  
+                  
+                  : ""
                 }
 
 
@@ -90,12 +102,7 @@ function Navbar() {
                     Vehicles
                   </Link>
 
-                    <Link className="nav-link" to="/brands">
-                      Brands
-                    </Link>
-                    <Link className="nav-link" to="/models">
-                      Models
-                    </Link>
+             
                     <Link className="nav-link" to="/states">
                       States
                     </Link>

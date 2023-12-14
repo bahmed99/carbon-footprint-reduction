@@ -8,7 +8,11 @@ import io.gatling.javaapi.http.HttpProtocolBuilder;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockito.internal.exceptions.util.ScenarioPrinter;
 import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 
@@ -16,47 +20,40 @@ import io.gatling.javaapi.core.Simulation;
 
 public class CustomerRequestSimulation extends Simulation {
 
-        HttpProtocolBuilder httpProtocol = HttpDsl.http
-                        .baseUrl("http://localhost:8080")
-                        .acceptHeader("application/json")
-                        .userAgentHeader("Gatling/Performance Test");
+    Map<String, Object> filters;
+    ObjectMapper objectMapper;
+    String jsonBody;
+    HttpProtocolBuilder httpProtocol;
 
-        // ScenarioBuilder scn = scenario("countByBrand")
-        // .exec(HttpDsl.http("Count By Brand")
-        // .get("/vehicles/countByBrand"));
+    public CustomerRequestSimulation() {
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("brandIds", new int[]{2});
+        filters.put("colorIds", new int[]{6});
+        filters.put("configurationIds", new int[]{5});
+        filters.put("modelIds", new int[]{14});
+        
 
-        // ScenarioBuilder scLogin = scenario("login")
-        // .exec(HttpDsl.http("login")
-        // .post("/auth/login")
-        // .body(StringBody("{\"email\":\"ahmed@gmail.com\",\"password\":\"12345678\"}"))
-        // .asJson());
+        objectMapper = new ObjectMapper();
 
-        // ScenarioBuilder scFilter = scenario("filter")
-        // .exec(HttpDsl.http("filter")
-        // .post("/vehicles/filters/page/0/10")
-        // .body(StringBody("{}"))
-        // .asJson());
-
-        // ScenarioBuilder scAddBrand = scenario("addBrand")
-        // .exec(HttpDsl.http("addBrand")
-        // .post("/brands")
-        // .body(StringBody("{\"name\":\"MERCEDES\"}"))
-        // .asJson());
-
-        ScenarioBuilder scGetSales = scenario("getSales")
-                        .exec(HttpDsl.http("sales")
-                                        .post("/sales")
-                                        .body(StringBody("{}"))
-                                        .asJson());
-
-        public CustomerRequestSimulation() {
-                this.setUp(
-                                // scn.injectOpen(constantUsersPerSec(50).during(Duration.ofSeconds(15))),
-                                // scLogin.injectOpen(constantUsersPerSec(30).during(Duration.ofSeconds(20))),
-                                // scFilter.injectOpen(constantUsersPerSec(50).during(Duration.ofSeconds(15))),
-                                // scAddBrand.injectOpen(constantUsersPerSec(1).during(Duration.ofSeconds(1))),
-                                scGetSales.injectOpen(constantUsersPerSec(1).during(Duration.ofSeconds(1))))
-                                .protocols(httpProtocol);
+        try {
+            jsonBody = objectMapper.writeValueAsString(filters);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
 
+        httpProtocol = HttpDsl.http
+                .baseUrl("http://localhost:8080")
+                .acceptHeader("application/json")
+                .userAgentHeader("Gatling/Performance Test");
+
+        ScenarioBuilder scFilter = scenario("filter")
+                .exec(HttpDsl.http("filter")
+                        .post("/vehicles/filters/page/0/10")
+                        .body(StringBody(jsonBody))
+                        .asJson());
+
+        this.setUp(scFilter.injectOpen(constantUsersPerSec(50).during(Duration.ofSeconds(15))))
+            .protocols(httpProtocol);
+    }
 }
+
