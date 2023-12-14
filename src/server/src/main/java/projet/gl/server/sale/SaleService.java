@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SaleService {
+    private final Random random = new Random();
     private final SaleRepository saleRepository;
 
     @Autowired
@@ -48,12 +49,11 @@ public class SaleService {
     }
 
     public Sale createSale(long idVehicle, double price) {
-        Random random = new Random();
         Sale sale = new Sale();
         sale.setVehicleId(idVehicle);
         sale.setPrice(price * 1.2);
-        sale.setDateDelivery(LocalDate.now().plusDays(random.nextInt(30) + 1));
-        sale.setDateExpiratonInsurance(LocalDate.now().plusYears(random.nextInt(4) + 1));
+        sale.setDateDelivery(LocalDate.now().plusDays(random.nextLong(30) + 1));
+        sale.setDateExpiratonInsurance(LocalDate.now().plusYears(random.nextLong(4) + 1));
         return saleRepository.save(sale);
     }
 

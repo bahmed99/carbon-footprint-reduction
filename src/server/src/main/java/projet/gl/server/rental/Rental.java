@@ -15,8 +15,6 @@ import projet.gl.server.vehicle.Vehicle;
 
 import java.time.LocalDate;
 
-import org.springframework.cglib.core.Local;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
@@ -62,8 +60,10 @@ public class Rental {
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Vehicle rentedVehicle;
 
-    public Rental() {
+    private final Random random = new Random();
 
+    public Rental() {
+        // This is a default constructor that is required by JPA
     }
 
     /**
@@ -194,12 +194,11 @@ public class Rental {
 
     @PrePersist
     public void prePersist() {
-        Random random = new Random();
         rentalStartDate = LocalDate.now();
         rentalCreatedAt = LocalDate.now();
         rentalUpdatedAt = LocalDate.now();
-        rentalEndDate = LocalDate.now().plusDays(random.nextInt(30) + 1);
-        insuranceExpirationDate = LocalDate.now().plusYears(random.nextInt(4) + 1);
+        rentalEndDate = LocalDate.now().plusDays(random.nextLong(30) + 1);
+        insuranceExpirationDate = LocalDate.now().plusYears(random.nextLong(4) + 1);
     }
 
     @PreUpdate

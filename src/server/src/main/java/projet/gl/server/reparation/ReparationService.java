@@ -5,8 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.sale.Sale;
-
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,6 +12,7 @@ import java.time.LocalDate;
 
 @Service
 public class ReparationService {
+    private Random random = new Random();
 
     private final ReparationRepository reparationRepository;
 
@@ -50,12 +49,12 @@ public class ReparationService {
     }
 
     public Reparation createReparation(long idVehicle, double price) {
-        Random random = new Random();
         Reparation reparation = new Reparation();
+        Long startDate = random.nextLong(30) + 1;
         reparation.setVehicleId(idVehicle);
         reparation.setRepairCost(price * 0.2);
-        reparation.setRepairStartDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
-        reparation.setRepairEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
+        reparation.setRepairStartDate(LocalDate.now().plusDays(startDate));
+        reparation.setRepairEndDate(LocalDate.now().plusDays(random.nextLong(30) + startDate));
         reparation.setRepairCreatedAt(LocalDate.now());
         reparation.setRepairUpdatedAt(LocalDate.now());
         return reparationRepository.save(reparation);

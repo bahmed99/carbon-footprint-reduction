@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -49,8 +48,10 @@ public class Reparation {
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Vehicle repairedVehicle;
 
-    public Reparation() {
+    private final Random random = new Random();
 
+    public Reparation() {
+        // This is a default constructor that is required by JPA
     }
 
     /**
@@ -167,7 +168,6 @@ public class Reparation {
 
     @PrePersist
     public void prePersist() {
-        Random random = new Random();
         repairStartDate = LocalDate.now();
         repairCreatedAt = LocalDate.now();
         repairUpdatedAt = LocalDate.now();

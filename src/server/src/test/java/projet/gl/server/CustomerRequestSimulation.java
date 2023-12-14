@@ -1,6 +1,5 @@
 package projet.gl.server;
 
-import io.gatling.core.body.StringBody;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.http.HttpDsl;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
@@ -8,9 +7,6 @@ import io.gatling.javaapi.http.HttpProtocolBuilder;
 import static io.gatling.javaapi.core.CoreDsl.*;
 
 import java.time.Duration;
-
-import org.mockito.internal.exceptions.util.ScenarioPrinter;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 
 import io.gatling.javaapi.core.Simulation;
 

@@ -82,31 +82,30 @@ public class AuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-
     public String getUsernameFromToken(String token) {
         String userEmail = jwtService.extractUsername(token);
         User user = repository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found")); 
-    
-        String userFullName = user.getFirstname() + " " + user.getLastname();
-        return userFullName;
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return user.getFirstname() + " " + user.getLastname();
     }
 
     public boolean isTokenValidForUser(String token) {
         String userEmail = jwtService.extractUsername(token);
         Optional<User> userToken = repository.findByEmail(userEmail);
-    
+
+        if (!userToken.isPresent()) {
+            return false;
+        }
         return jwtService.isTokenValid(token, userToken.get());
     }
 
     public Role getRoleFromToken(String token) {
         String userEmail = jwtService.extractUsername(token);
         User user = repository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found")); 
-    
-        Role userRole = user.getRole();
-        return userRole;
-    }
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        return user.getRole();
+    }
 
 }

@@ -5,10 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.reparation.Reparation;
-import projet.gl.server.sale.Sale;
-import projet.gl.server.sale.SaleDTO;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RentalService {
+    private Random random = new Random();
     private final RentalRepository rentalRepository;
 
     @Autowired
@@ -52,12 +49,11 @@ public class RentalService {
     }
 
     public Rental createRental(long idVehicle, double rentalFee) {
-        Random random = new Random();
         Rental rental = new Rental();
         rental.setVehicleId(idVehicle);
         rental.setRentalFee(rentalFee * 0.4);
-        rental.setRentalEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
-        rental.setInsuranceExpirationDate(LocalDate.now().plusYears(random.nextInt(4) + 1));
+        rental.setRentalEndDate(LocalDate.now().plusDays(random.nextLong(30) + 1));
+        rental.setInsuranceExpirationDate(LocalDate.now().plusYears(random.nextLong(4) + 1));
         return rentalRepository.save(rental);
     }
 
