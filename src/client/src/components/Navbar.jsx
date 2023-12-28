@@ -55,6 +55,7 @@ function Navbar() {
           });
           localStorage.removeItem("accessToken");
           localStorage.removeItem("role");
+          localStorage.removeItem("colors");
           window.location = "/";
         }
       })

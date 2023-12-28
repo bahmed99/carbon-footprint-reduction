@@ -17,48 +17,49 @@ export default function Filter(props) {
 
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_URL + props.url, {
-      headers: {
-        Authorization: Authorization,
-      }
-    })
-      .then((res) => {
-
-
-        let x = props.filters;
-
-        Object.keys(x).forEach((key) => {
-          if (x[key].length === 0) {
-            delete x[key];
-          }
+    const handleData = (data) => {
+      let x = props.filters;
+      Object.keys(x).forEach((key) => {
+        if (x[key].length === 0) {
+          delete x[key];
         }
-        );
-
-        axios.post(process.env.REACT_APP_API_URL + `vehicles/filters/${props.url.slice(0, -1)}`, x, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: Authorization,
-          },
-        }).then((resp) => {
-
-          let y = res.data
-          //add count to y 
-          y.forEach((item, index) => {
-            const carCount = resp.data.find((element) => element[0] === item.id);
-            y[index].count = carCount ? carCount[1] : 0
-          })
-
-          setData(y)
-    
-
-
-        }).catch((err) => console.log(err))
-
-
-
+      });
+  
+      axios.post(process.env.REACT_APP_API_URL + `vehicles/filters/${props.url.slice(0, -1)}`, x, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Authorization,
+        },
       })
-      .catch((err) => console.log(err))
-  }, [props.filters,props.data])
+      .then((resp) => {
+        // add count to data
+        data.forEach((item, index) => {
+          const carCount = resp.data.find((element) => element[0] === item.id);
+          data[index].count = carCount ? carCount[1] : 0;
+        });
+        setData(data);
+      })
+      .catch((err) => console.log(err));
+    };
+  
+    if (props.url === "colors") {
+      let y = localStorage.getItem('colors');
+      y = JSON.parse(y);
+      handleData(y);
+    } else {
+      axios.get(process.env.REACT_APP_API_URL + props.url, {
+        headers: {
+          Authorization: Authorization,
+        },
+      })
+      .then((res) => {
+        handleData(res.data);
+      })
+      .catch((err) => console.log(err));
+    }
+  }, [props.filters, props.data]);
+  
+  
 
   const HandleChange = (e) => {
 
