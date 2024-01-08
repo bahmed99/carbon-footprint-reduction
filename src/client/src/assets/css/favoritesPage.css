@@ -1,0 +1,15 @@
+.favoritesPage{
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: 100vh;
+}
+.favoritesPage-title{
+    font-family: var(--secondary);
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--red);
+    margin-left: 15px;
+    
+}

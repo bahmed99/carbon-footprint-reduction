@@ -11,7 +11,7 @@ import BrandsPage from "./pages/BrandsPage";
 import ModelsPage from "./pages/ModelsPage";
 import StatesPage from "./pages/StatesPage";
 import Navbar from "./components/Navbar";
-
+import FavoritesPage from "./pages/FavoritesPage";
 export default function MainRouter() {
 
   const role = localStorage.getItem("role");
@@ -25,7 +25,7 @@ export default function MainRouter() {
       <Routes>
 
         <Route path={"/vehicles"}  element={<PrivateRoute Component={FilterPage} auth={role == "USER" && token!==null} />}  />
-
+        <Route path={"/favorites"}  element={<PrivateRoute Component={FavoritesPage} auth={role == "USER" && token!==null} />}  />
         <Route path={"/addCars"} 
         element={<PrivateRoute Component={AddingCarsPage} auth={role === "ADMIN"} />} 
         />

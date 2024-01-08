@@ -4,7 +4,9 @@ import TableFilter from '../components/TableFilter'
 import { Tag } from 'antd';
 import axios from 'axios'
 import Stomp from 'stompjs';
-
+import { Button } from 'antd';
+import { HeartFilled } from '@ant-design/icons';
+import { HeartOutlined } from '@ant-design/icons';
 export default function FilterPage() {
 
   const Authorization = 'Bearer' + localStorage.getItem('accessToken');
@@ -14,8 +16,32 @@ export default function FilterPage() {
   const [loading, setLoading] = useState(false)
   const [countData, setCountData] = useState(0)
   const [filters, setFilters] = useState({})
-
+  const [favoriteCars, setFavoriteCars] = useState([]);
+  
   const socket = new WebSocket('ws://localhost:8080/chat', "v10.stomp");
+
+  //Ajouter une voiture aux favoris
+  const handleFavoriteClick = (record) => {
+    console.log("Favori cliqué pour la voiture avec l'ID:", record.key);
+    // Récupérer les voitures favorites actuelles du cache
+    const favoriteCars = JSON.parse(localStorage.getItem('favoriteCars')) || [];
+    // Vérifier si la voiture est déjà dans les favoris
+    const isAlreadyFavorite = favoriteCars.some((car) => car.key === record.key);
+    if (isAlreadyFavorite) {
+      const updatedFavoriteCars = favoriteCars.filter((car) => car.key !== record.key);
+      localStorage.setItem('favoriteCars', JSON.stringify(updatedFavoriteCars));
+      console.log('Voiture supprimée des favoris !');
+    } else {
+      const recordWithFavorite = { ...record, isFavorite: true };
+      const updatedFavoriteCars = [...favoriteCars, recordWithFavorite];
+      localStorage.setItem('favoriteCars', JSON.stringify(updatedFavoriteCars));
+      console.log('Voiture ajoutée aux favoris !');
+      
+    }
+  };
+  
+
+
 
   useEffect(() => {
     const stompClient = Stomp.over(socket);
@@ -28,6 +54,13 @@ export default function FilterPage() {
 
     stompClient.connect({}, onConnect);
   },[socket])
+
+  // Récupérer les voitures favorites du cache
+  useEffect(() => {
+    const favoriteCars = JSON.parse(localStorage.getItem('favoriteCars')) || [];
+    setFavoriteCars(favoriteCars);
+  }, [favoriteCars]);
+  
 
   const [columns, setColumns] = useState([
     {
@@ -81,6 +114,19 @@ export default function FilterPage() {
       dataIndex: 'price',
       key: 'price',
     },
+    {
+      title: '',
+      key: 'isFavorite',
+      render: (_, record) => (
+        <Button
+        className={`button-${record.isFavorite ? 'favorite' : 'not-favorite'}`}
+        onClick={() => handleFavoriteClick(record)}
+      >
+        {record.isFavorite ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />}
+        {record.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      </Button>
+      ),
+    },
     // {
     //   title: 'Action',
     //   key: 'action',
@@ -91,6 +137,7 @@ export default function FilterPage() {
     //     </Space>
     //   ),
     // },
+
   ])
 
   const fetchData = () => {
@@ -112,6 +159,7 @@ export default function FilterPage() {
     })
       .then((res) => {
         setData(getCars(res));
+        
         setLoading(false);
               })
       .catch((err) => {
@@ -141,7 +189,7 @@ export default function FilterPage() {
     <div>
       <div className='ContainerFiltrePage'>
         <Filters  setPageNumber={setPageNumber} setPageSize={setPageSize} countData={countData} pageNumber={pageNumber} pageSize={pageSize} data={data} filters={filters} setFilters={setFilters} setData={setData} setLoading={setLoading} />
-        <TableFilter countData={countData} pageNumber={pageNumber} pageSize={pageSize} setPageNumber={setPageNumber} setPageSize={setPageSize} filters={filters} setFilters={setFilters} data={data} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
+        <TableFilter countData={countData} pageNumber={pageNumber} pageSize={pageSize} setPageNumber={setPageNumber} setPageSize={setPageSize} filters={filters} setFilters={setFilters} data={data.map(car => ({ ...car, isFavorite: favoriteCars.some(favCar => favCar.key === car.key) }))} columns={columns} loading={loading} setData={setData} setLoading={setLoading} />
       </div>
     </div>
   )
@@ -166,6 +214,7 @@ export function getCars(response) {
     car.configurations = [item.configurations.map((item) => item.name)]
     car.price = item.priceWithoutConfiguration
     car.color = item.color.name
+
     cars.push(car)
     car = {
       key: '',

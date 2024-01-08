@@ -55,6 +55,7 @@ function Navbar() {
           });
           localStorage.removeItem("accessToken");
           localStorage.removeItem("role");
+          localStorage.removeItem("favoriteCars");
           window.location = "/";
         }
       })
@@ -89,6 +90,7 @@ function Navbar() {
                        <Link className="nav-link" to="/models">
                          Models
                        </Link>
+                       
 
                        </>
                   
@@ -105,6 +107,9 @@ function Navbar() {
              
                     <Link className="nav-link" to="/states">
                       States
+                    </Link>
+                    <Link className="nav-link" to="/favorites">
+                      Favorites 
                     </Link>
 
                   </> : ""}
