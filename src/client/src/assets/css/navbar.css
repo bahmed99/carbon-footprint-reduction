@@ -63,7 +63,6 @@ a.nav-link {
 }
 .nav-logo {
   margin: 10px;
-  max-width: 500px;
   height: auto;
   width: auto;
 }
@@ -109,7 +108,7 @@ a.nav-link {
     display: inline-block;
   }
   .user-image {
-    width: 30px;
+    width: auto;
     height: auto;
     margin-right: 10px;
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import AddingCarsForm from '../components/AddingCarsForm';
-import Carpage from '../assets/images/carpage.png'
+import Carpage from '../assets/images/carpage.webp'
 import Navbar from '../components/Navbar';
 const AddingCarsPage = () => {
     return (
