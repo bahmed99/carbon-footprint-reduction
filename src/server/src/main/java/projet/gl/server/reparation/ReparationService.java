@@ -1,13 +1,18 @@
 package projet.gl.server.reparation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import projet.gl.server.rental.RentalRepository;
 import projet.gl.server.sale.SaleRepository;
+import projet.gl.server.vehicle.Vehicle;
+import projet.gl.server.vehicle.VehicleRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
@@ -17,6 +22,9 @@ public class ReparationService {
     private ReparationRepository reparationRepository;
     private RentalRepository rentalRepository;
     private SaleRepository saleRepository;
+
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     public ReparationService(ReparationRepository reparationRepository, RentalRepository rentalRepository,
             SaleRepository saleRepository) {
@@ -52,10 +60,11 @@ public class ReparationService {
         return reparationRepository.save(reparation);
     }
 
+    @Transactional
     public Reparation createReparation(long idVehicle, double price, String initialState) {
         Random random = new Random();
         Reparation reparation = new Reparation();
-        
+
         if (initialState.equals("RENTAL")) {
             rentalRepository.deleteByVehicleId(idVehicle);
         } else if (initialState.equals("SALE")) {
@@ -63,11 +72,14 @@ public class ReparationService {
         }
 
         reparation.setVehicleId(idVehicle);
-        reparation.setRepairCost(price * 0.2);
+        Optional<Vehicle> vehicle = vehicleRepository.findById(idVehicle);
+        reparation.setRepairedVehicle(vehicle.get());
+        reparation.setRepairCost(vehicle.get().getPriceWithoutConfiguration() * 0.2);
         reparation.setRepairStartDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
         reparation.setRepairEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
         reparation.setRepairCreatedAt(LocalDate.now());
         reparation.setRepairUpdatedAt(LocalDate.now());
+
         return reparationRepository.save(reparation);
 
     }

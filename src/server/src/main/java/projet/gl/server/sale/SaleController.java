@@ -64,9 +64,9 @@ public class SaleController {
         return new ResponseEntity<>(convertToSaleDTO(createdSale), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{vehicleId}/{price}/{initialState}")
-    public ResponseEntity<SaleDTO> changeToSale(@PathVariable Long vehicleId, @PathVariable double price, @PathVariable String initialState) {
-        Sale createdSale = saleService.createSale(vehicleId, price, initialState);
+    @PostMapping("/{vehicleId}/{initialState}")
+    public ResponseEntity<SaleDTO> changeToSale(@PathVariable Long vehicleId, @PathVariable String initialState) {
+        Sale createdSale = saleService.createSale(vehicleId, 0, initialState);
         return new ResponseEntity<>(convertToSaleDTO(createdSale), HttpStatus.CREATED);
     }
 
