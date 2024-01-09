@@ -64,7 +64,7 @@ public class SaleController {
         return new ResponseEntity<>(convertToSaleDTO(createdSale), HttpStatus.CREATED);
     }
 
-    @PostMapping
+    @PostMapping("/{vehicleId}/{price}/{initialState}")
     public ResponseEntity<SaleDTO> changeToSale(@PathVariable Long vehicleId, @PathVariable double price, @PathVariable String initialState) {
         Sale createdSale = saleService.createSale(vehicleId, price, initialState);
         return new ResponseEntity<>(convertToSaleDTO(createdSale), HttpStatus.CREATED);

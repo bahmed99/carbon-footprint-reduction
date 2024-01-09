@@ -64,7 +64,7 @@ public class RentalController {
         return new ResponseEntity<>(convertToRentalDTO(createdRental), HttpStatus.CREATED);
     }
 
-    @PostMapping
+    @PostMapping("/{vehicleId}/{rentalFee}/{initialState}")
     public ResponseEntity<RentalDTO> changeToRental(@PathVariable Long vehicleId, @PathVariable double rentalFee, @PathVariable String initialState) {
         Rental createdRental = rentalService.createRental(vehicleId, rentalFee, initialState);
         return new ResponseEntity<>(convertToRentalDTO(createdRental), HttpStatus.CREATED);
