@@ -15,8 +15,6 @@ import projet.gl.server.vehicle.Vehicle;
 
 import java.time.LocalDate;
 
-import org.springframework.cglib.core.Local;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;

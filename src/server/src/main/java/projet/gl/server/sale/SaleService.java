@@ -1,9 +1,11 @@
 package projet.gl.server.sale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import projet.gl.server.rental.RentalRepository;
+import projet.gl.server.reparation.ReparationRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,11 +15,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class SaleService {
-    private final SaleRepository saleRepository;
+    private SaleRepository saleRepository;
+    private RentalRepository rentalRepository;
+    private ReparationRepository reparationRepository;
 
-    @Autowired
-    public SaleService(SaleRepository saleRepository) {
+    public SaleService(SaleRepository saleRepository, RentalRepository rentalRepository,
+            ReparationRepository reparationRepository) {
         this.saleRepository = saleRepository;
+        this.rentalRepository = rentalRepository;
+        this.reparationRepository = reparationRepository;
     }
 
     // Méthode pour obtenir tous les sales
@@ -47,9 +53,16 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
-    public Sale createSale(long idVehicle, double price) {
+    public Sale createSale(long idVehicle, double price, String initialState) {
         Random random = new Random();
         Sale sale = new Sale();
+
+        if (initialState.equals("RENTAL")) {
+            rentalRepository.deleteByVehicleId(idVehicle);
+        } else if (initialState.equals("REPARATION")) {
+            reparationRepository.deleteByVehicleId(idVehicle);
+        }
+
         sale.setVehicleId(idVehicle);
         sale.setPrice(price * 1.2);
         sale.setDateDelivery(LocalDate.now().plusDays(random.nextInt(30) + 1));

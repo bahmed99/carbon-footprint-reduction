@@ -1,13 +1,11 @@
 package projet.gl.server.rental;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.reparation.Reparation;
-import projet.gl.server.sale.Sale;
-import projet.gl.server.sale.SaleDTO;
+import projet.gl.server.reparation.ReparationRepository;
+import projet.gl.server.sale.SaleRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,11 +15,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class RentalService {
-    private final RentalRepository rentalRepository;
+    private RentalRepository rentalRepository;
+    private ReparationRepository reparationRepository;
+    private SaleRepository saleRepository;
 
-    @Autowired
-    public RentalService(RentalRepository rentalRepository) {
+    public RentalService(RentalRepository rentalRepository, ReparationRepository reparationRepository,
+            SaleRepository saleRepository) {
         this.rentalRepository = rentalRepository;
+        this.reparationRepository = reparationRepository;
+        this.saleRepository = saleRepository;
     }
 
     // Méthode pour obtenir tous les rentals
@@ -51,9 +53,16 @@ public class RentalService {
         return rentalRepository.save(rental);
     }
 
-    public Rental createRental(long idVehicle, double rentalFee) {
+    public Rental createRental(long idVehicle, double rentalFee, String initialState) {
         Random random = new Random();
         Rental rental = new Rental();
+
+        if (initialState.equals("REPERATION")) {
+            reparationRepository.deleteByVehicleId(idVehicle);
+        } else if (initialState.equals("SALE")) {
+            saleRepository.deleteByVehicleId(idVehicle);
+        }
+
         rental.setVehicleId(idVehicle);
         rental.setRentalFee(rentalFee * 0.4);
         rental.setRentalEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
