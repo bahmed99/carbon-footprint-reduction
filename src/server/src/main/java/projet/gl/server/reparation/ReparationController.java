@@ -62,6 +62,13 @@ public class ReparationController {
         return new ResponseEntity<>(createdReparation, HttpStatus.CREATED);
     }
 
+    @PostMapping("/{vehicleId}/{initialState}")
+    public ResponseEntity<Reparation> changeToReparation(@PathVariable Long vehicleId,
+            @PathVariable String initialState) {
+        Reparation createdReparation = reparationService.createReparation(vehicleId, 0, initialState);
+        return new ResponseEntity<>(createdReparation, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Reparation> updateReparation(@PathVariable Long id, @RequestBody Reparation reparation) {
         Reparation updatedReparation = reparationService.updateReparation(id, reparation);

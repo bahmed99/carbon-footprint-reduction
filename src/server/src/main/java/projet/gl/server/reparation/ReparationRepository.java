@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReparationRepository extends JpaRepository<Reparation, Long> {
+    void deleteByVehicleId(Long vehicleId);
 }

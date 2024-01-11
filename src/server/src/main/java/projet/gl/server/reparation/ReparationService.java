@@ -5,21 +5,32 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import projet.gl.server.sale.Sale;
+import jakarta.transaction.Transactional;
+import projet.gl.server.rental.RentalRepository;
+import projet.gl.server.sale.SaleRepository;
+import projet.gl.server.vehicle.Vehicle;
+import projet.gl.server.vehicle.VehicleRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
 
 @Service
 public class ReparationService {
-
-    private final ReparationRepository reparationRepository;
+    private ReparationRepository reparationRepository;
+    private RentalRepository rentalRepository;
+    private SaleRepository saleRepository;
 
     @Autowired
-    public ReparationService(ReparationRepository reparationRepository) {
+    private VehicleRepository vehicleRepository;
+
+    public ReparationService(ReparationRepository reparationRepository, RentalRepository rentalRepository,
+            SaleRepository saleRepository) {
         this.reparationRepository = reparationRepository;
+        this.rentalRepository = rentalRepository;
+        this.saleRepository = saleRepository;
     }
 
     // Méthode pour obtenir tous les reparations
@@ -49,15 +60,26 @@ public class ReparationService {
         return reparationRepository.save(reparation);
     }
 
-    public Reparation createReparation(long idVehicle, double price) {
+    @Transactional
+    public Reparation createReparation(long idVehicle, double price, String initialState) {
         Random random = new Random();
         Reparation reparation = new Reparation();
+
+        if (initialState.equals("RENTAL")) {
+            rentalRepository.deleteByVehicleId(idVehicle);
+        } else if (initialState.equals("SALE")) {
+            saleRepository.deleteByVehicleId(idVehicle);
+        }
+
         reparation.setVehicleId(idVehicle);
-        reparation.setRepairCost(price * 0.2);
+        Optional<Vehicle> vehicle = vehicleRepository.findById(idVehicle);
+        reparation.setRepairedVehicle(vehicle.get());
+        reparation.setRepairCost(vehicle.get().getPriceWithoutConfiguration() * 0.2);
         reparation.setRepairStartDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
         reparation.setRepairEndDate(LocalDate.now().plusDays(random.nextInt(30) + 1));
         reparation.setRepairCreatedAt(LocalDate.now());
         reparation.setRepairUpdatedAt(LocalDate.now());
+
         return reparationRepository.save(reparation);
 
     }

@@ -49,19 +49,19 @@ export default function StatesPage() {
             key: 'rentalFee',
 
         }
-        // ,{
-        //     title: 'Action',
-        //     key: 'action',
-        //     render: (_, record) => (
-        //       <Space size="middle">
-        //           <select onChange={(e)=>handleChangeState(e,record.id)}>
-        //               <option value="0">Move to</option>
-        //               <option value="Sales">Sales</option>
-        //               <option value="Reparations">Reparations</option>
-        //           </select>
-        //       </Space>
-        //     ),
-        //   }
+        ,{
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+              <Space size="middle">
+                  <select onChange={(e)=>handleChangeState(e,record.vehicleId,"RENTAL")}>
+                      <option value="0">Move to</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Reparations">Reparations</option>
+                  </select>
+              </Space>
+            ),
+          }
 
 
     ])
@@ -98,19 +98,20 @@ export default function StatesPage() {
             dataIndex: 'price',
             key: 'price',
         },
-        // {
-        //     title: 'Action',
-        //     key: 'action',
-        //     render: (_, record) => (
-        //       <Space size="middle">
-        //           <select onChange={(e)=>handleChangeState(e,record.id)}>
-        //               <option value="-1">Move to</option>
-        //               <option value="Reparations">Reparations</option>
-        //               <option value="Rentals">Rentals</option>
-        //           </select>
-        //       </Space>
-        //     ),
-        //   }
+
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+              <Space size="middle">
+                  <select onChange={(e)=>handleChangeState(e,record.vehicleId,"SALE")}>
+                      <option value="-1">Move to</option>
+                      <option value="Reparations">Reparations</option>
+                      <option value="Rentals">Rentals</option>
+                  </select>
+              </Space>
+            ),
+          }
     ];
 
     // Colonnes pour l'état de réparation
@@ -146,19 +147,19 @@ export default function StatesPage() {
             key: 'repairCost',
         },
         
-    // {
-    //   title: 'Action',
-    //   key: 'action',
-    //   render: (_, record) => (
-    //     <Space size="middle">
-    //         <select onChange={(e)=>handleChangeState(e,record.id)}>
-    //             <option value="0">Move to</option>
-    //             <option value="Sales">Sales</option>
-    //             <option value="Rentals">Rentals</option>
-    //         </select>
-    //     </Space>
-    //   ),
-    // }
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+            <select onChange={(e)=>handleChangeState(e,record.vehicleId,"REPARATION")}>
+                <option value="0">Move to</option>
+                <option value="Sales">Sales</option>
+                <option value="Rentals">Rentals</option>
+            </select>
+        </Space>
+      ),
+    }
     ];
 
 
@@ -190,7 +191,7 @@ export default function StatesPage() {
                 setSalesCount(salesCountResponse.data);
                 setSalesPagination({ ...salesPagination, total: salesCountResponse.data });
 
-                fetchSalesData(0, salesPagination.pageSize);
+                fetchSalesData(0, salesPagination.pageSize);            
                 
             } catch (error) {
                 console.log(error);
@@ -201,10 +202,60 @@ export default function StatesPage() {
 
     }, []);
 
-    const handleChangeState = (e,id) => {
-        console.log(`selected ${e.target.value}`);
-        console.log(id);
-    }
+    const handleChangeState = async (e, id, initialState) => {
+        const selectedState = e.target.value;
+      
+        try {
+          // Sélection de l'API en fonction de l'état choisi
+          let apiUrl;
+          let requestData;
+      
+          switch (selectedState) {
+            case 'Sales':
+              apiUrl = `${process.env.REACT_APP_API_URL}sales/${id}/${initialState}`;
+              requestData = { vehicleId: id, initialState };
+              break;
+            case 'Reparations':
+              apiUrl = `${process.env.REACT_APP_API_URL}reparations/${id}/${initialState}`;
+              requestData = { vehicleId: id, initialState };
+              break;
+            case 'Rentals':
+              apiUrl = `${process.env.REACT_APP_API_URL}rentals/${id}/${initialState}`;
+              requestData = { vehicleId: id, initialState };
+              break;
+            default:
+              return;
+          }
+      
+          const response = await Axios.post(apiUrl, requestData, {
+            headers: {
+              Authorization: Authorization,
+            },
+          });
+      
+          // Mettre à jour l'état approprié avec les données renvoyées si nécessaire
+          if (selectedState === 'Sales') {
+            // Mettre à jour l'état de la vente
+            const updatedSales = [...sales, response.data];
+            setSales(updatedSales);
+          } else if (selectedState === 'Reparations') {
+            // Mettre à jour l'état des réparations
+            const updatedReparations = [...reparations, response.data];
+            setReparations(updatedReparations);
+          } else if (selectedState === 'Rentals') {
+            // Mettre à jour l'état de la location
+            const updatedRentals = [...rentals, response.data];
+            setRentals(updatedRentals);
+          }
+      
+          // Effectuer d'autres mises à jour ou actions nécessaires
+      
+        } catch (error) {
+          console.error(error);
+          // Gérer les erreurs de manière appropriée
+        }
+      };
+      
 
     const handleTabChange = (key) => {
         setActiveTab(key);

@@ -54,14 +54,14 @@ public class VehicleService {
         Vehicle newVehicle = vehicleRepository.save(vehicle);
         switch (type) {
             case SALE:
-                saleService.createSale(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
+                saleService.createSale(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration(), "SALE");
                 break;
             case RENTAL:
-                rentalService.createRental(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
+                rentalService.createRental(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration(), "RENTAL");
                 break;
 
             case REPARATION:
-                reparationService.createReparation(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration());
+                reparationService.createReparation(newVehicle.getId(), newVehicle.getPriceWithoutConfiguration(), "REPARATION");
                 break;
             default:
 
