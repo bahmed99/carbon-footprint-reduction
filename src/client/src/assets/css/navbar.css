@@ -63,8 +63,8 @@ a.nav-link {
 }
 .nav-logo {
   margin: 10px;
-  max-width: 500px;
   height: auto;
+  width: auto;
 }
 .nav-normal-links-container{
     display: flex;
@@ -108,8 +108,8 @@ a.nav-link {
     display: inline-block;
   }
   .user-image {
-    width: 40px;
-    height: 40px;
+    width: auto;
+    height: auto;
     margin-right: 10px;
   }
   .dropdown-content-profile {

@@ -1,5 +1,5 @@
 import React from 'react';
-import backgroundImage from '../assets/images/vehicules.jpg';
+import backgroundImage from '../assets/images/vehicules.avif';
 
 const Home = () => {
   return (
@@ -15,5 +15,6 @@ const Home = () => {
     </div>
   );
 };
+
 
 export default Home;

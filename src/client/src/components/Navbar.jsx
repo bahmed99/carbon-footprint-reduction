@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LogoImg from "../assets/images/logo2.png";
-import UserImage from "../assets/images/User_icon.png";
+import LogoImg from "../assets/images/logo2.webp";
+import UserImage from "../assets/images/User_icon.webp";
 import { AuthContext } from "../helpers/AuthContext";
 
 import axios from "axios";
@@ -29,7 +29,6 @@ function Navbar() {
 
   const logout = () => {
 
-    console.log("logout cliqued")
     axios
       .post(
         process.env.REACT_APP_API_URL + "auth/logout",
@@ -115,7 +114,7 @@ function Navbar() {
                   </> : ""}
                 <div className="nav-sign-container">
                   <div className="user-container">
-                    <img src={UserImage} alt="User" className="user-image" />
+                    <img src={UserImage} alt="User" className="user-image"/>
                     <span className="down-arrow">&#8964;</span>
                     <div className="dropdown-content-profile">
                       <a className="nav-link" href="/profile">

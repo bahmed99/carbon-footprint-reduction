@@ -29,10 +29,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && terser -c -m -o build/static/js/main.min.js -- build/static/js/*.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
+  }
+  ,
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -50,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "terser": "^5.26.0"
   }
 }
